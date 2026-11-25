@@ -353,7 +353,9 @@
   function frame(now) {
     if (RUN !== window.__hallRun) return;
     var dt = Math.min(0.05, last ? (now - last) / 1000 : 0.016); last = now;
-    if (visible && !document.hidden) {
+    /* nothing to draw while a detail sheet or the photo viewer covers the page */
+    var covered = document.documentElement.classList.contains('sheet-lock') || !!document.querySelector('#lightbox[open]');
+    if (visible && !document.hidden && !covered) {
       var y = window.scrollY; sv += ((y - lastY) - sv) * 0.1; lastY = y;
       t += dt; travel += dt * (0.3 + Math.min(3, Math.abs(sv) * 0.07));
       if (!dragging && Math.abs(splitTo - split) > 0.0005) setSplit(split + (splitTo - split) * 0.06);

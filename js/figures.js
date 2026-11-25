@@ -12,14 +12,15 @@
   /* one shared clock; a figure only runs while it is on screen */
   var jobs = [];
   function animate(el, fn) {
-    var job = { fn: fn, on: !('IntersectionObserver' in window) };
+    var job = { fn: fn, on: !('IntersectionObserver' in window), page: !el.closest('.sheet-src') };
     if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { job.on = e[0].isIntersecting; }, { rootMargin: '80px' }).observe(el);
     jobs.push(job);
   }
   var last = 0;
   function tick(now) {
     var dt = Math.min(0.05, last ? (now - last) / 1000 : 0.016); last = now;
-    if (!document.hidden) for (var i = 0; i < jobs.length; i++) if (jobs[i].on) jobs[i].fn(now / 1000, dt);
+    var covered = document.documentElement.classList.contains('sheet-lock') || !!document.querySelector('#lightbox[open]');
+    if (!document.hidden) for (var i = 0; i < jobs.length; i++) if (jobs[i].on && !(covered && jobs[i].page)) jobs[i].fn(now / 1000, dt);
     requestAnimationFrame(tick);
   }
   function fitCanvas(cv) {
@@ -85,33 +86,45 @@
       if (x <= 1) return XO + K * (Math.cbrt(x) - Math.cbrt(XO));
       return XO + K * (1 - Math.cbrt(XO)) + (x - 1) * 9;
     };
-    var L = 58, R = 500, T = 26, B = 322;
+    /* the chart redraws in a narrower, taller frame on phones, so its lettering stays readable */
+    var L = 58, R = 500, T = 26, B = 322, narrow = null;
     var px = function (x) { return L + (R - L) * x / XMAX; };
     var py = function (y) { return B - (B - T) * Math.min(y, YMAX) / YMAX; };
-    var d = '', i, x;
-    for (i = 0; i <= 100; i++) { x = i / 100; d += (i ? 'L' : 'M') + px(x).toFixed(1) + ' ' + py(real(x)).toFixed(1); }
-    var xTop = 1 + (YMAX - real(1)) / 9;
-    svg.innerHTML =
-      '<line class="c-grid" x1="' + px(XO) + '" y1="' + T + '" x2="' + px(XO) + '" y2="' + B + '"/>' +
-      '<line class="c-grid" x1="' + px(1) + '" y1="' + T + '" x2="' + px(1) + '" y2="' + B + '"/>' +
-      '<path class="c-axis" d="M' + L + ' ' + T + 'V' + B + 'H' + R + '"/>' +
-      '<text class="c-text" x="' + px(XO) + '" y="' + (B + 20) + '" text-anchor="middle">onset of boiling</text>' +
-      '<text class="c-text" x="' + px(1) + '" y="' + (B + 20) + '" text-anchor="middle">critical heat flux</text>' +
-      '<text class="c-text-strong" x="' + R + '" y="' + (B + 46) + '" text-anchor="end">Chip heat flux</text>' +
-      '<text class="c-text-strong" transform="translate(20 ' + T + ') rotate(-90)" text-anchor="end">Wall temperature rise</text>' +
-      '<path class="c-fixed" d="M' + px(0) + ' ' + py(0) + 'L' + px(XMAX) + ' ' + py(fixed(XMAX)) + '"/>' +
-      '<path class="c-real" d="' + d + '"/>' +
-      '<path class="c-real-hot" d="M' + px(1) + ' ' + py(real(1)) + 'L' + px(xTop).toFixed(1) + ' ' + py(YMAX) + '"/>' +
-      '<path class="c-real-hot" d="M' + (px(xTop) - 7).toFixed(1) + ' ' + (py(YMAX) + 10) + 'L' + px(xTop).toFixed(1) + ' ' + py(YMAX) + 'l8 7"/>' +
-      '<line class="c-fixed" x1="' + (L + 14) + '" y1="' + (T + 12) + '" x2="' + (L + 48) + '" y2="' + (T + 12) + '"/>' +
-      '<text class="c-text" x="' + (L + 56) + '" y="' + (T + 16) + '">Single-phase plate, a fixed resistance</text>' +
-      '<line class="c-real" x1="' + (L + 14) + '" y1="' + (T + 34) + '" x2="' + (L + 48) + '" y2="' + (T + 34) + '"/>' +
-      '<text class="c-text" x="' + (L + 56) + '" y="' + (T + 38) + '">Two-phase plate</text>' +
-      '<line class="c-guide" id="boil-guide" y1="' + T + '" y2="' + B + '"/>' +
-      '<line class="c-gap" id="boil-gap"/>' +
-      '<circle class="c-dot-fixed" id="boil-df" r="6"/>' +
-      '<circle class="c-dot" id="boil-dr" r="7"/>' +
-      '<text class="c-text-strong" id="boil-note" text-anchor="end"></text>';
+    function build() {
+      var n = (svg.getBoundingClientRect().width || 520) < 440;
+      if (n === narrow) return false;
+      narrow = n;
+      var W = n ? 380 : 520, H = n ? 360 : 380;
+      L = n ? 44 : 58; R = W - (n ? 14 : 20); T = n ? 30 : 26; B = H - (n ? 64 : 58);
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      var d = '', i, x;
+      for (i = 0; i <= 100; i++) { x = i / 100; d += (i ? 'L' : 'M') + px(x).toFixed(1) + ' ' + py(real(x)).toFixed(1); }
+      var xTop = 1 + (YMAX - real(1)) / 9;
+      var chf = n ? '<text class="c-text" x="' + R + '" y="' + (B + 22) + '" text-anchor="end">critical heat flux</text>'
+                  : '<text class="c-text" x="' + px(1) + '" y="' + (B + 20) + '" text-anchor="middle">critical heat flux</text>';
+      svg.innerHTML =
+        '<line class="c-grid" x1="' + px(XO) + '" y1="' + T + '" x2="' + px(XO) + '" y2="' + B + '"/>' +
+        '<line class="c-grid" x1="' + px(1) + '" y1="' + T + '" x2="' + px(1) + '" y2="' + B + '"/>' +
+        '<path class="c-axis" d="M' + L + ' ' + T + 'V' + B + 'H' + R + '"/>' +
+        '<text class="c-text" x="' + px(XO) + '" y="' + (B + (n ? 22 : 20)) + '" text-anchor="middle">onset of boiling</text>' + chf +
+        '<text class="c-text-strong" x="' + R + '" y="' + (B + (n ? 52 : 46)) + '" text-anchor="end">Chip heat flux</text>' +
+        '<text class="c-text-strong" transform="translate(' + (n ? 16 : 20) + ' ' + T + ') rotate(-90)" text-anchor="end">Wall temperature rise</text>' +
+        '<path class="c-fixed" d="M' + px(0) + ' ' + py(0) + 'L' + px(XMAX) + ' ' + py(fixed(XMAX)) + '"/>' +
+        '<path class="c-real" d="' + d + '"/>' +
+        '<path class="c-real-hot" d="M' + px(1) + ' ' + py(real(1)) + 'L' + px(xTop).toFixed(1) + ' ' + py(YMAX) + '"/>' +
+        '<path class="c-real-hot" d="M' + (px(xTop) - 7).toFixed(1) + ' ' + (py(YMAX) + 10) + 'L' + px(xTop).toFixed(1) + ' ' + py(YMAX) + 'l8 7"/>' +
+        '<line class="c-fixed" x1="' + (L + 14) + '" y1="' + (T + 12) + '" x2="' + (L + 48) + '" y2="' + (T + 12) + '"/>' +
+        '<text class="c-text" x="' + (L + 56) + '" y="' + (T + 16) + '">' + (n ? 'Fixed resistance' : 'Single-phase plate, a fixed resistance') + '</text>' +
+        '<line class="c-real" x1="' + (L + 14) + '" y1="' + (T + 34) + '" x2="' + (L + 48) + '" y2="' + (T + 34) + '"/>' +
+        '<text class="c-text" x="' + (L + 56) + '" y="' + (T + 38) + '">Two-phase plate</text>' +
+        '<line class="c-guide" id="boil-guide" y1="' + T + '" y2="' + B + '"/>' +
+        '<line class="c-gap" id="boil-gap"/>' +
+        '<circle class="c-dot-fixed" id="boil-df" r="6"/>' +
+        '<circle class="c-dot" id="boil-dr" r="7"/>' +
+        '<text class="c-text-strong" id="boil-note" text-anchor="end"></text>';
+      return true;
+    }
+    build();
 
     var regime = $('#boil-regime'), text = $('#boil-text'), out = $('#boil-out');
     var m1 = $('#meter-1'), m2 = $('#meter-2');
@@ -132,9 +145,18 @@
       var gap = $('#boil-gap');
       gap.setAttribute('x1', X); gap.setAttribute('x2', X); gap.setAttribute('y1', py(yf)); gap.setAttribute('y2', py(yr));
       var note = $('#boil-note'), diff = yr - yf;
-      note.textContent = Math.abs(diff) < 0.02 ? '' : (diff < 0 ? 'fixed resistance: too hot' : 'fixed resistance: too cold');
-      note.setAttribute('y', (py(yf) + py(yr)) / 2 + 5);
-      if (X < L + (R - L) * 0.45) { note.setAttribute('text-anchor', 'start'); note.setAttribute('x', X + 12); } else { note.setAttribute('text-anchor', 'end'); note.setAttribute('x', X - 12); }
+      var words = Math.abs(diff) < 0.02 ? '' : (diff < 0 ? 'too hot' : 'too cold');
+      var nx = X < L + (R - L) * 0.45 ? X + 12 : X - 12, ny = (py(yf) + py(yr)) / 2 + 5;
+      note.setAttribute('text-anchor', X < L + (R - L) * 0.45 ? 'start' : 'end');
+      note.setAttribute('x', nx); note.setAttribute('y', ny);
+      note.textContent = '';
+      if (words && narrow) {
+        /* on a phone the note goes on two short lines */
+        var t1 = document.createElementNS(NS, 'tspan'), t2 = document.createElementNS(NS, 'tspan');
+        t1.setAttribute('x', nx); t1.setAttribute('dy', '-0.55em'); t1.textContent = 'fixed resistance:';
+        t2.setAttribute('x', nx); t2.setAttribute('dy', '1.15em'); t2.textContent = words;
+        note.appendChild(t1); note.appendChild(t2);
+      } else if (words) note.textContent = 'fixed resistance: ' + words;
       var k = q <= XO ? 0 : q <= 0.88 ? 1 : q <= 1 ? 2 : 3;
       regime.textContent = COPY[k][0]; text.textContent = COPY[k][1];
       out.textContent = k === 0 ? 'Warmer liquid out' : 'Liquid and vapour out';
@@ -143,6 +165,7 @@
       if (m2) { m2.querySelector('i').style.width = (Math.min(yr / YMAX, 1) * 100).toFixed(1) + '%'; m2.querySelector('b').textContent = STATE[k]; m2.classList.toggle('is-over', k === 3); }
     }
     input.addEventListener('input', function () { update(); if (reduce) still(); });
+    window.addEventListener('resize', function () { if (build()) update(); });
 
     /* one cold plate, in section along the flow. mode 1: liquid only, mode 2: boiling allowed */
     function Plate(cv, mode) {
@@ -427,15 +450,114 @@
       var u = (v - a[0]) / ((b[0] - a[0]) || 1);
       return 'rgb(' + Math.round(a[1] + (b[1] - a[1]) * u) + ',' + Math.round(a[2] + (b[2] - a[2]) * u) + ',' + Math.round(a[3] + (b[3] - a[3]) * u) + ')';
     };
-    /* a bead rides the tube as the page scrolls and takes the colour of where it is */
-    var pending = false;
+    /* a bead rides the tube as the page scrolls and takes the colour of where it is;
+       the job it passes lights up, and the bead can be dragged, tapped or stepped with the keys */
+    var roles = Array.prototype.slice.call(document.querySelectorAll('.roles > .role'));
+    var hit = $('.thermo-hit', root), glow = $('.thermo-glow', root), read = $('.thermo-read', root);
+    var pending = false, near = null, best = null, drag = null, settling = 0, heat = { on: false, y: 0 };
+    var dotY = function (r) { return r.getBoundingClientRect().top + 55.5; };
+    var label = function (r) {
+      var org = r.querySelector('.org'), h = r.querySelector('h3'), when = r.querySelector('.role-meta p');
+      var name = org ? org.textContent.replace(/\s*\(.*\)$/, '') : (h ? h.textContent : '');
+      var date = when ? when.innerHTML.split(/<br\s*\/?>/i)[0].replace(/<[^>]+>/g, '').trim() : '';
+      return name.trim() + (date ? ' · ' + date : '');
+    };
     var paint = function () {
       pending = false;
-      var r = root.getBoundingClientRect(), b = bead.getBoundingClientRect();
-      bead.style.background = col(clamp((b.top + b.height / 2 - r.top) / Math.max(1, r.height), 0, 1));
+      var r = root.getBoundingClientRect(), b = bead.getBoundingClientRect(), by = b.top + b.height / 2;
+      bead.style.background = col(clamp((by - r.top) / Math.max(1, r.height), 0, 1));
+      var bd = 1e9; best = null;
+      roles.forEach(function (ro) { var d = Math.abs(dotY(ro) - by); if (d < bd) { bd = d; best = ro; } });
+      var act = bd < 64 ? best : null;
+      if (act !== near) {
+        if (near) near.classList.remove('is-near');
+        if (act) { act.style.setProperty('--dot-c', col(clamp((dotY(act) - r.top) / Math.max(1, r.height), 0, 1))); act.classList.add('is-near'); }
+        near = act;
+      }
+      if (best) read.textContent = label(best);
     };
-    window.addEventListener('scroll', function () { if (!pending) { pending = true; requestAnimationFrame(paint); } }, { passive: true });
+    var queue = function () { if (!pending) { pending = true; requestAnimationFrame(paint); } };
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
     paint();
+
+    /* bring a job's dot to the bead */
+    function goTo(ro) {
+      if (!ro) return;
+      var bh = bead.offsetHeight, rr = root.getBoundingClientRect();
+      var target = window.scrollY + dotY(ro) - (window.innerHeight * 0.46 + bh / 2);
+      bead.style.position = 'absolute'; bead.style.left = '0'; bead.style.top = (dotY(ro) - rr.top - bh / 2) + 'px';
+      clearTimeout(settling);
+      window.scrollTo({ top: target, behavior: reduce ? 'auto' : 'smooth' });
+      settling = setTimeout(function () {
+        /* hand the bead back to the page without animating the jump in its position rules */
+        bead.style.transition = 'none';
+        bead.style.position = ''; bead.style.top = ''; bead.style.left = '';
+        void bead.offsetWidth; bead.style.transition = '';
+        paint();
+      }, reduce ? 30 : 750);
+    }
+    function place(cy) {
+      var rr = root.getBoundingClientRect(), bh = bead.offsetHeight;
+      var y = clamp(cy - rr.top, bh / 2, rr.height - 30);
+      bead.style.position = 'absolute'; bead.style.left = '0'; bead.style.top = (y - bh / 2) + 'px';
+      paint();
+    }
+    bead.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      clearTimeout(settling);
+      drag = { id: e.pointerId, y0: e.clientY, moved: false };
+      try { bead.setPointerCapture(e.pointerId); } catch (x) { /* ignore */ }
+      root.classList.add('is-drag'); bead.classList.add('was-used');
+      e.preventDefault();
+    });
+    bead.addEventListener('pointermove', function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      if (!drag.moved && Math.abs(e.clientY - drag.y0) < 4) return;
+      drag.moved = true;
+      /* near the top or bottom of the screen the page follows */
+      if (e.clientY < 90) window.scrollBy({ top: -16, behavior: 'instant' });
+      else if (e.clientY > window.innerHeight - 90) window.scrollBy({ top: 16, behavior: 'instant' });
+      place(e.clientY);
+    });
+    var release = function (e) {
+      if (!drag || (e && e.pointerId !== drag.id)) return;
+      var d = drag; drag = null; root.classList.remove('is-drag');
+      if (d.moved) { goTo(best); bead._dragged = true; setTimeout(function () { bead._dragged = false; }, 50); }
+    };
+    bead.addEventListener('pointerup', release);
+    bead.addEventListener('pointercancel', release);
+    /* a tap or Enter opens the job the bead is on */
+    bead.addEventListener('click', function () {
+      if (bead._dragged) return;
+      bead.classList.add('was-used');
+      var ro = near || best, a = ro && ro.querySelector('.tile-hit');
+      if (a) a.click();
+    });
+    bead.addEventListener('keydown', function (e) {
+      var i = roles.indexOf(near || best), k = -1;
+      if (e.key === 'ArrowDown') k = Math.min(roles.length - 1, i + 1);
+      else if (e.key === 'ArrowUp') k = Math.max(0, i - 1);
+      else if (e.key === 'Home') k = 0;
+      else if (e.key === 'End') k = roles.length - 1;
+      if (k < 0) return;
+      e.preventDefault(); bead.classList.add('was-used'); goTo(roles[k]);
+    });
+    /* point along the tube to warm it; click to send the bead there */
+    hit.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      var rr = root.getBoundingClientRect();
+      heat.on = true; heat.y = e.clientY;
+      glow.style.setProperty('--gy', (e.clientY - rr.top) + 'px');
+      glow.style.setProperty('--gc', col(clamp((e.clientY - rr.top) / rr.height, 0, 1)));
+      root.classList.add('is-heat');
+    });
+    hit.addEventListener('pointerleave', function () { heat.on = false; root.classList.remove('is-heat'); });
+    hit.addEventListener('click', function (e) {
+      var bd = 1e9, pick = null;
+      roles.forEach(function (ro) { var d = Math.abs(dotY(ro) - e.clientY); if (d < bd) { bd = d; pick = ro; } });
+      bead.classList.add('was-used'); goTo(pick);
+    });
     var night = function () { return document.documentElement.dataset.mode === 'night'; };
 
     /* top: vapour bubbles rise in the tube and leave it as steam */
@@ -447,6 +569,11 @@
         var u = Math.random();
         bub.push({ y: TOPPAD + u * u * (h - TOPPAD), x: (Math.random() - 0.5) * 2, r: 1.1 + Math.random() * (half * 0.58), v: 24 + Math.random() * 48, ph: Math.random() * 6.3, out: false, a: 1 });
       }
+      if (heat.on) {
+        var hy = heat.y - boil.getBoundingClientRect().top;
+        if (hy > TOPPAD && hy < h) for (var q = 0; q < 2; q++) bub.push({ y: hy + (Math.random() - 0.5) * 12, x: (Math.random() - 0.5) * 2, r: 1.6 + Math.random() * (half * 0.75), v: 70 + Math.random() * 80, ph: Math.random() * 6.3, out: false, a: 1 });
+      }
+      if (bub.length > want * 3) bub.splice(0, bub.length - want * 3);
       c.clearRect(0, 0, w, h);
       var steam = night() ? '255,255,255' : '224,67,47';
       for (var i = bub.length - 1; i >= 0; i--) {
@@ -478,8 +605,11 @@
       c.clearRect(0, 0, w, h);
       var rgb = night() ? '168,216,245' : '63,159,219';
       c.lineCap = 'round';
+      var my = heat.on ? heat.y - ice.getBoundingClientRect().top : -1e4;
       flakes.forEach(function (f) {
-        var depth = f.y / h, a = (0.3 + 0.7 * (0.5 + 0.5 * Math.sin(tt * f.sp + f.ph))) * (0.25 + 0.75 * depth);
+        f.melt = clamp((f.melt || 0) + (Math.abs(f.y - my) < 46 ? dt * 2.4 : -dt * 0.35), 0, 1);
+        var depth = f.y / h, a = (0.3 + 0.7 * (0.5 + 0.5 * Math.sin(tt * f.sp + f.ph))) * (0.25 + 0.75 * depth) * (1 - f.melt);
+        if (a < 0.02) return;
         c.strokeStyle = 'rgba(' + rgb + ',' + a.toFixed(2) + ')'; c.lineWidth = Math.max(0.9, 1.15 * k);
         c.beginPath();
         for (var m = 0; m < 6; m++) {
@@ -506,54 +636,370 @@
     } else { animate(boil, stepBoil); animate(ice, stepIce); }
   })();
 
-  /* ======= Current studies: coolant streaming across, cool to warm, parting round the pointer ======= */
+  /* ===== Current studies: flow past a cylinder, drawn with dye, that the visitor can move and stir =====
+     A point-vortex sketch: potential flow round a cylinder, plus vortices shed alternately from its
+     top and bottom at the Strouhal frequency from Roshko's fit. Below Re 47 the wake holds two
+     attached vortices and nothing is shed. Not a CFD solution, and the note under the controls says so. */
   (function flow() {
-    var cv = $('#studies-flow'); if (!cv || !cv.getContext) return;
-    var trail = document.createElement('canvas'), tc = trail.getContext('2d');
-    var parts = [], W = 0, H = 0, sized = '', t = 0, ptr = { x: -999, y: -999, on: false };
-    var DAY = ['#4aa8e0', '#6bb4df', '#9fc1cf', '#e3b178', '#f08a3c', '#ea5a1c'], NIGHT = ['#7a3a22', '#a8491f', '#d9501d', '#ff7a45', '#ff9a55', '#ffb347'];
-    window.addEventListener('pointermove', function (e) {
-      var r = cv.getBoundingClientRect();
-      ptr.x = e.clientX - r.left; ptr.y = e.clientY - r.top; ptr.on = e.pointerType !== 'touch' && ptr.y > -60 && ptr.y < r.height + 60;
-    }, { passive: true });
-    var spawn = function (p, anywhere) { p.x = anywhere ? Math.random() * W : -8; p.y = Math.random() * H; p.px = p.x; p.py = p.y; p.life = 0; return p; };
+    var cv = $('#studies-flow'), sec = $('#studies'), ui = $('#flow-ui');
+    if (!cv || !cv.getContext || !sec || !ui) return;
+    var gripBody = $('#flow-body'), pin1 = $('#flow-pin-1'), pin2 = $('#flow-pin-2');
+    var reIn = $('#flow-re'), reOut = $('#flow-re-out'), read = $('#flow-read'), pauseBtn = $('#flow-pause');
+    var modeBtns = Array.prototype.slice.call(ui.querySelectorAll('[data-mode]'));
+    ui.hidden = false; gripBody.hidden = false;
+
+    /* the dye builds up on the section's own canvas; the flags go on a thin layer above it */
+    var top = document.createElement('canvas'); top.className = 'studies-flow studies-flow-top'; top.setAttribute('aria-hidden', 'true');
+    cv.parentNode.insertBefore(top, cv.nextSibling);
+    var tc = cv.getContext('2d'), oc = top.getContext('2d'), trail = cv, topDirty = false;
+    var W = 0, H = 0, sized = '', R = 24, D = 48, U = 90, t = 0, grad = {};
+    function fit(el, ctx) {
+      var r = el.getBoundingClientRect(), dpr = Math.min(1.25, window.devicePixelRatio || 1), w = Math.max(1, r.width), h = Math.max(1, r.height);
+      if (el.width !== Math.round(w * dpr) || el.height !== Math.round(h * dpr)) { el.width = Math.round(w * dpr); el.height = Math.round(h * dpr); }
+      ctx.setTransform(el.width / w, 0, 0, el.height / h, 0, 0);
+      return { w: w, h: h };
+    }
+    var body = { x: 0, y: 0, fx: 0.56, fy: 0.3 };          /* fx, fy: where the visitor left it, as fractions */
+    var mode = 'street', Re = 150, paused = false, moved = false;
+    var vort = [], free = [], dye = [], phase = 0, side = 1, steady = [];
+    var GAPS = [0.25, 0.5, 0.75, 1, 1.25, 1.5], gap1 = 3, gap2 = 3;   /* indices into the study's six values */
+    var flags = [mkFlag(), mkFlag()];
+    var ptr = { x: -1e4, y: -1e4, vx: 0, vy: 0, on: false, t: 0 };
+    var COL = {
+      day: { free: 'rgba(86,160,214,0.42)', top: '#ea5a1c', bot: '#f2a03c', puff: ['#4aa8e0', '#ea5a1c', '#f2a03c'], body: '#1b1614', rim: 'rgba(255,255,255,0.5)', flag: '#1b1614' },
+      night: { free: 'rgba(120,170,210,0.22)', top: '#ff7a45', bot: '#ffb347', puff: ['#7cc4f0', '#ff7a45', '#ffb347'], body: '#f5efe9', rim: 'rgba(0,0,0,0.4)', flag: '#f5efe9' }
+    };
+    var night = function () { return document.documentElement.dataset.mode === 'night'; };
+    function mkFlag() { var n = 18, f = { n: n, y: [], v: [], x0: 0, y0: 0, len: 0 }; for (var i = 0; i < n; i++) { f.y.push(0); f.v.push(0); } return f; }
+
+    /* ---------------------------------- physics ---------------------------------- */
+    function St() { return Math.max(0.12, 0.198 * (1 - 19.7 / Re)); }
+    function addV(px, py, out) {
+      /* uniform stream plus the cylinder's doublet */
+      var x = px - body.x, y = py - body.y, r2 = x * x + y * y, a2 = R * R, u = U, v = 0;
+      if (r2 > 1) { var r4 = r2 * r2; u = U * (1 - a2 * (x * x - y * y) / r4); v = -U * 2 * a2 * x * y / r4; }
+      var list = vort.concat(steady);
+      for (var k = 0; k < list.length; k++) {
+        var q = list[k];
+        u += vel(px, py, q.x, q.y, q.g, q.rc, 0); v += vel(px, py, q.x, q.y, q.g, q.rc, 1);
+        /* its image inside the cylinder keeps the flow from passing through the wall */
+        var dx = q.x - body.x, dy = q.y - body.y, d2 = dx * dx + dy * dy;
+        if (d2 < 64 * a2 && d2 > a2) {
+          var s = a2 / d2, ix = body.x + dx * s, iy = body.y + dy * s;
+          u += vel(px, py, ix, iy, -q.g, q.rc * 0.6, 0); v += vel(px, py, ix, iy, -q.g, q.rc * 0.6, 1);
+        }
+      }
+      out[0] = u; out[1] = v;
+    }
+    /* a Lamb-Oseen vortex: g > 0 turns clockwise on screen */
+    function vel(px, py, cx, cy, g, rc, comp) {
+      var dx = px - cx, dy = py - cy, r2 = dx * dx + dy * dy + 1e-6;
+      var f = g / (2 * Math.PI * r2) * (1 - Math.exp(-r2 / (rc * rc)));
+      return comp ? f * dx : -f * dy;
+    }
+    var tmp = [0, 0], tmp2 = [0, 0];
+    function advect(p, dt) {
+      addV(p.x, p.y, tmp);
+      var mx = p.x + tmp[0] * dt * 0.5, my = p.y + tmp[1] * dt * 0.5;
+      addV(mx, my, tmp2);
+      p.px = p.x; p.py = p.y;
+      p.x += tmp2[0] * dt; p.y += tmp2[1] * dt;
+      /* stirred by the pointer */
+      if (ptr.on) {
+        var dx = p.x - ptr.x, dy = p.y - ptr.y, d2 = dx * dx + dy * dy, rr = 80 * 80;
+        if (d2 < rr) { var w = (1 - d2 / rr); p.x += ptr.vx * dt * w * 0.9; p.y += ptr.vy * dt * w * 0.9; }
+      }
+      /* nothing goes inside the cylinder */
+      var bx = p.x - body.x, by = p.y - body.y, b2 = bx * bx + by * by;
+      if (b2 < R * R) { var m = Math.sqrt(b2) || 1; p.x = body.x + bx / m * R * 1.02; p.y = body.y + by / m * R * 1.02; }
+    }
+    function shed(dt) {
+      steady.length = 0;
+      if (Re < 47) {
+        /* steady wake: a twin pair sits behind the cylinder, longer as Re grows */
+        var Lw = (0.05 * Re) * D, g0 = 1.5 * U * D * Math.sqrt(Re / 47);
+        steady.push({ x: body.x + R + 0.45 * Lw, y: body.y - 0.36 * D, g: g0, rc: 0.32 * D + 0.1 * Lw });
+        steady.push({ x: body.x + R + 0.45 * Lw, y: body.y + 0.36 * D, g: -g0, rc: 0.32 * D + 0.1 * Lw });
+      } else {
+        var half = D / (St() * U) / 2, jitter = Re > 190 ? (Re - 190) / 110 : 0;
+        phase += dt;
+        if (phase >= half) {
+          phase = 0; side = -side;
+          vort.push({ x: body.x + 0.7 * R, y: body.y - side * 0.8 * R, g: 0, g0: 1.9 * U * D * (1 + 0.15 * jitter * (Math.random() - 0.5)), rc: 0.3 * D, age: 0, s: side, born: half * (1 + 0.25 * jitter * (Math.random() - 0.5)) });
+        }
+      }
+      for (var k = vort.length - 1; k >= 0; k--) {
+        var q = vort[k]; q.age += dt;
+        if (q.age < q.born) {
+          /* still forming in the near wake */
+          var f = q.age / q.born, e = f * f * (3 - 2 * f);
+          q.g = q.s * q.g0 * e;
+          q.x = body.x + R * (0.7 + 1.9 * e); q.y = body.y - q.s * R * (0.8 - 0.25 * e);
+        } else {
+          /* released: carried downstream, settling into the street, slowly diffusing */
+          var dist = (q.x - body.x) / D;
+          q.x += 0.86 * U * dt;
+          var hy = body.y - q.s * D * (0.32 + 0.025 * Math.min(dist, 12));
+          q.y += (hy - q.y) * Math.min(1, dt * 1.2) + (Re > 190 ? (Math.random() - 0.5) * 6 * dt * (Re - 190) / 30 : 0);
+          q.g *= Math.exp(-dt / 14); q.rc += dt * 0.05 * D;
+        }
+        if (q.x > W + 4 * D || (q.age > q.born && Math.abs(q.g) < 0.05 * U * D)) vort.splice(k, 1);
+      }
+    }
+
+    /* ---------------------------------- flags ---------------------------------- */
+    function placeFlags() {
+      var L = 1.1 * D, x1 = body.x + R + GAPS[gap1] * D, x2 = x1 + L + GAPS[gap2] * D;
+      flags[0].x0 = x1; flags[1].x0 = x2; flags[0].len = flags[1].len = L; flags[0].y0 = flags[1].y0 = body.y;
+    }
+    function stepFlags(dt) {
+      /* each flag flaps with the shedding, as a wave that travels down it at the speed the vortices are carried */
+      placeFlags();
+      var f0 = Re >= 47 ? St() * U / D : 0, lam = f0 ? 0.86 * U / f0 : 1;
+      for (var j = 0; j < 2; j++) {
+        var f = flags[j], ds = f.len / (f.n - 1);
+        f.amp = (f.amp || 0) + ((f0 ? (0.2 + 0.06 * j) * D : 0) - (f.amp || 0)) * Math.min(1, dt * 1.5);
+        for (var i = 0; i < f.n; i++) {
+          var sN = i / (f.n - 1), x = f.x0 + i * ds;
+          f.y[i] = f.amp * Math.pow(sN, 1.5) * Math.sin(2 * Math.PI * (f0 * t - (x - body.x) / lam));
+        }
+      }
+    }
+
+    /* --------------------------------- drawing ---------------------------------- */
     function layout() {
-      var g = fitCanvas(cv);
-      if (sized === g.w + 'x' + g.h) return g;
-      sized = g.w + 'x' + g.h; W = g.w; H = g.h;
-      trail.width = cv.width; trail.height = cv.height; tc.setTransform(cv.width / W, 0, 0, cv.height / H, 0, 0);
-      parts = []; for (var i = 0, n = Math.round(clamp(W * 0.42, 120, 640)); i < n; i++) parts.push(spawn({}, true));
-      return g;
+      var r = cv.getBoundingClientRect(), key = Math.round(r.width) + 'x' + Math.round(r.height);
+      if (sized === key) return;
+      var first = !sized;
+      var g = fit(cv, tc); fit(top, oc);
+      sized = key; W = g.w; H = g.h; grad = {};
+      R = clamp(W * 0.018, 14, 24); D = 2 * R; U = clamp(W * 0.072, 58, 112);
+      if (first || !moved) defaultSpot();
+      body.x = body.fx * W; body.y = body.fy * H;
+      free = []; var n = Math.round(clamp(W * 0.42, 140, 620));
+      for (var i = 0; i < n; i++) free.push(spawn({}, true));
+      dye = []; vort = []; phase = 0;
+      grips();
+    }
+    function defaultSpot() {
+      /* just right of the heading on wide screens; on phones, in the band left above the heading */
+      var h2 = sec.querySelector('h2'), cr = cv.getBoundingClientRect();
+      var hr = h2 ? h2.getBoundingClientRect() : null;
+      if (W < 700) { body.fx = 0.13; body.fy = clamp((hr ? hr.top - cr.top - 46 : 50) / H, 0.05, 0.3); }
+      else { body.fx = clamp(((hr ? hr.right - cr.left : W * 0.36) + 0.045 * W) / W, 0.3, 0.5); body.fy = clamp((hr ? hr.top + hr.height * 0.3 - cr.top : H * 0.3) / H, 0.1, 0.5); }
+    }
+    function spawn(p, anywhere) { p.x = anywhere ? Math.random() * W : -6 - Math.random() * 20; p.y = Math.random() * H; p.px = p.x; p.py = p.y; return p; }
+    function emitDye(dt) {
+      if (dye.length > 1500) return;
+      var n = Math.max(1, Math.round(dt * 66));
+      for (var i = 0; i < n; i++) {
+        for (var s = -1; s <= 1; s += 2) {
+          var a = (Math.PI / 2) * s + (Math.random() - 0.5) * 0.25;   /* the top and bottom of the cylinder */
+          var x = body.x + Math.cos(a) * R * 0.15 + (Math.random() - 0.5) * 2, y = body.y + Math.sin(a) * R * 1.06;
+          dye.push({ x: x, y: y, px: x, py: y, c: s < 0 ? 1 : 2 });
+        }
+      }
+    }
+    function puff(x, y) {
+      var pal = Math.floor(Math.random() * 3);
+      for (var i = 0; i < 130; i++) {
+        var a = Math.random() * Math.PI * 2, r = Math.sqrt(Math.random()) * 26;
+        dye.push({ x: x + Math.cos(a) * r, y: y + Math.sin(a) * r, px: x, py: y, c: 3 + pal });
+      }
     }
     function step(now, dt) {
-      var g = layout(), c = g.c, U = Math.max(38, W * 0.052), R = 58, a2 = R * R, bins = [[], [], [], [], [], []];
-      t += dt;
-      for (var i = 0; i < parts.length; i++) {
-        var p = parts[i];
-        var u = U * (0.78 + 0.22 * Math.sin(p.y * 0.013 + t * 0.2));
-        var v = U * 0.2 * Math.sin(p.x * 0.008 + p.y * 0.011 + t * 0.35) + U * 0.1 * Math.sin(p.x * 0.021 - t * 0.5);
-        if (ptr.on) {
-          var dx = p.x - ptr.x, dy = p.y - ptr.y, r2 = dx * dx + dy * dy;
-          if (r2 > a2) { u -= U * a2 * (dx * dx - dy * dy) / (r2 * r2); v -= U * 2 * a2 * dx * dy / (r2 * r2); }
-          else { var m = Math.sqrt(r2) || 1; p.x = ptr.x + dx / m * R; p.y = ptr.y + dy / m * R; }
+      layout();
+      if (!paused) {
+        t += dt;
+        shed(dt);
+        if (mode === 'flags') stepFlags(dt);
+        emitDye(dt);
+        for (var i = 0; i < free.length; i++) {
+          var p = free[i]; advect(p, dt);
+          if (p.x > W + 10 || p.y < -30 || p.y > H + 30) spawn(p, false);
         }
-        p.px = p.x; p.py = p.y; p.x += u * dt; p.y += v * dt; p.life += dt;
-        if (p.x > W + 8 || p.y < -8 || p.y > H + 8) { spawn(p, false); continue; }
-        if (p.life > dt * 1.5) bins[clamp(Math.floor(p.x / W * 6), 0, 5)].push(p);
+        for (var j = dye.length - 1; j >= 0; j--) {
+          var q = dye[j]; advect(q, dt);
+          if (q.x > W + 10 || q.y < -40 || q.y > H + 40 || q.x < -40) dye.splice(j, 1);
+        }
+        ptr.vx *= 0.85; ptr.vy *= 0.85;
+        if (performance.now() - ptr.t > 120) ptr.on = false;
       }
-      tc.globalCompositeOperation = 'destination-out'; tc.fillStyle = 'rgba(0,0,0,0.04)'; tc.fillRect(0, 0, W, H);
-      tc.globalCompositeOperation = 'source-over'; tc.lineWidth = 2; tc.lineCap = 'round';
-      var cols = document.documentElement.dataset.mode === 'night' ? NIGHT : DAY;
-      for (var k = 0; k < 6; k++) {
-        if (!bins[k].length) continue;
-        tc.strokeStyle = cols[k]; tc.beginPath();
-        for (var j = 0; j < bins[k].length; j++) { var q = bins[k][j]; tc.moveTo(q.px, q.py); tc.lineTo(q.x, q.y); }
-        tc.stroke();
-      }
-      c.clearRect(0, 0, W, H); c.drawImage(trail, 0, 0, W, H);
+      draw(paused ? 0 : 1);
     }
-    if (reduce) { var still = function () { sized = ''; for (var n = 0; n < 420; n++) step(0, 1 / 60); }; still(); window.addEventListener('resize', still); }
-    else animate(cv, step);
+    function draw(fade) {
+      var col = night() ? COL.night : COL.day;
+      if (fade) { tc.globalCompositeOperation = 'destination-out'; tc.fillStyle = 'rgba(0,0,0,0.07)'; tc.fillRect(0, 0, W, H); }
+      tc.globalCompositeOperation = 'source-over'; tc.lineCap = 'round';
+      if (fade) {
+        tc.lineWidth = 1.3; tc.strokeStyle = col.free; tc.beginPath();
+        for (var i = 0; i < free.length; i++) { var p = free[i]; if (p.px > -1) { tc.moveTo(p.px, p.py); tc.lineTo(p.x, p.y); } }
+        tc.stroke();
+        var cols = [null, col.top, col.bot, col.puff[0], col.puff[1], col.puff[2]];
+        for (var k = 1; k <= 5; k++) {
+          tc.lineWidth = k > 2 ? 2.2 : 1.7; tc.strokeStyle = cols[k]; tc.globalAlpha = k > 2 ? 0.9 : 0.72; tc.beginPath();
+          for (var j = 0; j < dye.length; j++) { var q = dye[j]; if (q.c === k) { tc.moveTo(q.px, q.py); tc.lineTo(q.x, q.y); } }
+          tc.stroke();
+        }
+        tc.globalAlpha = 1;
+        /* fade the dye out towards the cards below and, on wide screens, under the text on the left;
+           done here rather than with a CSS mask, which costs a lot to repaint every frame */
+        tc.globalCompositeOperation = 'destination-out';
+        var y0 = H * 0.6;
+        if (!grad.v) { grad.v = tc.createLinearGradient(0, y0, 0, H); grad.v.addColorStop(0, 'rgba(0,0,0,0)'); grad.v.addColorStop(1, 'rgba(0,0,0,1)'); }
+        tc.fillStyle = grad.v; tc.fillRect(0, y0, W, H - y0);
+        if (W >= 700) {
+          if (!grad.h) { grad.h = tc.createLinearGradient(0, 0, W * 0.46, 0); grad.h.addColorStop(0, 'rgba(0,0,0,0.2)'); grad.h.addColorStop(1, 'rgba(0,0,0,0)'); }
+          tc.fillStyle = grad.h; tc.fillRect(0, 0, W * 0.46, H);
+        }
+        tc.globalCompositeOperation = 'source-over';
+      }
+      /* the cylinder itself is the handle drawn over the canvas, so the canvas's fade never dims it */
+      var c = oc;
+      if (topDirty || mode === 'flags') { c.clearRect(0, 0, W, H); topDirty = false; }
+      if (mode === 'flags') {
+        topDirty = true;
+        c.strokeStyle = col.flag; c.lineWidth = 2.6; c.lineJoin = 'round'; c.lineCap = 'round';
+        for (var f = 0; f < 2; f++) {
+          var fl = flags[f], ds = fl.len / (fl.n - 1);
+          c.beginPath(); c.moveTo(fl.x0, fl.y0 + fl.y[0]);
+          for (var n = 1; n < fl.n - 1; n++) {
+            var xa = fl.x0 + n * ds, ya = fl.y0 + fl.y[n], xb = fl.x0 + (n + 1) * ds, yb = fl.y0 + fl.y[n + 1];
+            c.quadraticCurveTo(xa, ya, (xa + xb) / 2, (ya + yb) / 2);
+          }
+          c.lineTo(fl.x0 + (fl.n - 1) * ds, fl.y0 + fl.y[fl.n - 1]);
+          c.stroke();
+          c.fillStyle = col.flag; c.beginPath(); c.arc(fl.x0, fl.y0, 4.5, 0, Math.PI * 2); c.fill();
+        }
+      }
+      grips();
+    }
+
+    /* ------------------------------- the controls ------------------------------- */
+    function readout() {
+      reOut.textContent = String(Re);
+      var txt;
+      if (Re < 47) txt = 'Steady wake: two vortices stay attached behind the cylinder, and nothing is shed.';
+      else if (Re < 190) txt = 'Periodic shedding, a von Kármán street. St ≈ ' + St().toFixed(2) + '.';
+      else txt = 'Shedding, St ≈ ' + St().toFixed(2) + '. A real wake turns three-dimensional above about Re 190, so this flat sketch no longer holds.';
+      if (mode === 'flags') {
+        var k = gap1 * 6 + gap2 + 1;
+        txt = 'Body-to-flag gap ' + GAPS[gap1].toFixed(2) + ', flag-to-flag gap ' + GAPS[gap2].toFixed(2) + ': case ' + k + ' of the study’s 36. ' + (Re === 300 ? 'Re 300, as in the study. ' : '') + 'Drag either flag to change its gap.';
+      }
+      read.textContent = txt;
+    }
+    function setMode(m) {
+      mode = m;
+      modeBtns.forEach(function (b) { b.setAttribute('aria-checked', b.dataset.mode === m ? 'true' : 'false'); });
+      pin1.hidden = pin2.hidden = m !== 'flags';
+      if (m === 'flags') { Re = 300; reIn.value = 300; placeFlags(); flags.forEach(function (f) { for (var i = 0; i < f.n; i++) { f.y[i] = 0; f.v[i] = 0; } }); }
+      else if (Re === 300) { Re = 150; reIn.value = 150; }
+      vort = []; phase = 0;
+      readout(); if (reduce || paused) still();
+    }
+    modeBtns.forEach(function (b) { b.addEventListener('click', function () { setMode(b.dataset.mode); }); });
+    ui.querySelector('.flow-modes').addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault(); var i = modeBtns.findIndex(function (b) { return b.dataset.mode === mode; });
+      var nb = modeBtns[(i + (e.key === 'ArrowRight' ? 1 : modeBtns.length - 1)) % modeBtns.length];
+      setMode(nb.dataset.mode); nb.focus();
+    });
+    reIn.addEventListener('input', function () { Re = +reIn.value; readout(); if (reduce || paused) still(); });
+    pauseBtn.addEventListener('click', function () {
+      paused = !paused; pauseBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      pauseBtn.setAttribute('aria-label', paused ? 'Play the flow' : 'Pause the flow');
+    });
+
+    /* handles that sit over the cylinder and the flag pins, so they can be dragged and focused */
+    function grips() {
+      var cr = cv.getBoundingClientRect(), sr = sec.getBoundingClientRect(), ox = cr.left - sr.left, oy = cr.top - sr.top, pad = 10;
+      gripBody.style.transform = 'translate(' + (ox + body.x - R - pad) + 'px,' + (oy + body.y - R - pad) + 'px)';
+      gripBody.style.width = gripBody.style.height = (2 * (R + pad)) + 'px';
+      gripBody.style.setProperty('--pad', pad + 'px');
+      if (mode === 'flags') {
+        [pin1, pin2].forEach(function (b, i) {
+          b.style.transform = 'translate(' + (ox + flags[i].x0 - 16) + 'px,' + (oy + flags[i].y0 - 16) + 'px)';
+        });
+      }
+    }
+    function dragger(el, onMove, onKey) {
+      var on = null;
+      el.addEventListener('pointerdown', function (e) {
+        on = { id: e.pointerId }; el.classList.add('is-drag'); el.classList.add('was-used');
+        try { el.setPointerCapture(e.pointerId); } catch (x) { /* ignore */ }
+        e.preventDefault();
+      });
+      el.addEventListener('pointermove', function (e) {
+        if (!on || e.pointerId !== on.id) return;
+        var cr = cv.getBoundingClientRect(); onMove(e.clientX - cr.left, e.clientY - cr.top);
+      });
+      var end = function () { on = null; el.classList.remove('is-drag'); };
+      el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+      el.addEventListener('keydown', function (e) { if (onKey(e.key, e.shiftKey ? 3 : 1)) { e.preventDefault(); el.classList.add('was-used'); } });
+    }
+    function floorY() {
+      /* keep the cylinder above the cards, where it can be seen */
+      var bento = sec.querySelector('.bento'), cr = cv.getBoundingClientRect();
+      return bento ? Math.min(H - R - 4, bento.getBoundingClientRect().top - cr.top - R - 12) : H - R - 4;
+    }
+    function moveBody(x, y) {
+      body.x = clamp(x, R + 4, W - R - 4); body.y = clamp(y, R + 4, Math.max(R + 4, floorY()));
+      body.fx = body.x / W; body.fy = body.y / H; moved = true;
+      if (reduce || paused) still(); else grips();
+    }
+    dragger(gripBody, moveBody, function (k, m) {
+      var s = 14 * m;
+      if (k === 'ArrowLeft') moveBody(body.x - s, body.y); else if (k === 'ArrowRight') moveBody(body.x + s, body.y);
+      else if (k === 'ArrowUp') moveBody(body.x, body.y - s); else if (k === 'ArrowDown') moveBody(body.x, body.y + s); else return false;
+      return true;
+    });
+    function snapGap(px) { var g = px / D, best = 0; for (var i = 1; i < 6; i++) if (Math.abs(GAPS[i] - g) < Math.abs(GAPS[best] - g)) best = i; return best; }
+    dragger(pin1, function (x) { gap1 = snapGap(x - (body.x + R)); placeFlags(); readout(); if (reduce || paused) still(); }, function (k) {
+      if (k === 'ArrowLeft') gap1 = Math.max(0, gap1 - 1); else if (k === 'ArrowRight') gap1 = Math.min(5, gap1 + 1); else return false;
+      placeFlags(); readout(); if (reduce || paused) still(); return true;
+    });
+    dragger(pin2, function (x) { gap2 = snapGap(x - (flags[0].x0 + flags[0].len)); placeFlags(); readout(); if (reduce || paused) still(); }, function (k) {
+      if (k === 'ArrowLeft') gap2 = Math.max(0, gap2 - 1); else if (k === 'ArrowRight') gap2 = Math.min(5, gap2 + 1); else return false;
+      placeFlags(); readout(); if (reduce || paused) still(); return true;
+    });
+
+    /* stir with the pointer; tap or click the background to release dye */
+    sec.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      var cr = cv.getBoundingClientRect(), x = e.clientX - cr.left, y = e.clientY - cr.top, nowT = performance.now();
+      if (y < 0 || y > H) { ptr.on = false; return; }
+      var dtp = Math.max(8, nowT - ptr.t) / 1000;
+      if (ptr.on) { ptr.vx = clamp((x - ptr.x) / dtp, -900, 900); ptr.vy = clamp((y - ptr.y) / dtp, -900, 900); }
+      ptr.x = x; ptr.y = y; ptr.t = nowT; ptr.on = !(e.target.closest && e.target.closest('.tile, .flow-ui, a, button'));
+    }, { passive: true });
+    sec.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('a, button, input, label, .tile, .flow-ui, .sheet-store')) return;
+      if (window.getSelection && String(window.getSelection())) return;
+      var cr = cv.getBoundingClientRect(), x = e.clientX - cr.left, y = e.clientY - cr.top;
+      if (y < 0 || y > H * 0.92) return;
+      puff(x, y); if (reduce || paused) still();
+    });
+    window.addEventListener('themechange', function () { tc.clearRect(0, 0, W, H); if (reduce || paused) still(); });
+
+    /* a still frame: run the flow for a few seconds out of sight, then draw it once */
+    function still() {
+      sized = sized || ''; layout();
+      tc.clearRect(0, 0, W, H);
+      var keep = paused; paused = false;
+      for (var n = 0; n < 300; n++) {
+        t += 1 / 60; shed(1 / 60); if (mode === 'flags') stepFlags(1 / 60); emitDye(1 / 60);
+        for (var i = 0; i < free.length; i++) { var p = free[i]; advect(p, 1 / 60); if (p.x > W + 10 || p.y < -30 || p.y > H + 30) spawn(p, false); }
+        for (var j = dye.length - 1; j >= 0; j--) { var q = dye[j]; advect(q, 1 / 60); if (q.x > W + 10 || q.y < -40 || q.y > H + 40) dye.splice(j, 1); }
+        if (n > 240) draw(1);
+      }
+      paused = keep; draw(0);
+    }
+    readout();
+    if (reduce) {
+      pauseBtn.hidden = true;
+      layout(); still();
+      window.addEventListener('resize', function () { sized = ''; still(); });
+    } else animate(cv, step);
   })();
 
   if (!reduce && jobs.length) requestAnimationFrame(tick);
