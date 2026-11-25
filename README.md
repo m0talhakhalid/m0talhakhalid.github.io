@@ -13,10 +13,25 @@ Copy everything in this folder to the root of the `m0talhakhalid.github.io` repo
 | `index.html` | All of the page content. Edit text here. |
 | `css/site.css` | Colours, type and layout. The colour tokens for light and dark are at the top. |
 | `js/site.js` | Navigation, theme switch, image viewer, contact helpers. |
+| `js/sheets.js` | The cards and the pop-up detail sheets: opening, closing, the back button, stepping between sheets. |
 | `js/hall.js` | The data-hall drawing in the hero. |
 | `js/figures.js` | The interactive figures (cooling loops, cold plates, flags, cell sorter, bearing texture, stress-strain). |
 | `assets/` | Photos, logos, the CV and the cooling-twins infographic. |
 | `fonts/` | Archivo, IBM Plex Sans and IBM Plex Mono (SIL Open Font Licence). |
+
+## Cards and detail sheets
+
+Each section shows short cards. The full text, figures and photos for a card sit in an `<article class="sheet-src" id="s-…">` in the `sheet-store` at the end of the same section of `index.html`. Edit the long text there and the short text on the card itself.
+
+- A card opens its sheet through its link, `href="#s-…"`. Any link on the page with that kind of address opens the sheet, so a sheet can be linked from anywhere, including from another sheet.
+- `data-group` on a sheet sets which other sheets the arrows step through.
+- A link straight to a sheet, such as `…/#s-twins`, opens that sheet when the page loads. The browser's back button closes it.
+- With scripts off, the sheets show in place under their cards.
+
+## Skills rack and the flow behind Current studies
+
+- Each unit in the skills rack opens to list where that tool shows up on the site. The list is kept as plain HTML in `index.html`: edit the links in each `unit-more` block.
+- The flow behind Current studies is drawn in `js/figures.js` (search for "flow past a cylinder"). It is a point-vortex sketch, not CFD, and the note under its controls says so.
 
 ## Theme
 

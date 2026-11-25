@@ -22,7 +22,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/site.css?v=2026-11-25">
 <script>(function(){var d=document.documentElement;d.classList.add('js');try{if(localStorage.getItem('mode')==='night')d.dataset.mode='night'}catch(e){}})();</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Muhammad Talha Khalid", "url": "https://muhammadtalhakhalid-iota.vercel.app/", "email": "mailto:talhakhalidraja692@gmail.com", "jobTitle": "Research Assistant", "affiliation": {"@type": "CollegeOrUniversity", "name": "National University of Sciences and Technology (NUST), Islamabad"}, "alumniOf": {"@type": "CollegeOrUniversity", "name": "National University of Sciences and Technology (NUST), Islamabad"}, "knowsAbout": ["Thermal-fluids", "Digital twins", "Two-phase heat transfer", "Data-centre liquid cooling", "Computational fluid dynamics", "Microfluidics"], "sameAs": ["https://www.linkedin.com/in/m0talhakhalid"], "address": {"@type": "PostalAddress", "addressLocality": "Islamabad", "addressCountry": "PK"}}</script>
 </head>
@@ -31,7 +31,7 @@
 
 <header class="bar" id="bar">
   <div class="bar-in">
-    <a class="bar-name" href="#top">M. Talha Khalid</a>
+    <a class="bar-name" href="#top"><span>M. Talha Khalid</span><small class="bar-where" id="bar-where" aria-hidden="true"></small></a>
     <nav class="bar-nav" aria-label="Sections">
       <span class="bar-marker" aria-hidden="true"></span>
       <a href="#research">Research</a>
@@ -44,6 +44,15 @@
       <a href="#contact">Contact</a>
     </nav>
     <div class="bar-tools">
+      <div class="bar-mail-wrap">
+        <a class="bar-mail" id="mail-btn" href="mailto:talhakhalidraja692@gmail.com" aria-label="Email talhakhalidraja692@gmail.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg><span class="bar-mail-full">talhakhalidraja692@gmail.com</span><span class="bar-mail-short">Email</span></a>
+        <div class="mail-pop" id="mail-pop" role="dialog" aria-label="Email address" hidden>
+          <p class="mail-pop-k">Write to me</p>
+          <p class="mail-pop-addr">talhakhalidraja692@gmail.com</p>
+          <div class="mail-pop-row"><a class="btn btn-solid" href="mailto:talhakhalidraja692@gmail.com">Open email</a><button class="btn btn-line" type="button" id="mail-copy">Copy address</button></div>
+          <p class="mail-pop-note">WhatsApp and LinkedIn are in <a href="#contact">Contact</a>.</p>
+        </div>
+      </div>
       <button class="icon-btn" id="theme-btn" type="button" aria-label="Switch between light and dark theme">
         <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
         <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
@@ -96,15 +105,14 @@
         <p class="hero-role">Thermal-fluids and digital twins <span class="at">NUST, Islamabad, Pakistan</span></p>
       </div>
       <h1>Muhammad <span class="nb">Talha Khalid</span></h1>
-      <p class="hero-lede">I work where <a href="#study-cfd">thermal-fluids</a> and <a href="#study-twins">digital twins</a> meet. I am a mechanical engineer and research assistant at NUST.</p>
-      <p class="hero-sub">Right now I apply this to liquid cooling in data centres, especially loops in which the coolant boils, and the same physics carries over to electronics cooling and building HVAC. I also run CFD on flexible flags for energy harvesting and COMSOL models of microfluidic flow, and write the Python that keeps large simulation sets in order.</p>
-      <p class="hero-sub">After graduating I worked on oil and gas wells, and since May 2025 I have worked full-time in product operations.</p>
+      <p class="hero-lede">I work where <a href="#s-flags">thermal-fluids</a> and <a href="#s-twins">digital twins</a> meet. I am a mechanical engineer and research assistant at NUST.</p>
+      <p class="hero-sub">Right now I apply this to liquid cooling in data centres, especially loops in which the coolant boils.</p>
       <div class="hero-actions">
         <a class="btn btn-solid btn-lg magnetic" href="assets/Muhammad-Talha-Khalid-CV.pdf" target="_blank" rel="noreferrer">Download CV (PDF)</a>
         <a class="btn btn-line btn-lg magnetic" href="mailto:talhakhalidraja692@gmail.com">Email</a>
-        <a class="btn btn-text btn-lg" href="#research">Research statement</a>
+        <a class="btn btn-text btn-lg" href="#s-about">More about me</a>
       </div>
-      <p class="stage-hint">Direct-to-chip racks on the left, immersion tanks on the right. Drag the divider to compare the hall with its twin, and move across the racks or tanks to add load. Drawn live for illustration; it is not a simulation.</p>
+      <p class="stage-hint">Drag the divider to compare the hall with its twin, and move across the racks or tanks to add load. Drawn live for illustration; it is not a simulation.</p>
     </div>
   </div>
   </div>
@@ -131,6 +139,34 @@
       <a href="#volunteering">Volunteering</a>
       <a href="#contact">Contact</a>
     </nav>
+
+    <div class="sheet-store">
+      <article class="sheet-src" id="s-about" data-group="about" aria-labelledby="s-about-t">
+        <header class="sh-head sh-head-id">
+          <span class="sh-face"><img src="assets/portrait.png" alt="" width="787" height="782" loading="lazy"></span>
+          <div>
+            <p class="sh-kicker">About</p>
+            <h2 id="s-about-t">Muhammad Talha Khalid</h2>
+            <p class="sh-meta"><span>Thermal-fluids and digital twins</span><span>NUST, Islamabad, Pakistan</span></p>
+          </div>
+        </header>
+        <div class="sh-body">
+          <p class="sh-lede">I work where thermal-fluids and digital twins meet. I am a mechanical engineer and research assistant at NUST.</p>
+          <p>Right now I apply this to liquid cooling in data centres, especially loops in which the coolant boils, and the same physics carries over to electronics cooling and building HVAC. I also run CFD on flexible flags for energy harvesting and COMSOL models of microfluidic flow, and write the Python that keeps large simulation sets in order.</p>
+          <p>After graduating I worked on oil and gas wells, and since May 2025 I have worked full-time in product operations.</p>
+          <div class="sh-jump">
+            <p class="kit-label">Open a study</p>
+            <div class="sh-jump-row">
+              <a href="#s-statement">Research statement</a>
+              <a href="#s-twins">Digital twins review</a>
+              <a href="#s-flags">Tandem flags in CFD</a>
+              <a href="#s-sorter">Microfluidic cell sorter</a>
+            </div>
+          </div>
+          <p class="sh-actions"><a class="btn btn-solid" href="assets/Muhammad-Talha-Khalid-CV.pdf" target="_blank" rel="noreferrer">Download CV (PDF)</a><a class="btn btn-line" href="mailto:talhakhalidraja692@gmail.com">Email</a></p>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -143,8 +179,8 @@
     </div>
     <div class="research-head">
       <div class="research-main">
-        <p>In the data-centre twins I have studied, ExaDigiT and DCVerse among them, the cold plate is treated as a fixed thermal resistance and the coolant stays single-phase. For a single-phase loop this is a reasonable simplification.</p>
-        <p>Two-phase cooling is a different case. Boiling inside the cold plate, or on the chip itself, carries most of the heat, and one fixed resistance cannot describe it. Most of my research sits in this gap. With Prof. Ibraheem Haneef, I am writing a critical review of how ready physics-informed digital twins are for direct-to-chip and immersion cooling.</p>
+        <p>In the data-centre twins I have studied, ExaDigiT and DCVerse among them, the cold plate is treated as a fixed thermal resistance and the coolant stays single-phase. Once the coolant boils, one fixed resistance cannot describe it, and most of my research sits in this gap.</p>
+        <a class="more" href="#s-statement"><span>Read the full statement</span><svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
       <aside class="question">
         <p class="kicker">The practical question</p>
@@ -152,6 +188,54 @@
       </aside>
     </div>
 
+    <figure class="fig boil" id="boil">
+      <div class="boil-grid">
+        <div class="plates">
+          <div class="plate-card">
+            <p class="plate-title">Single-phase direct-to-chip</p>
+            <div class="panel plate-view">
+              <canvas id="plate-1" role="img" aria-label="Section through a direct-to-chip cold plate in which the coolant stays liquid and leaves warmer."></canvas>
+              <div class="boil-tags" aria-hidden="true"><span>Coolant in</span><span>Warmer liquid out</span></div>
+              <div class="boil-chip" aria-hidden="true">Chip</div>
+            </div>
+            <div class="meter" id="meter-1"><span>Wall temperature rise</span><span class="meter-bar"><i></i></span><b>liquid</b></div>
+          </div>
+          <div class="plate-card">
+            <p class="plate-title">Two-phase direct-to-chip</p>
+            <div class="panel plate-view">
+              <canvas id="plate-2" role="img" aria-label="Section through a direct-to-chip cold plate in which the coolant boils. Bubbles form on the heated wall as the heat flux rises."></canvas>
+              <div class="boil-tags" aria-hidden="true"><span>Coolant in</span><span id="boil-out">Liquid and vapour out</span></div>
+              <div class="boil-chip" aria-hidden="true">Chip</div>
+            </div>
+            <div class="meter" id="meter-2"><span>Wall temperature rise</span><span class="meter-bar"><i></i></span><b>boiling</b></div>
+          </div>
+        </div>
+        <div class="boil-chart">
+          <svg id="boil-svg" viewBox="0 0 520 380" role="img" aria-label="Chart of wall temperature rise against chip heat flux. A straight line shows the single-phase plate, which a fixed thermal resistance describes. A curve shows the two-phase plate, which runs cooler in nucleate boiling and far hotter past critical heat flux."></svg>
+        </div>
+      </div>
+      <div class="boil-ctl">
+        <label for="boil-q">Chip heat flux</label>
+        <input id="boil-q" type="range" min="0" max="115" step="1" value="58" aria-describedby="boil-read">
+        <div class="boil-zones" aria-hidden="true"><span style="--w:25">Single-phase</span><span style="--w:63">Nucleate boiling</span><span style="--w:12">Near limit</span><span style="--w:15">Dry-out</span></div>
+      </div>
+      <div class="boil-read" id="boil-read" aria-live="polite">
+        <p class="boil-regime" id="boil-regime">Two-phase plate in nucleate boiling</p>
+        <p id="boil-text">Bubbles now carry most of the heat, so the two-phase wall runs cooler than the single-phase one, and cooler than a fixed resistance predicts. Here the model has to resolve boiling and conjugate heat transfer in some form, and the right level of detail is not yet settled.</p>
+      </div>
+      <figcaption><span class="fig-n"></span> Two direct-to-chip cold plates on the same chip. In the first the coolant stays liquid; in the second it is allowed to boil. Raise the heat flux and watch where one fixed resistance stops describing the plate. Schematic, not data. <details class="note"><summary>How the curves are drawn</summary><p>The curves use textbook scalings: linear in single-phase convection, wall superheat rising with the cube root of heat flux in nucleate boiling, and a sharp excursion past critical heat flux.</p></details></figcaption>
+    </figure>
+
+    <div class="sheet-store">
+      <article class="sheet-src" id="s-statement" data-group="research" aria-labelledby="s-statement-t">
+        <header class="sh-head">
+          <p class="sh-kicker">Research statement</p>
+          <h2 id="s-statement-t">Most data-centre twins assume the coolant never boils.</h2>
+          <p class="sh-meta"><span>Critical review with Prof. Ibraheem Haneef</span><span>NUST, Islamabad</span></p>
+        </header>
+        <div class="sh-body">
+        <p>In the data-centre twins I have studied, ExaDigiT and DCVerse among them, the cold plate is treated as a fixed thermal resistance and the coolant stays single-phase. For a single-phase loop this is a reasonable simplification.</p>
+        <p>Two-phase cooling is a different case. Boiling inside the cold plate, or on the chip itself, carries most of the heat, and one fixed resistance cannot describe it. Most of my research sits in this gap. With Prof. Ibraheem Haneef, I am writing a critical review of how ready physics-informed digital twins are for direct-to-chip and immersion cooling.</p>
     <figure class="fig loops" id="loops">
       <div class="loops-wide">
         <svg class="loops-svg loops-h" id="loops-svg" viewBox="0 0 1000 356" role="img" aria-label="Schematic of the two cooling loops. Cold plates in the rack pass heat to the technology loop, which carries it to the coolant distribution unit. There it crosses to the facility loop, which carries it to heat rejection outdoors.">
@@ -255,44 +339,10 @@
       </div>
       <figcaption><span class="fig-n"></span> How heat leaves a liquid-cooled hall. The technology loop stays inside the hall, and the facility loop carries the heat out of it. Schematic.</figcaption>
     </figure>
-
-    <figure class="fig boil" id="boil">
-      <div class="boil-grid">
-        <div class="plates">
-          <div class="plate-card">
-            <p class="plate-title">Single-phase direct-to-chip</p>
-            <div class="panel plate-view">
-              <canvas id="plate-1" role="img" aria-label="Section through a direct-to-chip cold plate in which the coolant stays liquid and leaves warmer."></canvas>
-              <div class="boil-tags" aria-hidden="true"><span>Coolant in</span><span>Warmer liquid out</span></div>
-              <div class="boil-chip" aria-hidden="true">Chip</div>
-            </div>
-            <div class="meter" id="meter-1"><span>Wall temperature rise</span><span class="meter-bar"><i></i></span><b>liquid</b></div>
-          </div>
-          <div class="plate-card">
-            <p class="plate-title">Two-phase direct-to-chip</p>
-            <div class="panel plate-view">
-              <canvas id="plate-2" role="img" aria-label="Section through a direct-to-chip cold plate in which the coolant boils. Bubbles form on the heated wall as the heat flux rises."></canvas>
-              <div class="boil-tags" aria-hidden="true"><span>Coolant in</span><span id="boil-out">Liquid and vapour out</span></div>
-              <div class="boil-chip" aria-hidden="true">Chip</div>
-            </div>
-            <div class="meter" id="meter-2"><span>Wall temperature rise</span><span class="meter-bar"><i></i></span><b>boiling</b></div>
-          </div>
+          <p class="sh-actions"><a class="more" href="#s-twins"><span>Open the review study</span><svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
         </div>
-        <div class="boil-chart">
-          <svg id="boil-svg" viewBox="0 0 520 380" role="img" aria-label="Chart of wall temperature rise against chip heat flux. A straight line shows the single-phase plate, which a fixed thermal resistance describes. A curve shows the two-phase plate, which runs cooler in nucleate boiling and far hotter past critical heat flux."></svg>
-        </div>
-      </div>
-      <div class="boil-ctl">
-        <label for="boil-q">Chip heat flux</label>
-        <input id="boil-q" type="range" min="0" max="115" step="1" value="58" aria-describedby="boil-read">
-        <div class="boil-zones" aria-hidden="true"><span style="--w:25">Single-phase</span><span style="--w:63">Nucleate boiling</span><span style="--w:12">Near limit</span><span style="--w:15">Dry-out</span></div>
-      </div>
-      <div class="boil-read" id="boil-read" aria-live="polite">
-        <p class="boil-regime" id="boil-regime">Two-phase plate in nucleate boiling</p>
-        <p id="boil-text">Bubbles now carry most of the heat, so the two-phase wall runs cooler than the single-phase one, and cooler than a fixed resistance predicts. Here the model has to resolve boiling and conjugate heat transfer in some form, and the right level of detail is not yet settled.</p>
-      </div>
-      <figcaption><span class="fig-n"></span> Two direct-to-chip cold plates on the same chip. In the first the coolant stays liquid; in the second it is allowed to boil. Raise the heat flux and watch where one fixed resistance stops describing the plate. Schematic, not data: the curves use textbook scalings, linear in single-phase convection, wall superheat rising with the cube root of heat flux in nucleate boiling, and a sharp excursion past critical heat flux.</figcaption>
-    </figure>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -301,25 +351,83 @@
 <!-- ========================= CURRENT STUDIES ======================== -->
 <section id="studies" class="sec" data-nav="research">
   <canvas class="studies-flow" id="studies-flow" aria-hidden="true"></canvas>
+  <button class="flow-grip flow-body" id="flow-body" type="button" hidden aria-label="Cylinder in the flow. Drag it, or use the arrow keys, to move it."></button>
+  <button class="flow-grip flow-pin" id="flow-pin-1" type="button" hidden aria-label="Front flag. Drag it, or use the left and right arrow keys, to change the body-to-flag gap."></button>
+  <button class="flow-grip flow-pin" id="flow-pin-2" type="button" hidden aria-label="Rear flag. Drag it, or use the left and right arrow keys, to change the flag-to-flag gap."></button>
   <div class="wrap">
-    <header class="sec-head">
+    <header class="sec-head flow-head">
       <h2 data-rise>Current studies</h2>
       <p>Two part-time research assistantships at NUST, the first from March 2026 and the second from June 2026.</p>
+      <div class="flow-ui" id="flow-ui" hidden>
+        <div class="flow-row">
+          <div class="flow-modes" role="radiogroup" aria-label="Flow drawn behind this section">
+            <button type="button" role="radio" aria-checked="true" data-mode="street">Vortex street</button>
+            <button type="button" role="radio" aria-checked="false" data-mode="flags">Tandem flags</button>
+          </div>
+          <label class="flow-re"><span>Re</span><input type="range" id="flow-re" min="20" max="300" step="1" value="150" aria-label="Reynolds number"><output id="flow-re-out" for="flow-re">150</output></label>
+          <button class="flow-pause" id="flow-pause" type="button" aria-pressed="false" aria-label="Pause the flow"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M8 5v14M16 5v14"/><path class="i-play" d="M7 5l12 7-12 7z"/></svg></button>
+        </div>
+        <p class="flow-read" id="flow-read" aria-live="polite"></p>
+        <p class="flow-note" id="flow-note">Drag the cylinder, stir the flow with your pointer, or tap to release dye. A point-vortex sketch, not CFD, with shedding at Roshko's St = 0.198(1 − 19.7/Re).</p>
+      </div>
     </header>
 
-    <div class="studies">
-      <article class="study" id="study-twins">
-        <div class="study-meta">
-          <p class="study-kind">Digital twins <span>Review</span></p>
-          <p class="study-org"><span class="seal seal-sm"><img src="assets/nust-logo.png" alt="NUST seal" width="1000" height="1000" loading="lazy"></span>National University of Sciences and Technology</p>
-          <p>Jun 2026 – present<br>With Prof. Ibraheem Haneef</p>
-          <p class="status"><span class="led led-amber"></span>Manuscript [2] in preparation</p>
+    <div class="bento">
+      <article class="tile tile-study span-7" id="study-twins">
+        <div class="tile-art panel" aria-hidden="true"><svg class="art" viewBox="0 0 420 200" preserveAspectRatio="xMidYMid meet"><defs><linearGradient id="at-ramp" x1="0" x2="1"><stop offset="0" stop-color="#8ecbf0"/><stop offset=".45" stop-color="#f7e0b5"/><stop offset=".75" stop-color="#f6a544"/><stop offset="1" stop-color="#ea5a1c"/></linearGradient><path id="at-a" d="M140 84 C188 30 232 30 280 84"/><path id="at-b" d="M280 116 C232 170 188 170 140 116"/></defs><use xlink:href="#at-a" class="a-wire"/><use xlink:href="#at-b" class="a-wire"/><text x="210" y="34" class="a-lab">telemetry</text><text x="210" y="183" class="a-lab">setpoints</text><text x="94" y="38" class="a-lab">hardware</text><text x="326" y="38" class="a-lab a-hot">twin</text><rect x="48" y="46" width="92" height="108" rx="9" class="a-box"/><rect x="58" y="56" width="72" height="18" rx="3" class="a-srv"/><rect x="64" y="61" width="22" height="6" rx="1.5" class="a-plate"/><circle cx="120" cy="65" r="2.2" class="a-led"><animate attributeName="opacity" values="1;.2;1" dur="1.60s" repeatCount="indefinite"/></circle><rect x="58" y="80" width="72" height="18" rx="3" class="a-srv"/><rect x="64" y="85" width="22" height="6" rx="1.5" class="a-plate"/><circle cx="120" cy="89" r="2.2" class="a-led"><animate attributeName="opacity" values="1;.2;1" dur="2.15s" repeatCount="indefinite"/></circle><rect x="58" y="104" width="72" height="18" rx="3" class="a-srv"/><rect x="64" y="109" width="22" height="6" rx="1.5" class="a-plate"/><circle cx="120" cy="113" r="2.2" class="a-led"><animate attributeName="opacity" values="1;.2;1" dur="2.70s" repeatCount="indefinite"/></circle><rect x="58" y="128" width="72" height="18" rx="3" class="a-srv"/><rect x="64" y="133" width="22" height="6" rx="1.5" class="a-plate"/><circle cx="120" cy="137" r="2.2" class="a-led"><animate attributeName="opacity" values="1;.2;1" dur="3.25s" repeatCount="indefinite"/></circle><rect x="280" y="46" width="92" height="108" rx="9" class="a-twin"/><rect x="290" y="56" width="72" height="18" rx="3" class="a-cell"/><rect x="290" y="56" width="40" height="18" rx="3" fill="url(#at-ramp)"><animate attributeName="width" values="30;64;30" dur="3.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/></rect><rect x="290" y="80" width="72" height="18" rx="3" class="a-cell"/><rect x="290" y="80" width="40" height="18" rx="3" fill="url(#at-ramp)"><animate attributeName="width" values="46;60;46" dur="4.3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/></rect><rect x="290" y="104" width="72" height="18" rx="3" class="a-cell"/><rect x="290" y="104" width="40" height="18" rx="3" fill="url(#at-ramp)"><animate attributeName="width" values="24;58;24" dur="5.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/></rect><rect x="290" y="128" width="72" height="18" rx="3" class="a-cell"/><rect x="290" y="128" width="40" height="18" rx="3" fill="url(#at-ramp)"><animate attributeName="width" values="52;66;52" dur="6.1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/></rect><circle r="4" class="a-dc"><animateMotion dur="2.4s" repeatCount="indefinite" begin="-0.0s"><mpath xlink:href="#at-a"/></animateMotion></circle><circle r="4" class="a-dc"><animateMotion dur="2.4s" repeatCount="indefinite" begin="-0.8s"><mpath xlink:href="#at-a"/></animateMotion></circle><circle r="4" class="a-dc"><animateMotion dur="2.4s" repeatCount="indefinite" begin="-1.6s"><mpath xlink:href="#at-a"/></animateMotion></circle><circle r="4" class="a-dw"><animateMotion dur="2.4s" repeatCount="indefinite" begin="-0.4s"><mpath xlink:href="#at-b"/></animateMotion></circle><circle r="4" class="a-dw"><animateMotion dur="2.4s" repeatCount="indefinite" begin="-1.2s"><mpath xlink:href="#at-b"/></animateMotion></circle><circle r="4" class="a-dw"><animateMotion dur="2.4s" repeatCount="indefinite" begin="-2.0s"><mpath xlink:href="#at-b"/></animateMotion></circle></svg></div>
+        <div class="tile-text">
+          <p class="tile-kind">Digital twins <span>Review</span></p>
+          <h3 class="tile-title"><a class="tile-hit" href="#s-twins">Physics-informed digital twins for direct-to-chip and immersion cooling</a></h3>
+          <p class="tile-meta">Jun 2026 – present · With Prof. Ibraheem Haneef</p>
+          <p class="tile-sum">How close physics-informed twins are to real-time use in liquid-cooled data centres, and what they would need to model boiling.</p>
+          <div class="tile-foot"><span class="status"><span class="led led-amber"></span>Manuscript [2] in preparation</span><span class="tile-open">Open study<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
         </div>
-        <div class="study-body">
-          <h3>Physics-informed digital twins for direct-to-chip and immersion cooling</h3>
-          <p>The review asks how close physics-informed digital twins are to real-time use in data centres cooled by direct-to-chip and immersion systems. Much of it comes down to the gap described above: where current twins simplify the cold plate and the coolant, and what a twin would need to model boiling in its place.</p>
-          <p>My first draft drew on a corpus of 48 earlier reviews and surveys from five databases (2014 to 2026) and went to Prof. Haneef in September 2026. For the second draft, now in progress, the working corpus has grown to 184 papers in 12 topic groups, and I have compared 11 earlier reviews across 12 dimensions to place this one among them. The review also sets out two grading scales: a DT0 to DT6 ladder for twin maturity, and V0 to V5 for how far a twin has been validated against measured data.</p>
+      </article>
 
+      <article class="tile tile-study span-5" id="study-cfd">
+        <div class="tile-art panel" aria-hidden="true"><svg class="art" viewBox="0 0 420 200" preserveAspectRatio="xMidYMid meet"><path class="a-stream" d="M-20 38 H440" style="animation-delay:-0.00s"/><path class="a-stream" d="M-20 58 H440" style="animation-delay:-0.37s"/><path class="a-stream" d="M-20 78 H440" style="animation-delay:-0.74s"/><path class="a-stream" d="M-20 122 H440" style="animation-delay:-1.11s"/><path class="a-stream" d="M-20 142 H440" style="animation-delay:-1.48s"/><path class="a-stream" d="M-20 162 H440" style="animation-delay:-1.85s"/><g class="a-vort"><path d="M0 0 m-1.5 0 a1.5 1.5 0 1 1 3 0 a3.5 3.5 0 1 1 -7 0 a5.5 5.5 0 1 1 11 0 a7.5 7.5 0 1 1 -15 0"/><animateTransform attributeName="transform" type="translate" values="104 86;430 86" dur="4.2s" begin="-0.00s" repeatCount="indefinite"/></g><g class="a-vort"><path d="M0 0 m-1.5 0 a1.5 1.5 0 1 1 3 0 a3.5 3.5 0 1 1 -7 0 a5.5 5.5 0 1 1 11 0 a7.5 7.5 0 1 1 -15 0"/><animateTransform attributeName="transform" type="translate" values="104 114;430 114" dur="4.2s" begin="-1.05s" repeatCount="indefinite"/></g><g class="a-vort"><path d="M0 0 m-1.5 0 a1.5 1.5 0 1 1 3 0 a3.5 3.5 0 1 1 -7 0 a5.5 5.5 0 1 1 11 0 a7.5 7.5 0 1 1 -15 0"/><animateTransform attributeName="transform" type="translate" values="104 86;430 86" dur="4.2s" begin="-2.10s" repeatCount="indefinite"/></g><g class="a-vort"><path d="M0 0 m-1.5 0 a1.5 1.5 0 1 1 3 0 a3.5 3.5 0 1 1 -7 0 a5.5 5.5 0 1 1 11 0 a7.5 7.5 0 1 1 -15 0"/><animateTransform attributeName="transform" type="translate" values="104 114;430 114" dur="4.2s" begin="-3.15s" repeatCount="indefinite"/></g><circle cx="80" cy="100" r="22" class="a-body"/><path class="a-flag" d="M126 100 C152 95 178 110 206 91"><animate attributeName="d" values="M126 100 C152 95 178 110 206 91;M126 100 C152 105 178 90 206 109;M126 100 C152 95 178 110 206 91" dur="1.15s" begin="0s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/></path><circle cx="126" cy="100" r="3.6" class="a-pin"/><path class="a-flag" d="M240 100 C266 95 292 110 320 91"><animate attributeName="d" values="M240 100 C266 95 292 110 320 91;M240 100 C266 105 292 90 320 109;M240 100 C266 95 292 110 320 91" dur="1.15s" begin="-0.38s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/></path><circle cx="240" cy="100" r="3.6" class="a-pin"/><path class="a-dim" d="M102 156 V146 M102 151 H126 M126 146 V156 M206 156 V146 M206 151 H240 M240 146 V156"/><text x="114" y="176" class="a-lab">gap 1</text><text x="223" y="176" class="a-lab">gap 2</text></svg></div>
+        <div class="tile-text">
+          <p class="tile-kind">Thermal-fluids <span>CFD</span></p>
+          <h3 class="tile-title"><a class="tile-hit" href="#s-flags">Tandem flexible flags behind a bluff body at Re = 300</a></h3>
+          <p class="tile-meta">Mar 2026 – present · With Dr. Emad Ud Din</p>
+          <p class="tile-sum">36 gap combinations on the group's in-house immersed-boundary FSI solver, with my Python post-processing.</p>
+          <div class="tile-foot"><span class="status"><span class="led led-amber"></span>Manuscript [4] in preparation</span><span class="tile-open">Open study<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        </div>
+      </article>
+
+      <article class="tile tile-study span-5" id="study-multiphysics">
+        <div class="tile-art panel" aria-hidden="true"><svg class="art" viewBox="16 -12 422 280" preserveAspectRatio="xMidYMid meet"><defs><radialGradient id="as-rbc"><stop offset="0.3" stop-color="#ffd2c2"/><stop offset="0.75" stop-color="#ff6a45"/><stop offset="1" stop-color="#c93a1d"/></radialGradient><path id="as-p0" d="M43.6 165.5 A60 60 0 1 0 100 126 A50 50 0 1 1 100 26 L376 22 L394 6"/><path id="as-p1" d="M43.6 165.5 A60 60 0 1 0 100 126 A50 50 0 1 1 100 26 L376 22 L394 38"/></defs><path class="chan-wall" d="M43.6 165.5 A60 60 0 1 0 100 126 A50 50 0 1 1 100 26 L376 22 M376 22 L394 6 M376 22 L394 38"/><path class="chan-fluid" d="M43.6 165.5 A60 60 0 1 0 100 126 A50 50 0 1 1 100 26 L376 22 M376 22 L394 6 M376 22 L394 38"/><path class="chan-flow a-chanflow" d="M43.6 165.5 A60 60 0 1 0 100 126 A50 50 0 1 1 100 26 L376 22"/><circle cx="40" cy="174" r="10" class="chan-port"/><g><circle r="4.8" class="chan-wbc"/><circle r="1.8" cx=".8" cy="-.6" class="chan-wbc-n"/><animateMotion dur="7s" repeatCount="indefinite" begin="-0.000s"><mpath xlink:href="#as-p0"/></animateMotion></g><circle r="3.4" fill="url(#as-rbc)"><animateMotion dur="7s" repeatCount="indefinite" begin="-0.875s"><mpath xlink:href="#as-p1"/></animateMotion></circle><circle r="3.4" fill="url(#as-rbc)"><animateMotion dur="7s" repeatCount="indefinite" begin="-1.750s"><mpath xlink:href="#as-p1"/></animateMotion></circle><g><circle r="4.8" class="chan-wbc"/><circle r="1.8" cx=".8" cy="-.6" class="chan-wbc-n"/><animateMotion dur="7s" repeatCount="indefinite" begin="-2.625s"><mpath xlink:href="#as-p0"/></animateMotion></g><circle r="3.4" fill="url(#as-rbc)"><animateMotion dur="7s" repeatCount="indefinite" begin="-3.500s"><mpath xlink:href="#as-p1"/></animateMotion></circle><circle r="3.4" fill="url(#as-rbc)"><animateMotion dur="7s" repeatCount="indefinite" begin="-4.375s"><mpath xlink:href="#as-p1"/></animateMotion></circle><g><circle r="4.8" class="chan-wbc"/><circle r="1.8" cx=".8" cy="-.6" class="chan-wbc-n"/><animateMotion dur="7s" repeatCount="indefinite" begin="-5.250s"><mpath xlink:href="#as-p0"/></animateMotion></g><circle r="3.4" fill="url(#as-rbc)"><animateMotion dur="7s" repeatCount="indefinite" begin="-6.125s"><mpath xlink:href="#as-p1"/></animateMotion></circle><text x="400" y="8" class="a-lab a-start a-big">WBC</text><text x="400" y="48" class="a-lab a-start a-big">RBC</text></svg></div>
+        <div class="tile-text">
+          <p class="tile-kind">Thermal-fluids <span>Multiphysics</span></p>
+          <h3 class="tile-title"><a class="tile-hit" href="#s-sorter">Validating a microfluidic cell sorter in COMSOL</a></h3>
+          <p class="tile-meta">Mar 2026 – present · With Dr. Emad Ud Din</p>
+          <p class="tile-sum">White blood cells parted from red ones by laminar flow: a validation first, then 112 cases.</p>
+          <div class="tile-foot"><span class="status"><span class="led led-amber"></span>Manuscript [3] in preparation</span><span class="tile-open">Open study<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        </div>
+      </article>
+
+      <article class="tile tile-study span-7" id="study-tribology">
+        <div class="tile-art panel" aria-hidden="true"><svg class="art" viewBox="0 0 420 200" preserveAspectRatio="xMidYMid meet"><defs><linearGradient id="ax-steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9c0c9"/><stop offset="0.45" stop-color="#eef1f4"/><stop offset="1" stop-color="#a9b1bb"/></linearGradient><radialGradient id="ax-pit"><stop offset="0" stop-color="#4c5563"/><stop offset="0.7" stop-color="#7c8593"/><stop offset="1" stop-color="#c2c8d0"/></radialGradient><linearGradient id="ax-roll" x1="0" x2="1"><stop offset="0" stop-color="#5b6470" stop-opacity="0"/><stop offset="0.5" stop-color="#5b6470" stop-opacity="0.55"/><stop offset="1" stop-color="#5b6470" stop-opacity="0"/></linearGradient><clipPath id="ax-clip"><rect x="30" y="40" width="360" height="112" rx="10"/></clipPath></defs><rect x="30" y="40" width="360" height="112" rx="10" fill="url(#ax-steel)" stroke="#8d96a2"/><g clip-path="url(#ax-clip)"><g fill="url(#ax-pit)" stroke="#5d6673" stroke-width="0.6"><circle cx="38" cy="54" r="6.2"/><circle cx="53" cy="82" r="6.2"/><circle cx="38" cy="110" r="6.2"/><circle cx="53" cy="138" r="6.2"/><circle cx="68" cy="54" r="6.2"/><circle cx="83" cy="82" r="6.2"/><circle cx="68" cy="110" r="6.2"/><circle cx="83" cy="138" r="6.2"/><circle cx="98" cy="54" r="6.2"/><circle cx="113" cy="82" r="6.2"/><circle cx="98" cy="110" r="6.2"/><circle cx="113" cy="138" r="6.2"/><circle cx="128" cy="54" r="6.2"/><circle cx="143" cy="82" r="6.2"/><circle cx="128" cy="110" r="6.2"/><circle cx="143" cy="138" r="6.2"/><ellipse cx="158" cy="54" rx="9" ry="4.4"/><ellipse cx="173" cy="82" rx="9" ry="4.4"/><ellipse cx="158" cy="110" rx="9" ry="4.4"/><ellipse cx="173" cy="138" rx="9" ry="4.4"/><ellipse cx="188" cy="54" rx="9" ry="4.4"/><ellipse cx="203" cy="82" rx="9" ry="4.4"/><ellipse cx="188" cy="110" rx="9" ry="4.4"/><ellipse cx="203" cy="138" rx="9" ry="4.4"/><ellipse cx="218" cy="54" rx="9" ry="4.4"/><ellipse cx="233" cy="82" rx="9" ry="4.4"/><ellipse cx="218" cy="110" rx="9" ry="4.4"/><ellipse cx="233" cy="138" rx="9" ry="4.4"/><ellipse cx="248" cy="54" rx="9" ry="4.4"/><ellipse cx="263" cy="82" rx="9" ry="4.4"/><ellipse cx="248" cy="110" rx="9" ry="4.4"/><ellipse cx="263" cy="138" rx="9" ry="4.4"/><polygon points="278,46.5 285.5,58.5 270.5,58.5"/><polygon points="293,74.5 300.5,86.5 285.5,86.5"/><polygon points="278,102.5 285.5,114.5 270.5,114.5"/><polygon points="293,130.5 300.5,142.5 285.5,142.5"/><polygon points="308,46.5 315.5,58.5 300.5,58.5"/><polygon points="323,74.5 330.5,86.5 315.5,86.5"/><polygon points="308,102.5 315.5,114.5 300.5,114.5"/><polygon points="323,130.5 330.5,142.5 315.5,142.5"/><polygon points="338,46.5 345.5,58.5 330.5,58.5"/><polygon points="353,74.5 360.5,86.5 345.5,86.5"/><polygon points="338,102.5 345.5,114.5 330.5,114.5"/><polygon points="353,130.5 360.5,142.5 345.5,142.5"/><polygon points="368,46.5 375.5,58.5 360.5,58.5"/><polygon points="383,74.5 390.5,86.5 375.5,86.5"/><polygon points="368,102.5 375.5,114.5 360.5,114.5"/><polygon points="383,130.5 390.5,142.5 375.5,142.5"/></g><path d="M150 40 V152 M270 40 V152" stroke="rgba(27,22,20,.28)" stroke-dasharray="3 4"/><rect x="-80" y="40" width="80" height="112" fill="url(#ax-roll)"><animate attributeName="x" values="-80;420" dur="3.6s" repeatCount="indefinite"/></rect></g><text x="90" y="176" class="a-lab">circular</text><text x="210" y="176" class="a-lab">elliptical</text><text x="330" y="176" class="a-lab">triangular</text><text x="30" y="28" class="a-lab a-start">inner-ring raceway, 5–20% area density</text></svg></div>
+        <div class="tile-text">
+          <p class="tile-kind">Earlier work <span>Tribology</span></p>
+          <h3 class="tile-title"><a class="tile-hit" href="#s-tex">Laser surface texturing of tapered roller bearings</a></h3>
+          <p class="tile-meta">Apr 2025 – Jun 2026 · Remote, with Dr. Jawad Aslam, Qilu Institute of Technology</p>
+          <p class="tile-sum">A research proposal for circular, elliptical and triangular textures on the inner-ring raceway, tested for friction.</p>
+          <div class="tile-foot"><span class="status"><span class="led led-green"></span>Completed</span><span class="tile-open">Open study<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="sheet-store">
+      <article class="sheet-src" id="s-twins" data-group="studies" aria-labelledby="s-twins-t">
+        <header class="sh-head">
+          <p class="sh-kicker">Digital twins · Review</p>
+          <h2 id="s-twins-t">Physics-informed digital twins for direct-to-chip and immersion cooling</h2>
+          <p class="sh-meta"><span><span class="seal seal-xs"><img src="assets/nust-logo.png" alt="" width="1000" height="1000" loading="lazy"></span>National University of Sciences and Technology</span><span>Jun 2026 – present</span><span>With Prof. Ibraheem Haneef</span><span class="status"><span class="led led-amber"></span>Manuscript [2] in preparation</span></p>
+        </header>
+        <div class="sh-body">
+          <p>The review asks how close physics-informed digital twins are to real-time use in data centres cooled by direct-to-chip and immersion systems. Much of it comes down to the gap set out in the <a href="#s-statement">research statement</a>: where current twins simplify the cold plate and the coolant, and what a twin would need to model boiling in its place.</p>
+          <p>My first draft drew on a corpus of 48 earlier reviews and surveys from five databases (2014 to 2026) and went to Prof. Haneef in September 2026. For the second draft, now in progress, the working corpus has grown to 184 papers in 12 topic groups, and I have compared 11 earlier reviews across 12 dimensions to place this one among them. The review also sets out two grading scales: a DT0 to DT6 ladder for twin maturity, and V0 to V5 for how far a twin has been validated against measured data.</p>
           <div class="review-kit">
             <div class="kit-card">
               <p class="kit-label">Working corpus</p>
@@ -341,7 +449,6 @@
               <p class="kit-note">Validation against measured data</p>
             </div>
           </div>
-
           <figure class="fig">
             <div class="loop-stack" aria-hidden="true">
               <div class="ls-box">Cooling hardware<span>cold plate or immersion tank</span></div>
@@ -371,18 +478,15 @@
         </div>
       </article>
 
-      <article class="study" id="study-cfd">
-        <div class="study-meta">
-          <p class="study-kind">Thermal-fluids <span>CFD</span></p>
-          <p class="study-org"><span class="seal seal-sm"><img src="assets/nust-logo.png" alt="NUST seal" width="1000" height="1000" loading="lazy"></span>National University of Sciences and Technology</p>
-          <p>Mar 2026 – present<br>With Dr. Emad Ud Din<br>Pakistan–South Korea collaboration</p>
-          <p class="status"><span class="led led-amber"></span>Manuscript [4] in preparation</p>
-        </div>
-        <div class="study-body">
-          <h3>Tandem flexible flags behind a bluff body at Re = 300</h3>
+      <article class="sheet-src" id="s-flags" data-group="studies" aria-labelledby="s-flags-t">
+        <header class="sh-head">
+          <p class="sh-kicker">Thermal-fluids · CFD</p>
+          <h2 id="s-flags-t">Tandem flexible flags behind a bluff body at Re = 300</h2>
+          <p class="sh-meta"><span><span class="seal seal-xs"><img src="assets/nust-logo.png" alt="" width="1000" height="1000" loading="lazy"></span>National University of Sciences and Technology</span><span>Mar 2026 – present</span><span>With Dr. Emad Ud Din</span><span>Pakistan–South Korea collaboration</span><span class="status"><span class="led led-amber"></span>Manuscript [4] in preparation</span></p>
+        </header>
+        <div class="sh-body">
           <p>In our group's earlier water-tunnel study, Mujtaba et al. (2021) found that two piezoelectric flags in tandem behind an inverted C-shaped cylinder harvested 116% more power than a single flag. They reported the rear flag's peak power at a streamwise gap of 1.75. This 2D study at Re = 300 looks at the same arrangement numerically, on the group's in-house immersed-boundary FSI solver, written in Fortran, in which the flags move through a fixed grid. The body-to-flag and flag-to-flag gaps each take six values from 0.25 to 1.5, which gives 36 cases.</p>
           <p>My part was running the cases and the Python post-processing. The scripts trim the start-up transient, check each run for solver divergence or early termination, and batch the Tecplot figures of drag and lift on both flags, bending and kinetic energy, tail motion, flag shape and vorticity.</p>
-
           <figure class="fig flags">
             <div class="flags-grid">
               <div class="panel flags-view"><canvas id="vortex" role="img" aria-label="Animated sketch of vortices shed by a bluff body, with two flexible flags flapping in its wake"></canvas></div>
@@ -407,15 +511,13 @@
         </div>
       </article>
 
-      <article class="study" id="study-multiphysics">
-        <div class="study-meta">
-          <p class="study-kind">Thermal-fluids <span>Multiphysics</span></p>
-          <p class="study-org"><span class="seal seal-sm"><img src="assets/nust-logo.png" alt="NUST seal" width="1000" height="1000" loading="lazy"></span>National University of Sciences and Technology</p>
-          <p>Mar 2026 – present<br>With Dr. Emad Ud Din</p>
-          <p class="status"><span class="led led-amber"></span>Manuscript [3] in preparation</p>
-        </div>
-        <div class="study-body">
-          <h3>Validating a microfluidic cell sorter in COMSOL</h3>
+      <article class="sheet-src" id="s-sorter" data-group="studies" aria-labelledby="s-sorter-t">
+        <header class="sh-head">
+          <p class="sh-kicker">Thermal-fluids · Multiphysics</p>
+          <h2 id="s-sorter-t">Validating a microfluidic cell sorter in COMSOL</h2>
+          <p class="sh-meta"><span><span class="seal seal-xs"><img src="assets/nust-logo.png" alt="" width="1000" height="1000" loading="lazy"></span>National University of Sciences and Technology</span><span>Mar 2026 – present</span><span>With Dr. Emad Ud Din</span><span class="status"><span class="led led-amber"></span>Manuscript [3] in preparation</span></p>
+        </header>
+        <div class="sh-body">
           <p>A smaller study. The channel separates white blood cells from red ones by laminar flow, and I follow the cells with particle tracing in a 2D COMSOL 6.4 model. It started as a validation: I reproduced the published model first, with its particle counts and settings kept fixed, then ran a full-factorial set of 112 cases across four channel designs, four wall-roughness factors and seven Reynolds numbers.</p>
           <figure class="fig sorter">
             <div class="sorter-grid">
@@ -453,15 +555,16 @@
         </div>
       </article>
 
-      <article class="study" id="study-tribology">
-        <div class="study-meta">
+      <article class="sheet-src" id="s-tex" data-group="studies" aria-labelledby="s-tex-t">
+        <header class="sh-head sh-head-logo">
           <span class="logo-plate"><img src="assets/qilu-institute-of-technology.png" alt="Qilu Institute of Technology logo" width="1000" height="1000" loading="lazy"></span>
-          <p class="study-kind">Earlier work <span>Tribology</span></p>
-          <p>Apr 2025 – Jun 2026, remote<br>Remote research assistant, with Dr. Jawad Aslam<br>Qilu Institute of Technology, Jinan, China</p>
-          <p class="status"><span class="led led-green"></span>Completed</p>
-        </div>
-        <div class="study-body">
-          <h3>Laser surface texturing of tapered roller bearings</h3>
+          <div>
+            <p class="sh-kicker">Earlier work · Tribology</p>
+            <h2 id="s-tex-t">Laser surface texturing of tapered roller bearings</h2>
+            <p class="sh-meta"><span>Apr 2025 – Jun 2026, remote</span><span>Remote research assistant, with Dr. Jawad Aslam</span><span>Qilu Institute of Technology, Jinan, China</span><span class="status"><span class="led led-green"></span>Completed</span></p>
+          </div>
+        </header>
+        <div class="sh-body">
           <p>I worked remotely with Dr. Aslam as a research assistant in tribology. One project at Qilu Institute of Technology was on laser surface texturing of bearing surfaces. I reviewed earlier studies on textured bearing steels such as 100Cr6, with attention to the inner rings of tapered roller bearings, and wrote the research proposal. It specifies circular, elliptical and triangular textures at 5–20% area density and several orientations for friction testing on a tribology rig, and sets out the feasibility and the expected drop in the coefficient of friction.</p>
           <p>Alongside it, I analysed technical and experimental data on friction, wear and lubrication, including for automotive engine components, and supported the research design and methodology.</p>
           <figure class="fig texture">
@@ -514,48 +617,51 @@
     </header>
     <ol class="papers">
       <li>
-        <a href="#projects">
+        <a href="#s-gimbal">
           <span class="paper-n">[1]</span>
           <span class="paper-kind">Journal article<span class="status"><span class="led led-green"></span>In final revision</span></span>
           <span class="paper-body">
             <span class="paper-title">Integrated Mechatronic Design of a Heavy-Payload Two-Axis Gimbal Under Cyclic Loading</span>
             <span class="paper-auth">Farzad, M. S., Haneef, I., <strong>Khalid, M. T.</strong>, Waris, R., Amin, F. and Khan, M. A. A.</span>
-            <span class="paper-note">Manuscript in final revision · Follow-up to my final-year project</span>
-            <span class="paper-note">Team results, measured on the prototype with a 20 kg payload under a 200 N, 20 Hz cyclic load: settling in 0.474 s (pitch) and 0.376 s (yaw), with overshoot of 1.20% and 0.85%.</span>
+            <span class="paper-note">Follow-up to my final-year project</span>
           </span>
+          <span class="paper-go" aria-hidden="true"><svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
       </li>
       <li>
-        <a href="#study-twins">
+        <a href="#s-twins">
           <span class="paper-n">[2]</span>
           <span class="paper-kind">Review article<span class="status"><span class="led led-amber"></span>In preparation</span></span>
           <span class="paper-body">
             <span class="paper-title">Towards Physics-Informed Digital Twins for Data-Centre Liquid and Immersion Cooling Systems: A Review</span>
             <span class="paper-auth"><strong>Khalid, M. T.</strong> and Haneef, I.</span>
-            <span class="paper-note">Manuscript in preparation</span>
+            <span class="paper-note">From the digital twins review study</span>
           </span>
+          <span class="paper-go" aria-hidden="true"><svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
       </li>
       <li>
-        <a href="#study-multiphysics">
+        <a href="#s-sorter">
           <span class="paper-n">[3]</span>
           <span class="paper-kind">Journal article<span class="status"><span class="led led-amber"></span>In preparation</span></span>
           <span class="paper-body">
             <span class="paper-title">Effect of Channel Geometry, Wall Roughness and Reynolds Number on White and Red Blood Cell Separation in a Microfluidic Sorter</span>
             <span class="paper-auth">Ud Din, E. and <strong>Khalid, M. T.</strong></span>
-            <span class="paper-note">Manuscript in preparation · From the 112-run COMSOL study</span>
+            <span class="paper-note">From the 112-run COMSOL study</span>
           </span>
+          <span class="paper-go" aria-hidden="true"><svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
       </li>
       <li>
-        <a href="#study-cfd">
+        <a href="#s-flags">
           <span class="paper-n">[4]</span>
           <span class="paper-kind">Journal article<span class="status"><span class="led led-amber"></span>In preparation</span></span>
           <span class="paper-body">
             <span class="paper-title">Tandem Flexible Flags Behind an Inverted C-Shaped Body at Re = 300: Effect of Body-to-Flag and Flag-to-Flag Gaps</span>
             <span class="paper-auth">Ud Din, E. and <strong>Khalid, M. T.</strong></span>
-            <span class="paper-note">Manuscript in preparation · From the 36-case CFD study</span>
+            <span class="paper-note">From the 36-case CFD study</span>
           </span>
+          <span class="paper-go" aria-hidden="true"><svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
       </li>
     </ol>
@@ -565,13 +671,71 @@
 <!-- ============================ EDUCATION =========================== -->
 <section id="education" class="sec" data-nav="education">
   <div class="wrap">
-    <div class="edu">
-      <div class="edu-col">
-        <h2 data-rise>Education</h2>
-        <div class="edu-degree">
-          <span class="seal"><img src="assets/nust-logo.png" alt="NUST seal" width="1000" height="1000" loading="lazy"></span>
-          <p>Bachelor of Engineering, Mechanical Engineering<br><span class="dim">National University of Sciences and Technology, Islamabad · Oct 2020 – Jun 2024</span></p>
+    <header class="sec-head">
+      <h2 data-rise>Education</h2>
+    </header>
+
+    <div class="bento">
+      <article class="tile tile-degree span-7">
+        <div class="tile-text">
+          <div class="tile-org"><span class="seal"><img src="assets/nust-logo.png" alt="NUST seal" width="1000" height="1000" loading="lazy"></span><p>National University of Sciences and Technology, Islamabad<span class="dim">Oct 2020 – Jun 2024</span></p></div>
+          <h3 class="tile-title"><a class="tile-hit" href="#s-degree">Bachelor of Engineering, Mechanical Engineering</a></h3>
+          <div class="gpa-big"><span class="gpa-n"><span class="num">3.7</span><small>/ 4</small></span><span class="gpa-t">CGPA, top 10% of cohort</span></div>
+          <span class="gpa-bar" role="img" aria-label="3.7 out of 4"><span style="--v:92.5"></span></span>
+          <div class="tile-foot"><span class="dim">Transcript, thesis, societies and school</span><span class="tile-open">Open<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
         </div>
+      </article>
+
+      <article class="tile tile-honours span-5">
+        <div class="tile-text">
+          <h3 class="tile-title"><a class="tile-hit" href="#s-honours">Honours and certificates</a></h3>
+          <ul class="tile-list">
+            <li><span>Dean's Merit List</span><span class="dim">2023 – 2024</span></li>
+            <li><span>Prime Minister's Merit Laptop Scheme</span><span class="dim">Dec 2023</span></li>
+            <li><span>3rd position, AKDC Design Challenge</span><span class="dim">NUST</span></li>
+            <li><span>1st position, Stars of Chakwal 2018</span><span class="dim">Apr 2018</span></li>
+          </ul>
+          <div class="tile-foot"><span class="dim">Details and a photo</span><span class="tile-open">Open<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        </div>
+      </article>
+
+      <article class="tile tile-lead span-7">
+        <div class="tile-text">
+          <div class="tile-row">
+            <div class="tile-col">
+              <p class="tile-kind">Student leadership</p>
+              <h3 class="tile-title"><a class="tile-hit" href="#s-ashrae">ASHRAE NUST Student Branch</a></h3>
+              <p class="tile-meta">Treasurer, Sep 2022 – Sep 2023<br>Mentor Technical, Sep 2023 – May 2024</p>
+            </div>
+            <div class="tile-stat"><span class="tile-stat-n">$5,400</span><span class="dim">in funding secured for junior members</span></div>
+          </div>
+          <div class="tile-foot"><span class="dim">Accounts, workshops and mentoring</span><span class="tile-open">Open<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        </div>
+      </article>
+
+      <article class="tile tile-static tile-ielts span-5">
+        <div class="tile-text">
+          <p class="tile-kind">English</p>
+          <h3 class="tile-title">IELTS Academic, 8.0 / 9</h3>
+          <p class="tile-meta">Aug 2026 · Valid until Aug 2028. An earlier test, in Jan 2025, gave 8.5 overall.</p>
+            <div class="ielts" role="img" aria-label="IELTS band scores: listening 9.0, reading 8.5, writing 7.0, speaking 8.0">
+              <span style="--v:9"><i></i>Listening <b>9.0</b></span><span style="--v:8.5"><i></i>Reading <b>8.5</b></span><span style="--v:7"><i></i>Writing <b>7.0</b></span><span style="--v:8"><i></i>Speaking <b>8.0</b></span>
+            </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="sheet-store">
+      <article class="sheet-src" id="s-degree" data-group="edu" aria-labelledby="s-degree-t">
+        <header class="sh-head sh-head-logo">
+          <span class="seal"><img src="assets/nust-logo.png" alt="NUST seal" width="1000" height="1000" loading="lazy"></span>
+          <div>
+            <p class="sh-kicker">Education</p>
+            <h2 id="s-degree-t">Bachelor of Engineering, Mechanical Engineering</h2>
+            <p class="sh-meta"><span>National University of Sciences and Technology, Islamabad</span><span>Oct 2020 – Jun 2024</span></p>
+          </div>
+        </header>
+        <div class="sh-body">
         <dl class="rows">
           <div><dt>CGPA</dt><dd>
             <span class="gpa"><span class="gpa-val"><span class="num">3.7</span> / 4, top 10% of cohort</span>
@@ -582,31 +746,40 @@
           <div><dt>Societies</dt><dd>ASHRAE NUST, Khalq Foundation</dd></div>
           <div><dt>School</dt><dd>Fauji Foundation Higher Secondary School for Boys, Chakwal · 2018 – 2020</dd></div>
         </dl>
-      </div>
+        </div>
+      </article>
 
-      <div class="edu-col">
-        <h3 class="h3-lg">Honours and certificates</h3>
+      <article class="sheet-src" id="s-honours" data-group="edu" aria-labelledby="s-honours-t">
+        <header class="sh-head">
+          <p class="sh-kicker">Education</p>
+          <h2 id="s-honours-t">Honours and certificates</h2>
+        </header>
+        <div class="sh-body">
         <ul class="honours">
           <li><div class="hon-top"><span>Dean's Merit List</span><span class="dim">NUST · 2023 – 2024</span></div></li>
           <li><div class="hon-top"><span>Prime Minister's Merit Laptop Scheme</span><span class="dim">Government of Pakistan · Dec 2023</span></div><p>A laptop awarded for academic performance (CGPA) during undergraduate studies.</p></li>
           <li><div class="hon-top"><span>3rd position, AKDC Design Challenge</span><span class="dim">NUST</span></div></li>
           <li class="hon-pic"><div><div class="hon-top"><span>1st position, Stars of Chakwal 2018</span><span class="dim">Punjab Group of Colleges · Apr 2018</span></div><p>First place in a district-level competition after 10th grade, with a prize of Rs. 10,000.</p></div>
             <a href="assets/stars-of-chakwal.jpg" data-zoom data-caption="Receiving the Stars of Chakwal 2018 first-position award."><img src="assets/stars-of-chakwal.jpg" alt="Receiving the Stars of Chakwal 2018 first-position award" loading="lazy" width="720" height="480"></a></li>
-          <li><div class="hon-top"><span>IELTS Academic, 8.0 / 9</span><span class="dim">Aug 2026</span></div><p>Listening 9.0, reading 8.5, writing 7.0, speaking 8.0. Valid until Aug 2028. An earlier test, in Jan 2025, gave 8.5 overall.</p>
-            <div class="ielts" role="img" aria-label="IELTS band scores: listening 9.0, reading 8.5, writing 7.0, speaking 8.0">
-              <span style="--v:9"><i></i>Listening <b>9.0</b></span><span style="--v:8.5"><i></i>Reading <b>8.5</b></span><span style="--v:7"><i></i>Writing <b>7.0</b></span><span style="--v:8"><i></i>Speaking <b>8.0</b></span>
-            </div></li>
-        </ul>
-      </div>
-    </div>
+          </ul>
+        </div>
+      </article>
 
-    <div class="lead-row">
-      <div>
-        <p class="kicker">Student leadership</p>
-        <p class="lead-title">ASHRAE NUST Student Branch</p>
-        <p class="dim">Treasurer, Sep 2022 – Sep 2023<br>Mentor Technical, Sep 2023 – May 2024</p>
-      </div>
+      <article class="sheet-src" id="s-ashrae" data-group="edu" aria-labelledby="s-ashrae-t">
+        <header class="sh-head">
+          <p class="sh-kicker">Student leadership</p>
+          <h2 id="s-ashrae-t">ASHRAE NUST Student Branch</h2>
+          <p class="sh-meta"><span>Treasurer, Sep 2022 – Sep 2023</span><span>Mentor Technical, Sep 2023 – May 2024</span></p>
+        </header>
+        <div class="sh-body">
       <p>As treasurer, I kept the branch's accounts and meeting minutes and worked with the university's finance department. In my final year I moved to the technical side. I planned workshops and technical events, mentored junior members, and secured $5,400 in funding for their development.</p>
+          <div class="bigstat sh-stat">
+            <p class="kicker">Funding secured</p>
+            <p class="bigstat-n">$5,400</p>
+            <p>for the development of junior members, in my final year as Mentor Technical.</p>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -618,7 +791,6 @@
       <h2 data-rise>Experience</h2>
       <div>
         <p>My first job after graduating was as a wireline field engineer, running production logging on oil and gas wells. Since May 2025 I have worked in product operations at OneScreen, an interactive display company with customers in the US, Canada, Europe and the Middle East.</p>
-        <p>A lot of that job is data stuck in systems that don't talk to each other, so I write tools for it. The same habit now runs the post-processing for the flag study. Most of what I have built in both places is Python.</p>
       </div>
     </header>
 
@@ -649,21 +821,85 @@
     </figure>
 
     <div class="roles">
-      <div class="thermo" aria-hidden="true"><span class="thermo-tube"></span><canvas class="thermo-boil"></canvas><canvas class="thermo-ice"></canvas><span class="thermo-bead"></span></div>
-      <article class="role">
+      <div class="thermo"><span class="thermo-tube" aria-hidden="true"></span><canvas class="thermo-boil" aria-hidden="true"></canvas><canvas class="thermo-ice" aria-hidden="true"></canvas><span class="thermo-hit" aria-hidden="true"></span><span class="thermo-glow" aria-hidden="true"></span><button class="thermo-bead" type="button" aria-label="Thermometer bead. Drag it to a job, or use the up and down arrow keys to step through the jobs."><span class="thermo-read" aria-hidden="true"></span></button></div>
+      <article class="role role-tile">
         <div class="role-meta">
           <span class="logo-plate"><img src="assets/onescreen.png" alt="OneScreen logo" width="447" height="447" loading="lazy"></span>
-          <p>May 2025 – present<br>Islamabad, hybrid<br>Full-time</p>
+          <p>May 2025 – present<br>Islamabad, hybrid</p>
         </div>
-        <div class="role-body role-split">
+        <div class="role-body">
+          <h3><a class="tile-hit" href="#s-onescreen">Product Operations Engineer</a> <span class="org">OneScreen</span></h3>
+          <p class="role-sum">Python tools for data stuck in systems that don't talk to each other. The first live licence order took 8 minutes, against about nine hours by hand.</p>
+          <div class="role-foot"><span class="chip-stat"><b class="num">125+ h</b> of manual entry saved on a Texas rollout</span><span class="tile-open">Read more<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        </div>
+      </article>
+
+      <article class="role role-tile">
+        <div class="role-meta">
+          <span class="logo-plate"><img src="assets/well-logging-energy.png" alt="Well Logging Energy logo" width="200" height="200" loading="lazy"></span>
+          <p>Oct 2024 – Jan 2025<br>Khyber Pakhtunkhwa</p>
+        </div>
+        <div class="role-body">
+          <h3><a class="tile-hit" href="#s-wle">Junior Wireline Engineer</a> <span class="org">Well Logging Energy (Pvt.) Ltd.</span></h3>
+          <p class="role-sum">Ran production logging (PLT) operations at the Bettani, Togh and Nashpa wells.</p>
+          <div class="role-foot"><span class="role-thumbs" aria-hidden="true"><img src="assets/bettani-2.jpg" alt="" width="600" height="800" loading="lazy"><img src="assets/wle-truck.jpg" alt="" width="1280" height="960" loading="lazy"><img src="assets/wle-data-acquisition.jpg" alt="" width="1280" height="960" loading="lazy"></span><span class="tile-open">Read more<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        </div>
+      </article>
+
+      <article class="role role-tile">
+        <div class="role-meta">
+          <span class="logo-plate"><img src="assets/attock-refinery.png" alt="Attock Refinery Limited logo" width="314" height="160" loading="lazy"></span>
+          <p>Jun – Jul 2024<br>Rawalpindi</p>
+        </div>
+        <div class="role-body">
+          <h3><a class="tile-hit" href="#s-attock">Maintenance Engineering Intern</a> <span class="org">Attock Refinery Limited</span></h3>
+          <p class="role-sum">Pumps, compressors and heat exchangers across the maintenance sections of a refinery, with root cause analysis and safety audits.</p>
+          <div class="role-foot"><span class="tile-open">Read more<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        </div>
+      </article>
+
+      <article class="role role-tile">
+        <div class="role-meta">
+          <span class="logo-plate"><img src="assets/sngpl.png" alt="SNGPL logo" width="447" height="447" loading="lazy"></span>
+          <p>Aug – Sep 2022<br>Islamabad</p>
+        </div>
+        <div class="role-body">
+          <h3><a class="tile-hit" href="#s-sngpl">Engineering Intern</a> <span class="org">Sui Northern Gas Pipelines Ltd. (SNGPL)</span></h3>
+          <p class="role-sum">A summer placement at the utility that supplies gas to over 60% of Pakistan, mostly in the Corrosion Control department.</p>
+          <div class="role-foot"><span class="tile-open">Read more<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        </div>
+      </article>
+
+      <article class="role" id="role-photomath">
+        <div class="role-meta">
+          <span class="logo-plate"><img src="assets/photomath.png" alt="Photomath logo" width="512" height="512" loading="lazy"></span>
+          <p>Dec 2021 – Jun 2022<br>Remote<br>Freelance</p>
+        </div>
+        <div class="role-body">
+          <h3>Mathematics Solver <span class="org">Photomath (acquired by Google)</span></h3>
+          <p>Solved and reviewed more than 100 student problems in algebra, calculus, statistics and geometry, and wrote the step-by-step solutions in LaTeX, with GeoGebra and Excel for the visuals.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="sheet-store">
+      <article class="sheet-src" id="s-onescreen" data-group="exp" aria-labelledby="s-onescreen-t">
+        <header class="sh-head sh-head-logo">
+          <span class="logo-plate"><img src="assets/onescreen.png" alt="OneScreen logo" width="447" height="447" loading="lazy"></span>
           <div>
-            <h3>Product Operations Engineer <span class="org">OneScreen</span></h3>
-            <ul>
+            <p class="sh-kicker">Experience</p>
+            <h2 id="s-onescreen-t">Product Operations Engineer</h2>
+            <p class="sh-meta"><span>OneScreen</span><span>May 2025 – present</span><span>Islamabad, hybrid</span><span>Full-time</span></p>
+          </div>
+        </header>
+        <div class="sh-body">
+          <p>A lot of this job is data stuck in systems that don't talk to each other, so I write tools for it. The same habit now runs the post-processing for the flag study. Most of what I have built in both places is Python.</p>
+          <div class="role-split">
+            <ul class="sh-list">
               <li>Wrote Python tools that register panels through the manufacturer's API and allocate licence keys from a shared Google Sheet. The first live licence order took 8 minutes, against about nine hours by hand.</li>
               <li>Pull invoice records out of a desktop ERP that has no API, using pywinauto, and run renewal reminders and expiry alerts in Google Apps Script and n8n.</li>
               <li>Documented more than 12 internal workflows, which shortened onboarding by about 30%, and supported the Duncanville and Lewisville school-district rollouts, part of deployments worth over $5M. I also supervise one junior team member.</li>
             </ul>
-          </div>
           <div class="role-side">
             <div class="bigstat">
               <p class="kicker">Texas rollout</p>
@@ -675,17 +911,21 @@
               <figcaption><strong>Jennifer May</strong>, Channel Sales Manager / Sales Enablement Manager. Worked with Talha on different teams · 30 Sep 2026<br><a class="ext" href="https://www.linkedin.com/in/m0talhakhalid/details/recommendations/" target="_blank" rel="noreferrer">Read it on LinkedIn</a></figcaption>
             </figure>
           </div>
+          </div>
         </div>
       </article>
 
-      <article class="role">
-        <div class="role-meta">
+      <article class="sheet-src" id="s-wle" data-group="exp" aria-labelledby="s-wle-t">
+        <header class="sh-head sh-head-logo">
           <span class="logo-plate"><img src="assets/well-logging-energy.png" alt="Well Logging Energy logo" width="200" height="200" loading="lazy"></span>
-          <p>Oct 2024 – Jan 2025<br>Field sites in Khyber Pakhtunkhwa<br>Full-time</p>
-        </div>
-        <div class="role-body">
-          <h3>Junior Wireline Engineer <span class="org">Well Logging Energy (Pvt.) Ltd.</span></h3>
-          <ul>
+          <div>
+            <p class="sh-kicker">Experience</p>
+            <h2 id="s-wle-t">Junior Wireline Engineer</h2>
+            <p class="sh-meta"><span>Well Logging Energy (Pvt.) Ltd.</span><span>Oct 2024 – Jan 2025</span><span>Field sites in Khyber Pakhtunkhwa</span><span>Full-time</span></p>
+          </div>
+        </header>
+        <div class="sh-body">
+          <ul class="sh-list">
             <li>Ran production logging (PLT) operations at the Bettani, Togh and Nashpa wells.</li>
             <li>Completed technical training on wireline operations, downhole tools and equipment.</li>
             <li>Set up a Power Automate flow for the tool inventory that cut retrieval time by about 20%, and moved asset and job records onto Notion and Trello, which improved tracking efficiency by about 15%.</li>
@@ -698,36 +938,31 @@
         </div>
       </article>
 
-      <article class="role">
-        <div class="role-meta">
+      <article class="sheet-src" id="s-attock" data-group="exp" aria-labelledby="s-attock-t">
+        <header class="sh-head sh-head-logo">
           <span class="logo-plate"><img src="assets/attock-refinery.png" alt="Attock Refinery Limited logo" width="314" height="160" loading="lazy"></span>
-          <p>Jun – Jul 2024<br>Rawalpindi<br>Full-time</p>
-        </div>
-        <div class="role-body">
-          <h3>Maintenance Engineering Intern <span class="org">Attock Refinery Limited</span></h3>
+          <div>
+            <p class="sh-kicker">Experience</p>
+            <h2 id="s-attock-t">Maintenance Engineering Intern</h2>
+            <p class="sh-meta"><span>Attock Refinery Limited</span><span>Jun – Jul 2024</span><span>Rawalpindi</span><span>Full-time</span></p>
+          </div>
+        </header>
+        <div class="sh-body">
           <p>I rotated through the maintenance sections of a refinery that covers nearly every unit operation: PM-I, PM-II, PM-III, WTH (workshop, transport, heating and ventilation), offsite maintenance and the power plant. The hands-on part was pumps, compressors and heat exchangers. I also sat in on root cause analysis with senior engineers, who used fault tree analysis and FMEA, took part in safety audits, and wrote up maintenance procedures and troubleshooting steps.</p>
         </div>
       </article>
 
-      <article class="role">
-        <div class="role-meta">
+      <article class="sheet-src" id="s-sngpl" data-group="exp" aria-labelledby="s-sngpl-t">
+        <header class="sh-head sh-head-logo">
           <span class="logo-plate"><img src="assets/sngpl.png" alt="SNGPL logo" width="447" height="447" loading="lazy"></span>
-          <p>Aug – Sep 2022<br>Islamabad<br>Full-time</p>
-        </div>
-        <div class="role-body">
-          <h3>Engineering Intern <span class="org">Sui Northern Gas Pipelines Ltd. (SNGPL)</span></h3>
+          <div>
+            <p class="sh-kicker">Experience</p>
+            <h2 id="s-sngpl-t">Engineering Intern</h2>
+            <p class="sh-meta"><span>Sui Northern Gas Pipelines Ltd. (SNGPL)</span><span>Aug – Sep 2022</span><span>Islamabad</span><span>Full-time</span></p>
+          </div>
+        </header>
+        <div class="sh-body">
           <p>A summer placement after my second year, at the utility that supplies gas to over 60% of Pakistan. I saw the compression stations and their turbines first, but most of my time went to the Corrosion Control department, learning how laid pipelines are protected and how leaks are found. I also studied the SCADA system that monitors more than 9,000 km of pipeline and the safety devices at the stations.</p>
-        </div>
-      </article>
-
-      <article class="role">
-        <div class="role-meta">
-          <span class="logo-plate"><img src="assets/photomath.png" alt="Photomath logo" width="512" height="512" loading="lazy"></span>
-          <p>Dec 2021 – Jun 2022<br>Remote<br>Freelance</p>
-        </div>
-        <div class="role-body">
-          <h3>Mathematics Solver <span class="org">Photomath (acquired by Google)</span></h3>
-          <p>Solved and reviewed more than 100 student problems in algebra, calculus, statistics and geometry, and wrote the step-by-step solutions in LaTeX, with GeoGebra and Excel for the visuals.</p>
         </div>
       </article>
     </div>
@@ -742,77 +977,40 @@
       <p>Built at NUST between 2021 and 2024. The smaller builds were mostly with two classmates, Muhammad Sharjeel and Faisal, and the course projects had teams of three to five.</p>
     </header>
 
-    <article class="feature">
-      <div class="feature-text">
-        <p class="kicker">Final-year thesis · Jun 2023 – May 2024</p>
-        <h3>Multi-axis self-stabilising platform for heavy payloads</h3>
-        <p>Our team of four designed a two-axis gimbal, pitch and yaw, that holds a heavy payload in place against outside disturbance. The motors, frame and mounts were modelled in SOLIDWORKS. We chose aluminium for the frame, which was cast and then checked for stress, deformation and fatigue in ANSYS. Actuators were sized from the inertia ratios, torque and RPM each axis needed.</p>
-        <p>The control system was my part. I wrote the Arduino software that drives the BLDC servos by PWM and reads the angles from an MPU6050 IMU, tuned the PID loops, and added fail-safes that hold the payload through vibration or sudden shifts. A teammate wrote the Kalman filter that cleans up the sensor noise. What made it hard was scale. Each motor was rated at 1000 W and the drivers drew up to 40 A, so wiring and testing needed far more care than a bench project. I also bought the components from China and coordinated building the prototype. It was tested for step response and robustness to disturbance, and we recommended a third axis with better controllers as the next step.</p>
-        <p class="keywords"><span>Keywords</span>Control systems, SOLIDWORKS, ANSYS FEA, C++</p>
-        <p class="dim">This work later became a journal manuscript, now in final revision. See <a href="#publications">Manuscripts</a>.</p>
-        <p class="links">
-          <a class="ext" href="https://drive.google.com/file/d/1UWfBeuUMbdsYHTTErwWfPAp0mGnUdCq2/view?usp=drive_link" target="_blank" rel="noreferrer">Thesis files</a>
-          <a class="ext" href="https://drive.google.com/drive/folders/1d2DeHgFPEOTfA4xxT_eYBdAUKkCmlusE?usp=drive_link" target="_blank" rel="noreferrer">Control system photos</a>
-        </p>
-      </div>
-      <div class="feature-media gallery g-gimbal">
-        <figure class="fig shot tall"><a href="assets/gimbal-platform.jpg" data-zoom><img src="assets/gimbal-platform.jpg" alt="The finished two-axis platform with payload tray, geared motor and wiring, in the workshop" loading="lazy" width="720" height="960"></a><figcaption><span class="fig-n"></span> The finished platform in the workshop, with the payload tray, geared motor and wiring fitted.</figcaption></figure>
-        <figure class="fig shot"><a href="assets/gimbal-driver.jpg" data-zoom><img src="assets/gimbal-driver.jpg" alt="Servo driver with encoder and control wiring" loading="lazy" width="480" height="400"></a><figcaption><span class="fig-n"></span> Servo driver wired to the control board.</figcaption></figure>
-        <figure class="fig shot"><a href="assets/gimbal-motor.jpg" data-zoom><img src="assets/gimbal-motor.jpg" alt="Geared motor and power supply on the bench" loading="lazy" width="480" height="279"></a><figcaption><span class="fig-n"></span> Geared motor on the bench.</figcaption></figure>
-      </div>
-    </article>
-
-    <article class="feature feature-flip">
-      <div class="feature-media gallery g-rover">
-        <figure class="fig shot plate-img wide"><a href="assets/ler-cad.jpg" data-zoom><img src="assets/ler-cad.jpg" alt="Rendered SOLIDWORKS view of the lunar rover" loading="lazy" width="480" height="448"></a><figcaption><span class="fig-n"></span> Rendered view of the rover.</figcaption></figure>
-        <figure class="fig shot plate-img"><a href="assets/ler-assembly.png" data-zoom><img src="assets/ler-assembly.png" alt="SOLIDWORKS assembly of the lunar rover: a round-topped cabin on a braced chassis, carried by six legs with two wheels each" loading="lazy" width="640" height="480"></a><figcaption><span class="fig-n"></span> Full assembly: the cabin on its two-level chassis, carried by six legs with two wheels each.</figcaption></figure>
-        <figure class="fig shot plate-img"><a href="assets/ler-strut.png" data-zoom><img src="assets/ler-strut.png" alt="SOLIDWORKS model of one suspension strut with its two wheel axles" loading="lazy" width="640" height="480"></a><figcaption><span class="fig-n"></span> One of the six suspension struts, modelled as its own part.</figcaption></figure>
-      </div>
-      <div class="feature-text">
-        <p class="kicker">Mechanics of Materials course project · Sep 2022 – Jan 2023</p>
-        <h3>Lunar Electric Rover: structural design without FEA</h3>
-        <p>The brief asked for a lunar electric rover whose structure was checked by hand, with no finite element analysis allowed. Our team of five arrived at a design of about 3,700 kg: six suspension legs with two wheels each, a two-level I-beam chassis, and a round-topped cabin for two people. Nothing was built; the parts were modelled in SOLIDWORKS and mated into a full assembly.</p>
-        <p>I scripted the hand calculations in MATLAB, from the statically indeterminate chassis frame to column buckling, the pressurised cabin and wheel-shaft fatigue. Temperature mattered more than gravity. The lunar day and night swing, about 120 °C to −130 °C, puts roughly 200 to 220 MPa of thermal stress into restrained members. Once a 1 m drop and buckling were added to the checks, aluminium 6061 fell short, so the final design moved to aluminium 7068 with a Ti-6Al-4V suspension.</p>
-        <dl class="stats">
-          <div><dd><span class="num">2.7</span></dd><dt>yield safety factor of the frame, thermal stress included</dt></div>
-          <div><dd><span class="num" data-count="557">557</span> <small>MPa</small></dd><dt>worst beam stress in the 1 m drop, against 590 MPa yield</dt></div>
-          <div><dd><span class="num">8.6</span></dd><dt>fatigue safety factor of the 51 mm wheel shafts (Goodman)</dt></div>
-        </dl>
-        <p class="links">
-          <a class="ext" href="https://drive.google.com/file/d/1XW_GfFMa9gqKaCBdkutmSVMv5UbboyC3/view?usp=sharing" target="_blank" rel="noreferrer">Final design report</a>
-          <a class="ext" href="https://drive.google.com/file/d/10z7Qbxs1LgHWTI3dfdqei5j4xWTR9BxP/view?usp=sharing" target="_blank" rel="noreferrer">CAD files</a>
-        </p>
-      </div>
-    </article>
-
-    <article class="feature feature-live" id="stress">
-      <div class="feature-text">
-        <p class="kicker">Feb – Jun 2021 · Python, NumPy, Matplotlib</p>
-        <h3>Interactive stress-strain model</h3>
-        <p>A bilinear stress-strain curve up to 5% strain: linear elastic to the yield point, then linear hardening with a slope of 5% of the modulus. Temperature lowers the modulus and yield strength by 0.05% per °C above 25 °C, down to a floor of 30%, and each °C/s of cooling rate above 1 °C/s adds 2% to the yield strength. Both factors are simple assumptions rather than fits to test data. Four sliders set Young's modulus, yield strength, cooling rate and temperature, and the curve is redrawn as they move.</p>
-        <p class="dim">The original is a Matplotlib window. The panel here runs the same rules in the browser, so you can move the sliders yourself.</p>
-        <p class="links">
-          <a class="ext" href="https://drive.google.com/file/d/12yyUTtd4_GLGjBKClqhOjTPXxHHJal_I/view?usp=sharing" target="_blank" rel="noreferrer">Source code</a>
-          <a href="assets/stress-strain.png" data-zoom data-caption="The original Matplotlib window, with a stress-strain curve and four parameter sliders.">See the original window</a>
-        </p>
-      </div>
-      <figure class="fig ss">
-        <div class="panel-soft">
-          <svg id="ss-svg" viewBox="0 0 520 300" role="img" aria-label="Stress-strain curve that redraws as the four sliders move"></svg>
+    <div class="bento">
+      <article class="tile tile-proj span-7" id="gimbal">
+        <div class="tile-cover tile-collage"><img src="assets/gimbal-platform.jpg" alt="" width="720" height="960" loading="lazy" style="object-position:center 34%"><img src="assets/gimbal-motor.jpg" alt="" width="480" height="279" loading="lazy"><img src="assets/gimbal-driver.jpg" alt="" width="480" height="400" loading="lazy" style="object-position:center 30%"></div>
+        <div class="tile-text">
+          <p class="tile-kind">Final-year thesis <span>2023 – 2024</span></p>
+          <h3 class="tile-title"><a class="tile-hit" href="#s-gimbal">Multi-axis self-stabilising platform for heavy payloads</a></h3>
+          <p class="tile-meta">Team of four · Funded by NUST, about US$2,800 (Dec 2023)</p>
+          <p class="tile-sum">A two-axis gimbal that holds a heavy payload in place against outside disturbance. The control system was my part.</p>
+          <div class="tile-foot"><span class="status"><span class="led led-green"></span>Manuscript [1] in final revision</span><span class="tile-open">Open project<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
         </div>
-        <div class="ss-ctl">
-          <label for="ss-e">Young's modulus <input id="ss-e" type="range" min="50" max="250" step="1" value="146"><output id="ss-e-o">146 GPa</output></label>
-          <label for="ss-y">Yield strength <input id="ss-y" type="range" min="100" max="600" step="1" value="246"><output id="ss-y-o">246 MPa</output></label>
-          <label for="ss-c">Cooling rate <input id="ss-c" type="range" min="0" max="20" step="0.5" value="19"><output id="ss-c-o">19 °C/s</output></label>
-          <label for="ss-t">Temperature <input id="ss-t" type="range" min="25" max="800" step="5" value="420"><output id="ss-t-o">420 °C</output></label>
-        </div>
-        <figcaption><span class="fig-n"></span> The model, running live. The dashed line is the same material at 25 °C and 1 °C/s. Assumed factors, not test data.</figcaption>
-      </figure>
-    </article>
+      </article>
 
-    <div class="cards">
-      <article class="card">
-        <div class="card-media plate-svg"><svg viewBox="0 0 320 240" role="img" aria-label="Section through a two-storey house with three rooms downstairs and four upstairs, sun on the glazing, 103 °F outside and 75 °F inside" class="house-svg">
+      <article class="tile tile-proj span-5" id="rover">
+        <div class="tile-cover is-plate"><img src="assets/ler-cad.jpg" alt="" width="480" height="448" loading="lazy"></div>
+        <div class="tile-text">
+          <p class="tile-kind">Mechanics of Materials <span>2022 – 2023</span></p>
+          <h3 class="tile-title"><a class="tile-hit" href="#s-rover">Lunar Electric Rover: structural design without FEA</a></h3>
+          <p class="tile-sum">A 3,700 kg rover checked entirely by hand, scripted in MATLAB.</p>
+          <div class="tile-foot"><span class="chip-stat"><b class="num">2.7</b> yield safety factor</span><span class="tile-open">Open<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        </div>
+      </article>
+
+      <article class="tile tile-proj span-5" id="stress">
+        <div class="tile-cover tile-cover-svg"><svg class="art art-ss" viewBox="0 0 420 220" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><line class="c-grid" x1="56" x2="400" y1="40" y2="40"/><line class="c-grid" x1="56" x2="400" y1="76" y2="76"/><line class="c-grid" x1="56" x2="400" y1="112" y2="112"/><line class="c-grid" x1="56" x2="400" y1="148" y2="148"/><path class="c-axis" d="M56 26 V182 H400"/><path class="c-ref" d="M56 182 L84 112 L400 90"/><path class="c-real" d="M56 182 L92 96 L400 70"><animate attributeName="d" values="M56 182 L92 96 L400 70;M56 182 L74 138 L400 120;M56 182 L92 96 L400 70" dur="6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/></path><circle class="c-dot" r="6" cx="92" cy="96"><animate attributeName="cx" values="92;74;92" dur="6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/><animate attributeName="cy" values="96;138;96" dur="6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/></circle><text class="c-text" x="400" y="204" text-anchor="end">strain</text><text class="c-text" x="56" y="18">stress</text><text class="c-text" x="400" y="62" text-anchor="end">cool</text><text class="c-text" x="400" y="136" text-anchor="end">hot</text></svg></div>
+        <div class="tile-text">
+          <p class="tile-kind">Python, NumPy, Matplotlib <span>2021</span></p>
+          <h3 class="tile-title"><a class="tile-hit" href="#s-stress">Interactive stress-strain model</a></h3>
+          <p class="tile-sum">A bilinear curve that redraws as four sliders move. It runs live in the browser.</p>
+          <div class="tile-foot"><span class="chip-stat"><b>Live</b> try the sliders</span><span class="tile-open">Open<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        </div>
+      </article>
+
+      <article class="tile tile-proj span-7" id="hvac">
+        <div class="tile-cover tile-cover-svg is-plain"><svg viewBox="0 0 320 240" aria-hidden="true" class="house-svg">
           <defs><marker id="hv-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--accent-fill)"></path></marker></defs>
           <circle cx="40" cy="58" r="12" style="fill:var(--accent-fill)"></circle><line x1="56.0" y1="58.0" x2="61.0" y2="58.0" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line><line x1="51.3" y1="69.3" x2="54.8" y2="72.8" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line><line x1="40.0" y1="74.0" x2="40.0" y2="79.0" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line><line x1="28.7" y1="69.3" x2="25.2" y2="72.8" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line><line x1="24.0" y1="58.0" x2="19.0" y2="58.0" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line><line x1="28.7" y1="46.7" x2="25.2" y2="43.2" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line><line x1="40.0" y1="42.0" x2="40.0" y2="37.0" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line><line x1="51.3" y1="46.7" x2="54.8" y2="43.2" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line>
           <line x1="52" y1="75" x2="81" y2="116" style="stroke:var(--accent-fill);stroke-width:1.4;stroke-dasharray:4 3" marker-end="url(#hv-arrow)"></line>
@@ -830,8 +1028,177 @@
           <text x="300" y="30" text-anchor="end" style="font:500 12px var(--font-text);fill:var(--muted)">Lahore, 31.6° N</text>
           <text x="20" y="222" style="font:400 12px var(--font-text);fill:var(--muted)">3 rooms down, 4 up · hand method vs HAP</text>
         </svg></div>
-        <p class="kicker">Feb – Jun 2023 · Carrier HAP</p>
-        <h3>Cooling-load estimation for a two-storey house</h3>
+        <div class="tile-text">
+          <p class="tile-kind">HVAC course project <span>2023</span></p>
+          <h3 class="tile-title"><a class="tile-hit" href="#s-hvac">Cooling-load estimation for a two-storey house</a></h3>
+          <p class="tile-sum">Each room's cooling load in Carrier HAP and then by hand, and why the two came out apart.</p>
+          <div class="tile-foot"><span class="chip-stat"><b class="num">9–12%</b> hand method above HAP</span><span class="tile-open">Open<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        </div>
+      </article>
+
+      <article class="tile tile-proj tile-sm span-4">
+        <div class="tile-cover"><img src="assets/distance-device.jpg" alt="" width="493" height="800" loading="lazy" style="object-position:center 62%"></div>
+        <div class="tile-text">
+          <p class="tile-kind">Electronics <span>2022</span></p>
+          <h3 class="tile-title"><a class="tile-hit" href="#s-distance">Portable distance meter with an HC-SR04 sensor</a></h3>
+          <div class="tile-foot"><span class="tile-open">Open<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        </div>
+      </article>
+
+      <article class="tile tile-proj tile-sm span-4">
+        <div class="tile-cover"><img src="assets/object-tracking-robot.jpg" alt="" width="357" height="480" loading="lazy" style="object-position:center 52%"></div>
+        <div class="tile-text">
+          <p class="tile-kind">Computer vision <span>2021</span></p>
+          <h3 class="tile-title"><a class="tile-hit" href="#s-robot">Object tracking robot on an NVIDIA Jetson Nano</a></h3>
+          <div class="tile-foot"><span class="tile-open">Open<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        </div>
+      </article>
+
+      <article class="tile tile-proj tile-sm span-4">
+        <div class="tile-cover"><img src="assets/rc-controller.jpg" alt="" width="480" height="316" loading="lazy"></div>
+        <div class="tile-text">
+          <p class="tile-kind">Circuit design <span>2021</span></p>
+          <h3 class="tile-title"><a class="tile-hit" href="#s-rc">RC car with NRF24L01 wireless control</a></h3>
+          <div class="tile-foot"><span class="tile-open">Open<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+        </div>
+      </article>
+
+      <article class="tile tile-proj tile-also span-12">
+        <div class="tile-text tile-also-in">
+          <div class="tile-col">
+            <p class="tile-kind">Also from NUST, and personal software</p>
+            <h3 class="tile-title"><a class="tile-hit" href="#s-more">DOODHwala, Scrolls and Sage</a></h3>
+          </div>
+          <p class="tile-sum">A milk-delivery business plan, a Flutter task app with nested timers, and a FastAPI tool that audits specifications.</p>
+          <span class="tile-open">Open<svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </article>
+    </div>
+
+    <div class="sheet-store">
+      <article class="sheet-src" id="s-gimbal" data-group="proj" aria-labelledby="s-gimbal-t">
+        <header class="sh-head">
+          <p class="sh-kicker">Final-year thesis · Jun 2023 – May 2024</p>
+          <h2 id="s-gimbal-t">Multi-axis self-stabilising platform for heavy payloads</h2>
+          <p class="sh-meta"><span>Team of four</span><span>Funded by NUST, about US$2,800 (Dec 2023)</span><span>My part: the control system</span><span class="status"><span class="led led-green"></span>Manuscript [1] in final revision</span></p>
+        </header>
+        <div class="sh-body">
+          <div class="sh-split">
+            <div class="sh-text">
+        <p>Our team of four designed a two-axis gimbal, pitch and yaw, that holds a heavy payload in place against outside disturbance. The motors, frame and mounts were modelled in SOLIDWORKS. We chose aluminium for the frame, which was cast and then checked for stress, deformation and fatigue in ANSYS. Actuators were sized from the inertia ratios, torque and RPM each axis needed.</p>
+        <p>The control system was my part. I wrote the Arduino software that drives the BLDC servos by PWM and reads the angles from an MPU6050 IMU, tuned the PID loops, and added fail-safes that hold the payload through vibration or sudden shifts. A teammate wrote the Kalman filter that cleans up the sensor noise. What made it hard was scale. Each motor was rated at 1000 W and the drivers drew up to 40 A, so wiring and testing needed far more care than a bench project. I also bought the components from China and coordinated building the prototype. It was tested for step response and robustness to disturbance, and we recommended a third axis with better controllers as the next step.</p>
+        <p class="keywords"><span>Keywords</span>Control systems, SOLIDWORKS, ANSYS FEA, C++</p>
+              <p class="links">
+          <a class="ext" href="https://drive.google.com/file/d/1UWfBeuUMbdsYHTTErwWfPAp0mGnUdCq2/view?usp=drive_link" target="_blank" rel="noreferrer">Thesis files</a>
+          <a class="ext" href="https://drive.google.com/drive/folders/1d2DeHgFPEOTfA4xxT_eYBdAUKkCmlusE?usp=drive_link" target="_blank" rel="noreferrer">Control system photos</a>
+              </p>
+            </div>
+      <div class="feature-media gallery g-gimbal">
+        <figure class="fig shot tall"><a href="assets/gimbal-platform.jpg" data-zoom><img src="assets/gimbal-platform.jpg" alt="The finished two-axis platform with payload tray, geared motor and wiring, in the workshop" loading="lazy" width="720" height="960"></a><figcaption><span class="fig-n"></span> The finished platform in the workshop, with the payload tray, geared motor and wiring fitted.</figcaption></figure>
+        <figure class="fig shot"><a href="assets/gimbal-driver.jpg" data-zoom><img src="assets/gimbal-driver.jpg" alt="Servo driver with encoder and control wiring" loading="lazy" width="480" height="400"></a><figcaption><span class="fig-n"></span> Servo driver wired to the control board.</figcaption></figure>
+        <figure class="fig shot"><a href="assets/gimbal-motor.jpg" data-zoom><img src="assets/gimbal-motor.jpg" alt="Geared motor and power supply on the bench" loading="lazy" width="480" height="279"></a><figcaption><span class="fig-n"></span> Geared motor on the bench.</figcaption></figure>
+      </div>
+          </div>
+          <div class="sh-note">
+            <p class="kit-label">Manuscript [1] · Team results, measured on the prototype with a 20 kg payload under a 200 N, 20 Hz cyclic load</p>
+            <dl class="stats">
+              <div><dd><span class="num">0.474</span> <small>s</small></dd><dt>settling, pitch</dt></div>
+              <div><dd><span class="num">0.376</span> <small>s</small></dd><dt>settling, yaw</dt></div>
+              <div><dd><span class="num">1.20</span><small>%</small></dd><dt>overshoot, pitch</dt></div>
+              <div><dd><span class="num">0.85</span><small>%</small></dd><dt>overshoot, yaw</dt></div>
+            </dl>
+            <p class="dim">This work later became a journal manuscript, now in final revision. See <a href="#publications">Manuscripts</a>.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="sheet-src" id="s-rover" data-group="proj" aria-labelledby="s-rover-t">
+        <header class="sh-head">
+          <p class="sh-kicker">Mechanics of Materials course project · Sep 2022 – Jan 2023</p>
+          <h2 id="s-rover-t">Lunar Electric Rover: structural design without FEA</h2>
+          <p class="sh-meta"><span>Team of five</span><span>Hand calculations in MATLAB</span><span>Modelled in SOLIDWORKS</span></p>
+        </header>
+        <div class="sh-body">
+          <div class="sh-split">
+      <div class="feature-media gallery g-rover">
+        <figure class="fig shot plate-img wide"><a href="assets/ler-cad.jpg" data-zoom><img src="assets/ler-cad.jpg" alt="Rendered SOLIDWORKS view of the lunar rover" loading="lazy" width="480" height="448"></a><figcaption><span class="fig-n"></span> Rendered view of the rover.</figcaption></figure>
+        <figure class="fig shot plate-img"><a href="assets/ler-assembly.png" data-zoom><img src="assets/ler-assembly.png" alt="SOLIDWORKS assembly of the lunar rover: a round-topped cabin on a braced chassis, carried by six legs with two wheels each" loading="lazy" width="640" height="480"></a><figcaption><span class="fig-n"></span> Full assembly: the cabin on its two-level chassis, carried by six legs with two wheels each.</figcaption></figure>
+        <figure class="fig shot plate-img"><a href="assets/ler-strut.png" data-zoom><img src="assets/ler-strut.png" alt="SOLIDWORKS model of one suspension strut with its two wheel axles" loading="lazy" width="640" height="480"></a><figcaption><span class="fig-n"></span> One of the six suspension struts, modelled as its own part.</figcaption></figure>
+      </div>
+            <div class="sh-text">
+        <p>The brief asked for a lunar electric rover whose structure was checked by hand, with no finite element analysis allowed. Our team of five arrived at a design of about 3,700 kg: six suspension legs with two wheels each, a two-level I-beam chassis, and a round-topped cabin for two people. Nothing was built; the parts were modelled in SOLIDWORKS and mated into a full assembly.</p>
+        <p>I scripted the hand calculations in MATLAB, from the statically indeterminate chassis frame to column buckling, the pressurised cabin and wheel-shaft fatigue. Temperature mattered more than gravity. The lunar day and night swing, about 120 °C to −130 °C, puts roughly 200 to 220 MPa of thermal stress into restrained members. Once a 1 m drop and buckling were added to the checks, aluminium 6061 fell short, so the final design moved to aluminium 7068 with a Ti-6Al-4V suspension.</p>
+        <dl class="stats">
+          <div><dd><span class="num">2.7</span></dd><dt>yield safety factor of the frame, thermal stress included</dt></div>
+          <div><dd><span class="num" data-count="557">557</span> <small>MPa</small></dd><dt>worst beam stress in the 1 m drop, against 590 MPa yield</dt></div>
+          <div><dd><span class="num">8.6</span></dd><dt>fatigue safety factor of the 51 mm wheel shafts (Goodman)</dt></div>
+        </dl>
+        <p class="links">
+          <a class="ext" href="https://drive.google.com/file/d/1XW_GfFMa9gqKaCBdkutmSVMv5UbboyC3/view?usp=sharing" target="_blank" rel="noreferrer">Final design report</a>
+          <a class="ext" href="https://drive.google.com/file/d/10z7Qbxs1LgHWTI3dfdqei5j4xWTR9BxP/view?usp=sharing" target="_blank" rel="noreferrer">CAD files</a>
+        </p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="sheet-src" id="s-stress" data-group="proj" aria-labelledby="s-stress-t">
+        <header class="sh-head">
+          <p class="sh-kicker">Feb – Jun 2021 · Python, NumPy, Matplotlib</p>
+          <h2 id="s-stress-t">Interactive stress-strain model</h2>
+        </header>
+        <div class="sh-body">
+          <div class="sh-split">
+            <div class="sh-text">
+        <p>A bilinear stress-strain curve up to 5% strain: linear elastic to the yield point, then linear hardening with a slope of 5% of the modulus. Temperature lowers the modulus and yield strength by 0.05% per °C above 25 °C, down to a floor of 30%, and each °C/s of cooling rate above 1 °C/s adds 2% to the yield strength. Both factors are simple assumptions rather than fits to test data. Four sliders set Young's modulus, yield strength, cooling rate and temperature, and the curve is redrawn as they move.</p>
+        <p class="dim">The original is a Matplotlib window. The panel here runs the same rules in the browser, so you can move the sliders yourself.</p>
+        <p class="links">
+          <a class="ext" href="https://drive.google.com/file/d/12yyUTtd4_GLGjBKClqhOjTPXxHHJal_I/view?usp=sharing" target="_blank" rel="noreferrer">Source code</a>
+          <a href="assets/stress-strain.png" data-zoom data-caption="The original Matplotlib window, with a stress-strain curve and four parameter sliders.">See the original window</a>
+        </p>
+            </div>
+      <figure class="fig ss">
+        <div class="panel-soft">
+          <svg id="ss-svg" viewBox="0 0 520 300" role="img" aria-label="Stress-strain curve that redraws as the four sliders move"></svg>
+        </div>
+        <div class="ss-ctl">
+          <label for="ss-e">Young's modulus <input id="ss-e" type="range" min="50" max="250" step="1" value="146"><output id="ss-e-o">146 GPa</output></label>
+          <label for="ss-y">Yield strength <input id="ss-y" type="range" min="100" max="600" step="1" value="246"><output id="ss-y-o">246 MPa</output></label>
+          <label for="ss-c">Cooling rate <input id="ss-c" type="range" min="0" max="20" step="0.5" value="19"><output id="ss-c-o">19 °C/s</output></label>
+          <label for="ss-t">Temperature <input id="ss-t" type="range" min="25" max="800" step="5" value="420"><output id="ss-t-o">420 °C</output></label>
+        </div>
+        <figcaption><span class="fig-n"></span> The model, running live. The dashed line is the same material at 25 °C and 1 °C/s. Assumed factors, not test data.</figcaption>
+      </figure>
+          </div>
+        </div>
+      </article>
+
+      <article class="sheet-src" id="s-hvac" data-group="proj" aria-labelledby="s-hvac-t">
+        <header class="sh-head">
+          <p class="sh-kicker">Feb – Jun 2023 · Carrier HAP</p>
+          <h2 id="s-hvac-t">Cooling-load estimation for a two-storey house</h2>
+        </header>
+        <div class="sh-body">
+          <div class="sh-split">
+            <div class="sh-media sh-media-svg"><svg viewBox="0 0 320 240" role="img" aria-label="Section through a two-storey house with three rooms downstairs and four upstairs, sun on the glazing, 103 °F outside and 75 °F inside" class="house-svg">
+          <defs><marker id="hv2-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--accent-fill)"></path></marker></defs>
+          <circle cx="40" cy="58" r="12" style="fill:var(--accent-fill)"></circle><line x1="56.0" y1="58.0" x2="61.0" y2="58.0" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line><line x1="51.3" y1="69.3" x2="54.8" y2="72.8" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line><line x1="40.0" y1="74.0" x2="40.0" y2="79.0" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line><line x1="28.7" y1="69.3" x2="25.2" y2="72.8" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line><line x1="24.0" y1="58.0" x2="19.0" y2="58.0" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line><line x1="28.7" y1="46.7" x2="25.2" y2="43.2" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line><line x1="40.0" y1="42.0" x2="40.0" y2="37.0" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line><line x1="51.3" y1="46.7" x2="54.8" y2="43.2" style="stroke:var(--accent-fill);stroke-width:1.5;stroke-linecap:round"></line>
+          <line x1="52" y1="75" x2="81" y2="116" style="stroke:var(--accent-fill);stroke-width:1.4;stroke-dasharray:4 3" marker-end="url(#hv2-arrow)"></line>
+          <path d="M78 96 L162 46 L246 96 Z" style="fill:var(--surface);stroke:var(--muted);stroke-width:1.5;stroke-linejoin:round"></path>
+          <rect x="84" y="96" width="156" height="50" style="fill:var(--surface);stroke:var(--muted);stroke-width:1.5;stroke-linejoin:round"></rect>
+          <rect x="84" y="146" width="156" height="50" style="fill:var(--surface);stroke:var(--muted);stroke-width:1.5;stroke-linejoin:round"></rect>
+          <line x1="123" y1="96" x2="123" y2="146" style="stroke:var(--muted);stroke-width:1"></line><line x1="162" y1="96" x2="162" y2="146" style="stroke:var(--muted);stroke-width:1"></line><line x1="201" y1="96" x2="201" y2="146" style="stroke:var(--muted);stroke-width:1"></line>
+          <line x1="136" y1="146" x2="136" y2="196" style="stroke:var(--muted);stroke-width:1"></line><line x1="188" y1="146" x2="188" y2="196" style="stroke:var(--muted);stroke-width:1"></line>
+          <line x1="84" y1="108" x2="84" y2="132" style="stroke:var(--cool);stroke-width:4"></line><line x1="84" y1="158" x2="84" y2="180" style="stroke:var(--cool);stroke-width:4"></line><line x1="240" y1="108" x2="240" y2="132" style="stroke:var(--cool);stroke-width:4"></line><line x1="240" y1="158" x2="240" y2="180" style="stroke:var(--cool);stroke-width:4"></line>
+          <circle cx="181.5" cy="114" r="3.2" style="fill:var(--ink)"></circle><path d="M181.5 118 V130 M176 123 H187 M181.5 130 L177.5 138 M181.5 130 L185.5 138" style="fill:none;stroke:var(--ink);stroke-width:1.4;stroke-linecap:round"></path>
+          <text x="162" y="176" text-anchor="middle" style="font:500 13px var(--font-text);fill:var(--ink)">75 °F</text>
+          <line x1="20" y1="196" x2="300" y2="196" style="stroke:var(--ink);stroke-width:1.5"></line>
+          <text x="20" y="128" style="font:400 12px var(--font-text);fill:var(--muted)">500 W/m²</text>
+          <text x="20" y="166" style="font:500 15px var(--font-text);fill:var(--ink)">103 °F</text><text x="20" y="182" style="font:400 12px var(--font-text);fill:var(--muted)">outside</text>
+          <text x="300" y="30" text-anchor="end" style="font:500 12px var(--font-text);fill:var(--muted)">Lahore, 31.6° N</text>
+          <text x="20" y="222" style="font:400 12px var(--font-text);fill:var(--muted)">3 rooms down, 4 up · hand method vs HAP</text>
+        </svg></div>
+            <div class="sh-text">
         <p>HVAC course project, team of five. I estimated the cooling load of each conditioned room in a house placed in Lahore for the weather data, first in Carrier's Hourly Analysis Program (HAP) and then by hand: envelope conduction, solar gain through glazing, occupants, lighting and equipment. In five of the six rooms worked both ways, the hand figure came out 9–12% above HAP. The kitchen, where the stove dominates, went the other way: 19% below (22,362 against 27,600 Btu/hr). The report attributes the gaps to infiltration, which HAP includes and the hand method left out, and to the assumed solar intensity.</p>
         <div class="pair" role="img" aria-label="Kitchen cooling load: 22,362 Btu per hour by hand against 27,600 in HAP">
           <span class="pair-row"><span class="pair-l">Kitchen, by hand</span><span class="pair-bar" style="--v:81"></span><span class="num">22,362</span></span>
@@ -839,32 +1206,64 @@
           <span class="pair-u">Btu/hr</span>
         </div>
         <p class="links"><a class="ext" href="https://drive.google.com/file/d/1u3jXRH_6z81TLB-UNZtXsVQJieZseJhA/view?usp=drive_link" target="_blank" rel="noreferrer">Project report</a></p>
+            </div>
+          </div>
+        </div>
       </article>
 
-      <article class="card">
-        <a class="card-media" href="assets/distance-device.jpg" data-zoom data-caption="Arduino Nano distance meter with LCD and battery pack."><img src="assets/distance-device.jpg" alt="Arduino Nano distance meter with LCD and battery pack" loading="lazy" width="493" height="800" style="object-position:center 40%"></a>
-        <p class="kicker">Feb – Mar 2022 · Electronics</p>
-        <h3>Portable distance meter with an HC-SR04 sensor</h3>
+      <article class="sheet-src" id="s-distance" data-group="proj" aria-labelledby="s-distance-t">
+        <header class="sh-head">
+          <p class="sh-kicker">Feb – Mar 2022 · Electronics</p>
+          <h2 id="s-distance-t">Portable distance meter with an HC-SR04 sensor</h2>
+        </header>
+        <div class="sh-body">
+          <div class="sh-split sh-split-media">
+            <figure class="fig shot sh-photo"><a href="assets/distance-device.jpg" data-zoom data-caption="Arduino Nano distance meter with LCD and battery pack."><img src="assets/distance-device.jpg" alt="Arduino Nano distance meter with LCD and battery pack" loading="lazy" width="493" height="800"></a></figure>
+            <div class="sh-text">
         <p>A handheld device on an Arduino Nano. It sends an ultrasonic pulse, times the echo and converts it to distance using the speed of sound, which is the same idea behind parking sensors and SONAR. With the Doppler effect, the design could be extended to estimate the speed of a moving object.</p>
+            </div>
+          </div>
+        </div>
       </article>
 
-      <article class="card">
-        <a class="card-media" href="assets/object-tracking-robot.jpg" data-zoom data-caption="Pan-tilt robot with a Logitech webcam."><img src="assets/object-tracking-robot.jpg" alt="Pan-tilt robot with a Logitech webcam" loading="lazy" width="357" height="480" style="object-position:center 45%"></a>
-        <p class="kicker">Aug – Sep 2021 · Computer vision</p>
-        <h3>Object tracking robot on an NVIDIA Jetson Nano</h3>
+      <article class="sheet-src" id="s-robot" data-group="proj" aria-labelledby="s-robot-t">
+        <header class="sh-head">
+          <p class="sh-kicker">Aug – Sep 2021 · Computer vision</p>
+          <h2 id="s-robot-t">Object tracking robot on an NVIDIA Jetson Nano</h2>
+        </header>
+        <div class="sh-body">
+          <div class="sh-split sh-split-media">
+            <figure class="fig shot sh-photo"><a href="assets/object-tracking-robot.jpg" data-zoom data-caption="Pan-tilt robot with a Logitech webcam."><img src="assets/object-tracking-robot.jpg" alt="Pan-tilt robot with a Logitech webcam" loading="lazy" width="357" height="480"></a></figure>
+            <div class="sh-text">
         <p>A 2-DOF robot that keeps a moving object in view. A 720p Logitech webcam feeds the Jetson Nano, which runs object detection and colour recognition and adjusts the servos as the object moves. Camera gimbals that need to keep a subject in frame work on the same principle.</p>
+            </div>
+          </div>
+        </div>
       </article>
 
-      <article class="card">
-        <a class="card-media" href="assets/rc-controller.jpg" data-zoom data-caption="Hand-built remote with two joysticks and an NRF24L01 radio module."><img src="assets/rc-controller.jpg" alt="Hand-built remote with two joysticks and an NRF24L01 radio module" loading="lazy" width="480" height="316"></a>
-        <p class="kicker">Apr – Jun 2021 · Circuit design</p>
-        <h3>RC car with NRF24L01 wireless control</h3>
+      <article class="sheet-src" id="s-rc" data-group="proj" aria-labelledby="s-rc-t">
+        <header class="sh-head">
+          <p class="sh-kicker">Apr – Jun 2021 · Circuit design</p>
+          <h2 id="s-rc-t">RC car with NRF24L01 wireless control</h2>
+        </header>
+        <div class="sh-body">
+          <div class="sh-split sh-split-media">
+            <figure class="fig shot sh-photo"><a href="assets/rc-controller.jpg" data-zoom data-caption="Hand-built remote with two joysticks and an NRF24L01 radio module."><img src="assets/rc-controller.jpg" alt="Hand-built remote with two joysticks and an NRF24L01 radio module" loading="lazy" width="480" height="316"></a></figure>
+            <div class="sh-text">
         <p>My second-semester project. The car uses no ready-made motor driver such as the L298 or L293D. I designed the drive circuit and the handheld remote from raw components, and the two talk over a pair of NRF24L01 radio modules rather than a phone app and Bluetooth.</p>
         <p class="links"><a class="ext" href="https://drive.google.com/drive/folders/1kg5QEA1dut69OujSXz1zYNHxneuyNgL_?usp=drive_link" target="_blank" rel="noreferrer">Project files</a></p>
+            </div>
+          </div>
+        </div>
       </article>
-    </div>
 
-    <div class="also">
+      <article class="sheet-src" id="s-more" data-group="proj" aria-labelledby="s-more-t">
+        <header class="sh-head">
+          <p class="sh-kicker">Also</p>
+          <h2 id="s-more-t">Also from NUST, and personal software</h2>
+        </header>
+        <div class="sh-body">
+          <div class="also sh-also">
       <div>
         <h3>Also from NUST</h3>
         <p>DOODHwala was a business plan for a milk-delivery start-up, written by three of us for the Entrepreneurship course in 2023. As Director of Finance, I built its Excel profit-and-loss projection.</p>
@@ -873,24 +1272,28 @@
         <h3>Personal software projects</h3>
         <p>Scrolls is a task reminder app I wrote for Android in Flutter. A task can carry timers nested inside other timers, which lets jobs on different timelines run side by side. My current project is Sage, a Python and FastAPI tool that audits specifications.</p>
       </div>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
 <!-- ====================== SKILLS + VOLUNTEERING ===================== -->
-<section id="skills" class="sec sec-tint" data-nav="skills">
+<section id="skills" class="sec hall sec-dark" data-nav="skills">
   <div class="wrap skills">
     <div class="skills-col">
       <h2 data-rise>Skills and tools</h2>
+      <p class="rack-hint">Pick a unit to see where I used it.</p>
       <dl class="rack" id="rack">
-        <div class="unit"><dt>Simulation</dt><dd>Immersed-boundary CFD (in-house Fortran code), COMSOL Multiphysics 6.4 (laminar flow, particle tracing), ANSYS Mechanical (static and fatigue), Tecplot, Carrier HAP</dd></div>
-        <div class="unit"><dt>Programming</dt><dd>Python (Matplotlib, gspread, pywinauto, Playwright), MATLAB, C++, Google Apps Script, LaTeX. FastAPI and Flutter in personal projects.</dd></div>
-        <div class="unit"><dt>Design</dt><dd>SOLIDWORKS, AutoCAD, GeoGebra</dd></div>
-        <div class="unit"><dt>Hardware</dt><dd>Arduino, PID control, BLDC servo drives, MPU6050 IMU, NRF24L01, NVIDIA Jetson Nano, LabVIEW</dd></div>
-        <div class="unit"><dt>Automation</dt><dd>REST APIs, Google Sheets API, n8n, Zapier, Power Automate, Excel, Notion, Trello</dd></div>
-        <div class="unit"><dt>Reliability</dt><dd>Root cause analysis, FMEA, fault tree analysis, production logging</dd></div>
-        <div class="unit"><dt>Research</dt><dd>Systematic literature review, technical writing</dd></div>
-        <div class="unit"><dt>Languages</dt><dd>Urdu (native), English (IELTS Academic 8.0, CEFR C1)</dd></div>
+        <div class="unit"><dt><button class="unit-btn" type="button" aria-expanded="false" aria-controls="u-simulation">Simulation</button><span class="unit-latch" aria-hidden="true"></span></dt><dd>Immersed-boundary CFD (in-house Fortran code), COMSOL Multiphysics 6.4 (laminar flow, particle tracing), ANSYS Mechanical (static and fatigue), Tecplot, Carrier HAP</dd><dd class="unit-more" id="u-simulation"><div><p class="unit-k">Where it shows up</p><div class="unit-uses"><a href="#s-flags" style="--i:0"><b>Tandem flags</b><span>In-house Fortran solver, Tecplot</span></a><a href="#s-sorter" style="--i:1"><b>Cell sorter</b><span>COMSOL Multiphysics</span></a><a href="#s-gimbal" style="--i:2"><b>Gimbal platform</b><span>ANSYS stress and fatigue</span></a><a href="#s-hvac" style="--i:3"><b>Cooling-load study</b><span>Carrier HAP</span></a></div></div></dd></div>
+        <div class="unit"><dt><button class="unit-btn" type="button" aria-expanded="false" aria-controls="u-programming">Programming</button><span class="unit-latch" aria-hidden="true"></span></dt><dd>Python (Matplotlib, gspread, pywinauto, Playwright), MATLAB, C++, Google Apps Script, LaTeX. FastAPI and Flutter in personal projects.</dd><dd class="unit-more" id="u-programming"><div><p class="unit-k">Where it shows up</p><div class="unit-uses"><a href="#s-flags" style="--i:0"><b>Flag post-processing</b><span>Python</span></a><a href="#s-onescreen" style="--i:1"><b>OneScreen tools</b><span>Python, pywinauto, Apps Script</span></a><a href="#s-stress" style="--i:2"><b>Stress-strain model</b><span>Python, NumPy, Matplotlib</span></a><a href="#s-rover" style="--i:3"><b>Lunar rover</b><span>MATLAB</span></a><a href="#s-gimbal" style="--i:4"><b>Gimbal control</b><span>Arduino, C++</span></a><a href="#s-more" style="--i:5"><b>Scrolls and Sage</b><span>Flutter, FastAPI</span></a></div></div></dd></div>
+        <div class="unit"><dt><button class="unit-btn" type="button" aria-expanded="false" aria-controls="u-design">Design</button><span class="unit-latch" aria-hidden="true"></span></dt><dd>SOLIDWORKS, AutoCAD, GeoGebra</dd><dd class="unit-more" id="u-design"><div><p class="unit-k">Where it shows up</p><div class="unit-uses"><a href="#s-gimbal" style="--i:0"><b>Gimbal platform</b><span>SOLIDWORKS</span></a><a href="#s-rover" style="--i:1"><b>Lunar rover</b><span>SOLIDWORKS</span></a><a href="#role-photomath" style="--i:2"><b>Photomath</b><span>GeoGebra</span></a></div></div></dd></div>
+        <div class="unit"><dt><button class="unit-btn" type="button" aria-expanded="false" aria-controls="u-hardware">Hardware</button><span class="unit-latch" aria-hidden="true"></span></dt><dd>Arduino, PID control, BLDC servo drives, MPU6050 IMU, NRF24L01, NVIDIA Jetson Nano, LabVIEW</dd><dd class="unit-more" id="u-hardware"><div><p class="unit-k">Where it shows up</p><div class="unit-uses"><a href="#s-gimbal" style="--i:0"><b>Gimbal platform</b><span>Arduino, PID, BLDC servos, MPU6050</span></a><a href="#s-distance" style="--i:1"><b>Distance meter</b><span>Arduino Nano</span></a><a href="#s-rc" style="--i:2"><b>RC car</b><span>NRF24L01 radio</span></a><a href="#s-robot" style="--i:3"><b>Tracking robot</b><span>Jetson Nano</span></a></div></div></dd></div>
+        <div class="unit"><dt><button class="unit-btn" type="button" aria-expanded="false" aria-controls="u-automation">Automation</button><span class="unit-latch" aria-hidden="true"></span></dt><dd>REST APIs, Google Sheets API, n8n, Zapier, Power Automate, Excel, Notion, Trello</dd><dd class="unit-more" id="u-automation"><div><p class="unit-k">Where it shows up</p><div class="unit-uses"><a href="#s-onescreen" style="--i:0"><b>OneScreen</b><span>Manufacturer API, Apps Script, n8n</span></a><a href="#s-wle" style="--i:1"><b>Well Logging Energy</b><span>Power Automate, Notion, Trello</span></a><a href="#s-more" style="--i:2"><b>DOODHwala</b><span>Excel</span></a></div></div></dd></div>
+        <div class="unit"><dt><button class="unit-btn" type="button" aria-expanded="false" aria-controls="u-reliability">Reliability</button><span class="unit-latch" aria-hidden="true"></span></dt><dd>Root cause analysis, FMEA, fault tree analysis, production logging</dd><dd class="unit-more" id="u-reliability"><div><p class="unit-k">Where it shows up</p><div class="unit-uses"><a href="#s-attock" style="--i:0"><b>Attock Refinery</b><span>Root cause analysis, FMEA, fault trees</span></a><a href="#s-wle" style="--i:1"><b>Well Logging Energy</b><span>Production logging</span></a></div></div></dd></div>
+        <div class="unit"><dt><button class="unit-btn" type="button" aria-expanded="false" aria-controls="u-research">Research</button><span class="unit-latch" aria-hidden="true"></span></dt><dd>Systematic literature review, technical writing</dd><dd class="unit-more" id="u-research"><div><p class="unit-k">Where it shows up</p><div class="unit-uses"><a href="#s-twins" style="--i:0"><b>Digital twins review</b><span>Systematic review</span></a><a href="#publications" style="--i:1"><b>Manuscripts</b><span>Technical writing</span></a></div></div></dd></div>
+        <div class="unit"><dt><button class="unit-btn" type="button" aria-expanded="false" aria-controls="u-languages">Languages</button><span class="unit-latch" aria-hidden="true"></span></dt><dd>Urdu (native), English (IELTS Academic 8.0, CEFR C1)</dd><dd class="unit-more" id="u-languages"><div><p class="unit-k">Where it shows up</p><div class="unit-uses"><a href="#education" style="--i:0"><b>IELTS Academic</b><span>8.0 overall, Aug 2026</span></a></div></div></dd></div>
       </dl>
     </div>
     <div class="skills-col" id="volunteering">
@@ -923,15 +1326,15 @@
     <ul class="posts">
       <li><a href="https://lnkd.in/p/dxt4MxaS" target="_blank" rel="noreferrer">
         <span class="post-date">7 Sep 2026</span>
-        <span class="post-body"><span class="post-title">Your software has no API. The repetitive work keeps piling up.</span><span class="dim">A way to decide how to automate an app with no API: try exports and bulk imports first, then elements, anchors, pixels and screen coordinates, and always confirm the record actually saved.</span></span>
+        <span class="post-body"><span class="post-title">Your software has no API. The repetitive work keeps piling up.</span><span class="post-desc"><span>A way to decide how to automate an app with no API: try exports and bulk imports first, then elements, anchors, pixels and screen coordinates, and always confirm the record actually saved.</span></span></span>
         <span class="post-tag"><img class="li" src="assets/linkedin.svg" alt="LinkedIn post:" width="16" height="16">Automation</span></a></li>
       <li><a href="https://lnkd.in/p/dHY5YZ5h" target="_blank" rel="noreferrer">
         <span class="post-date">2 Aug 2025</span>
-        <span class="post-body"><span class="post-title">Kodak invented digital photography and still went bankrupt.</span><span class="dim">What MITx SC0x taught me about choosing a demand distribution, tracking forecast error with MAD, MSE and MAPE, and updating the model as data comes in.</span></span>
+        <span class="post-body"><span class="post-title">Kodak invented digital photography and still went bankrupt.</span><span class="post-desc"><span>What MITx SC0x taught me about choosing a demand distribution, tracking forecast error with MAD, MSE and MAPE, and updating the model as data comes in.</span></span></span>
         <span class="post-tag"><img class="li" src="assets/linkedin.svg" alt="LinkedIn post:" width="16" height="16">Forecasting</span></a></li>
       <li><a href="https://lnkd.in/p/dDDeW_mc" target="_blank" rel="noreferrer">
         <span class="post-date">Jul 2025</span>
-        <span class="post-body"><span class="post-title">You’re not being ignored, you’re just speaking to the wrong people.</span><span class="dim">Why defining an ideal customer profile should come before you connect, post or sell, told through Joshua Bell’s 2007 metro-station performance that earned $32.</span></span>
+        <span class="post-body"><span class="post-title">You’re not being ignored, you’re just speaking to the wrong people.</span><span class="post-desc"><span>Why defining an ideal customer profile should come before you connect, post or sell, told through Joshua Bell’s 2007 metro-station performance that earned $32.</span></span></span>
         <span class="post-tag"><img class="li" src="assets/linkedin.svg" alt="LinkedIn post:" width="16" height="16">Networking</span></a></li>
     </ul>
   </div>
@@ -979,6 +1382,27 @@
 
 <a class="next-btn" id="next-btn" href="#research" hidden><span class="next-k">Next</span><span id="next-name">Research statement</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
 
+<dialog class="sheet" id="sheet" aria-labelledby="sheet-crumb">
+  <div class="sheet-scrim" aria-hidden="true"></div>
+  <div class="sheet-panel">
+    <div class="sheet-bar">
+      <p class="sheet-crumb" id="sheet-crumb"></p>
+      <div class="sheet-tools">
+        <button class="icon-btn sheet-prev" type="button" aria-label="Previous"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <span class="sheet-count" id="sheet-count"></span>
+        <button class="icon-btn sheet-fwd" type="button" aria-label="Next"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        <button class="icon-btn sheet-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+    </div>
+    <div class="sheet-scroll" id="sheet-scroll" tabindex="-1">
+      <div class="sheet-inner" id="sheet-inner">
+        <div id="sheet-slot"></div>
+        <div class="sheet-foot" id="sheet-foot"></div>
+      </div>
+    </div>
+  </div>
+</dialog>
+
 <dialog class="lightbox" id="lightbox" aria-label="Image viewer">
   <button class="icon-btn lb-close" type="button" aria-label="Close">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -987,8 +1411,9 @@
   <figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
   <button class="icon-btn lb-next" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 </dialog>
-<script src="js/site.js" defer></script>
-<script src="js/hall.js" defer></script>
-<script src="js/figures.js" defer></script>
+<script src="js/site.js?v=2026-11-25" defer></script>
+<script src="js/hall.js?v=2026-11-25" defer></script>
+<script src="js/figures.js?v=2026-11-25" defer></script>
+<script src="js/sheets.js?v=2026-11-25" defer></script>
 </body>
 </html>
