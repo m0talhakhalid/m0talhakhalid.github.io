@@ -114,9 +114,9 @@
         '<path class="c-real-hot" d="M' + px(1) + ' ' + py(real(1)) + 'L' + px(xTop).toFixed(1) + ' ' + py(YMAX) + '"/>' +
         '<path class="c-real-hot" d="M' + (px(xTop) - 7).toFixed(1) + ' ' + (py(YMAX) + 10) + 'L' + px(xTop).toFixed(1) + ' ' + py(YMAX) + 'l8 7"/>' +
         '<line class="c-fixed" x1="' + (L + 14) + '" y1="' + (T + 12) + '" x2="' + (L + 48) + '" y2="' + (T + 12) + '"/>' +
-        '<text class="c-text" x="' + (L + 56) + '" y="' + (T + 16) + '">' + (n ? 'Fixed resistance' : 'Single-phase plate, a fixed resistance') + '</text>' +
+        '<text class="c-text" x="' + (L + 56) + '" y="' + (T + 16) + '">' + (n ? 'Fixed resistance' : 'Fixed resistance: single-phase plate, and today’s twins') + '</text>' +
         '<line class="c-real" x1="' + (L + 14) + '" y1="' + (T + 34) + '" x2="' + (L + 48) + '" y2="' + (T + 34) + '"/>' +
-        '<text class="c-text" x="' + (L + 56) + '" y="' + (T + 38) + '">Two-phase plate</text>' +
+        '<text class="c-text" x="' + (L + 56) + '" y="' + (T + 38) + '">' + (n ? 'Two-phase plate' : 'Two-phase plate, as it really behaves') + '</text>' +
         '<line class="c-guide" id="boil-guide" y1="' + T + '" y2="' + B + '"/>' +
         '<line class="c-gap" id="boil-gap"/>' +
         '<circle class="c-dot-fixed" id="boil-df" r="6"/>' +
@@ -129,12 +129,12 @@
     var regime = $('#boil-regime'), text = $('#boil-text'), out = $('#boil-out');
     var m1 = $('#meter-1'), m2 = $('#meter-2');
     var COPY = [
-      ['Both plates run single-phase', 'Below the onset of boiling the two plates behave alike, and one fixed thermal resistance describes either of them. Current twins handle this case well enough.'],
-      ['Two-phase plate in nucleate boiling', 'Bubbles now carry most of the heat, so the two-phase wall runs cooler than the single-phase one, and cooler than a fixed resistance predicts. Here the model has to resolve boiling and conjugate heat transfer in some form, and the right level of detail is not yet settled.'],
-      ['Two-phase plate near its limit', 'The margin to critical heat flux is closing. A twin with a fixed resistance still draws a comfortable straight line and gives no warning.'],
-      ['Past critical heat flux', 'Vapour blankets the wall of the two-phase plate and its temperature runs away. A fixed resistance misses this entirely, which is why a twin used for control has to know where the limit is.']
+      ['Both plates are still all liquid', 'The coolant just warms up as it passes over the chip, so the wall temperature climbs in a straight line.', 'Gets this right. A fixed resistance is a fair model here, and today’s twins handle it well.'],
+      ['The two-phase plate is boiling', 'Bubbles form on the hot wall and carry heat away as the coolant turns to vapour, so the wall temperature barely climbs.', 'Still draws a straight line, so it guesses too hot. That errs on the safe side, but a controller trusting it would cool harder than it needs to.'],
+      ['Close to the limit', 'Bubbles are crowding the wall and the margin to critical heat flux is almost gone.', 'Still shows a comfortable straight line and gives no warning.'],
+      ['Past critical heat flux', 'A film of vapour covers the wall and cuts it off from the liquid, so the chip temperature shoots up.', 'Misses this completely. A twin used for control has to know where this limit is.']
     ];
-    var STATE = ['liquid', 'boiling', 'near limit', 'dry-out'];
+    var STATE = ['just warm', 'stays cool', 'close to the limit', 'too hot!'];
     var q = 0.58;
     function update() {
       q = parseFloat(input.value) / 100;
@@ -145,103 +145,231 @@
       var gap = $('#boil-gap');
       gap.setAttribute('x1', X); gap.setAttribute('x2', X); gap.setAttribute('y1', py(yf)); gap.setAttribute('y2', py(yr));
       var note = $('#boil-note'), diff = yr - yf;
-      var words = Math.abs(diff) < 0.02 ? '' : (diff < 0 ? 'too hot' : 'too cold');
+      var words = Math.abs(diff) < 0.02 ? '' : (diff < 0 ? 'guesses too hot' : 'misses the dry-out');
       var nx = X < L + (R - L) * 0.45 ? X + 12 : X - 12, ny = (py(yf) + py(yr)) / 2 + 5;
       note.setAttribute('text-anchor', X < L + (R - L) * 0.45 ? 'start' : 'end');
+      if (ny < T + 70) ny = Math.max(py(yf), py(yr)) + 26;
       note.setAttribute('x', nx); note.setAttribute('y', ny);
       note.textContent = '';
       if (words && narrow) {
         /* on a phone the note goes on two short lines */
         var t1 = document.createElementNS(NS, 'tspan'), t2 = document.createElementNS(NS, 'tspan');
-        t1.setAttribute('x', nx); t1.setAttribute('dy', '-0.55em'); t1.textContent = 'fixed resistance:';
+        t1.setAttribute('x', nx); t1.setAttribute('dy', '-0.55em'); t1.textContent = 'fixed resistance';
         t2.setAttribute('x', nx); t2.setAttribute('dy', '1.15em'); t2.textContent = words;
         note.appendChild(t1); note.appendChild(t2);
-      } else if (words) note.textContent = 'fixed resistance: ' + words;
+      } else if (words) note.textContent = 'fixed resistance ' + words;
       var k = q <= XO ? 0 : q <= 0.88 ? 1 : q <= 1 ? 2 : 3;
-      regime.textContent = COPY[k][0]; text.textContent = COPY[k][1];
+      regime.textContent = COPY[k][0]; text.textContent = COPY[k][1]; var tw = $('#boil-twin'); if (tw) tw.textContent = COPY[k][2]; var rd = $('#boil-read'); if (rd) rd.setAttribute('data-k', k);
       out.textContent = k === 0 ? 'Warmer liquid out' : 'Liquid and vapour out';
       input.setAttribute('aria-valuetext', COPY[k][0]);
-      if (m1) { m1.querySelector('i').style.width = (Math.min(yf / YMAX, 1) * 100).toFixed(1) + '%'; m1.querySelector('b').textContent = 'liquid'; }
+      if (m1) { m1.querySelector('i').style.width = (Math.min(yf / YMAX, 1) * 100).toFixed(1) + '%'; m1.querySelector('b').textContent = q <= 0.3 ? 'just warm' : q <= 0.65 ? 'warm' : q <= 0.98 ? 'hot' : 'very hot'; }
       if (m2) { m2.querySelector('i').style.width = (Math.min(yr / YMAX, 1) * 100).toFixed(1) + '%'; m2.querySelector('b').textContent = STATE[k]; m2.classList.toggle('is-over', k === 3); }
     }
     input.addEventListener('input', function () { update(); if (reduce) still(); });
     window.addEventListener('resize', function () { if (build()) update(); });
 
-    /* one cold plate, in section along the flow. mode 1: liquid only, mode 2: boiling allowed */
+    /* one cold plate, drawn by hand in section along the flow. mode 1: liquid only, mode 2: boiling allowed.
+       Bubbles grow on nucleation sites on the hot wall, lift off, drift with the flow and merge into
+       slugs downstream; past the critical heat flux a vapour film covers the wall. Schematic, not data. */
     function Plate(cv, mode) {
-      this.cv = cv; this.mode = mode; this.bubbles = []; this.acc = 0; this.streaks = [];
-      for (var n = 0; n < 22; n++) this.streaks.push({ x: Math.random(), y: Math.random(), v: 0.5 + Math.random() * 0.6 });
+      this.cv = cv; this.mode = mode; this.free = []; this.up = []; this.dash = []; this.rnd = [];
+      for (var n = 0; n < 16; n++) this.dash.push({ x: Math.random(), y: 0.15 + Math.random() * 0.7, v: 0.75 + Math.random() * 0.5 });
+      for (var r = 0; r < 600; r++) this.rnd.push(Math.random() * 2 - 1);
+      this.sites = [];
+      for (var s = 0; s < 15; s++) this.sites.push({ u: (s + 0.5 + (Math.random() - 0.5) * 0.7) / 15, on: Math.random(), r: 0, wait: Math.random() * 0.4, rd: 1 });
     }
+    var mix = function (a, b, t) { return 'rgb(' + Math.round(a[0] + (b[0] - a[0]) * t) + ',' + Math.round(a[1] + (b[1] - a[1]) * t) + ',' + Math.round(a[2] + (b[2] - a[2]) * t) + ')'; };
     Plate.prototype.step = function (tt, dt) {
-      var g = fitCanvas(this.cv), c = g.c, w = g.w, h = g.h, mode = this.mode;
-      var x0 = w * 0.05, x1 = w * 0.95, yT = h * 0.34, yB = h * 0.6, lid = h * 0.08, base = h * 0.085;
-      var cx0 = w * 0.28, cx1 = w * 0.72, heatK = clamp(q / 1.05, 0, 1), dry = mode === 2 && q > 1;
+      var g = fitCanvas(this.cv), c = g.c, w = g.w, h = g.h, mode = this.mode, rnd = this.rnd, k = 0;
+      var night = document.documentElement.dataset.mode === 'night';
+      var INK = night ? '#efe7df' : '#1b1614', PAPER = night ? '#211c1a' : '#fffaf2';
+      var COLD = night ? [43, 74, 96] : [191, 224, 243], WARM = night ? [112, 60, 34] : [248, 196, 156];
+      var BLUE = night ? '#7cc0ef' : '#1f6fb2', HOT = night ? '#ff8a5c' : '#c2410c', RED = night ? '#ff6b5e' : '#c0321f';
+      var R = function () { k = (k + 1) % rnd.length; return rnd[k]; };
+      function ln(x1, y1, x2, y2, passes) {
+        var dx = x2 - x1, dy = y2 - y1, L = Math.sqrt(dx * dx + dy * dy) || 1, nx = -dy / L, ny = dx / L, bow = Math.min(2, L * 0.01);
+        for (var p = 0; p < (passes || 2); p++) {
+          var mb = R() * bow;
+          c.moveTo(x1 + R() * 0.7, y1 + R() * 0.7);
+          c.quadraticCurveTo((x1 + x2) / 2 + nx * mb, (y1 + y2) / 2 + ny * mb, x2 + R() * 0.7, y2 + R() * 0.7);
+        }
+      }
+      function box(x, y, bw, bh, col, lw) { c.strokeStyle = col || INK; c.lineWidth = lw || 1.6; c.beginPath(); ln(x, y, x + bw, y); ln(x + bw, y, x + bw, y + bh); ln(x + bw, y + bh, x, y + bh); ln(x, y + bh, x, y); c.stroke(); }
+      function hatch(x, y, bw, bh, gap, col, lw) {
+        c.save(); c.beginPath(); c.rect(x, y, bw, bh); c.clip();
+        c.strokeStyle = col; c.lineWidth = lw || 1.2; c.beginPath();
+        for (var t = -bh; t < bw; t += gap) ln(x + t, y + bh, x + t + bh, y, 1);
+        c.stroke(); c.restore();
+      }
+      var fs = clamp(Math.round(h * 0.115), 17, 21);
+      var x0 = w * 0.03, x1 = w * 0.97, pw = Math.max(14, w * 0.045);
+      var pTop = fs + 8, yT = h * 0.45, lid = h * 0.065, yB = h * 0.69, base = h * 0.07;
+      var cx0 = w * 0.3, cx1 = w * 0.7, yC = yB + base + 3, chH = Math.min(h * 0.15, h - yC - 3);
+      var heatK = clamp(q / 1.05, 0, 1), I = clamp((q - XO) / (1 - XO), 0, 1), dry = mode === 2 && q > 1;
+      var kk = q <= XO ? 0 : q <= 0.88 ? 1 : q <= 1 ? 2 : 3;
+      var inX = x0 + w * 0.025, outX = x1 - w * 0.025 - pw;
       c.clearRect(0, 0, w, h);
-      /* chip, and the heat it sheds into the base */
-      var cy = yB + base + 3, ch = h * 0.13;
-      var glow = c.createLinearGradient(0, cy + ch, 0, yB - 2);
-      glow.addColorStop(0, 'rgba(255,106,53,' + (0.2 + 0.6 * heatK).toFixed(2) + ')'); glow.addColorStop(1, 'rgba(255,106,53,0)');
-      c.fillStyle = glow; c.fillRect(cx0 - 12, yB - 2, cx1 - cx0 + 24, cy + ch - yB + 2);
-      c.fillStyle = dry ? '#ff3b2f' : 'rgb(' + Math.round(70 + 180 * heatK) + ',' + Math.round(62 + 50 * heatK) + ',' + Math.round(56 - 6 * heatK) + ')';
-      c.beginPath(); if (c.roundRect) c.roundRect(cx0, cy, cx1 - cx0, ch, 4); else c.rect(cx0, cy, cx1 - cx0, ch); c.fill();
-      /* ports through the lid */
-      var pw = w * 0.05, pt = h * 0.2;
-      c.fillStyle = '#8d8780';
-      c.fillRect(x0 + w * 0.02 - 3, pt, pw + 6, yT - lid - pt); c.fillRect(x1 - w * 0.02 - pw - 3, pt, pw + 6, yT - lid - pt);
-      /* plate: lid, channel, copper base */
-      c.fillRect(x0, yT - lid, x1 - x0, lid);
-      c.fillStyle = dry ? '#e2603a' : '#c9743b'; c.fillRect(x0, yB, x1 - x0, base);
-      c.fillStyle = '#3a322e'; c.fillRect(cx0 - 6, yB + base, cx1 - cx0 + 12, 3);
-      var liq = c.createLinearGradient(x0, 0, x1, 0), warm = mode === 1 ? heatK : heatK * 0.25;
-      /* by day the coolant is drawn light blue, warming toward orange; the night palette is unchanged */
-      if (document.documentElement.dataset.mode === 'night') {
-        liq.addColorStop(0, '#4d606b'); liq.addColorStop(0.25, '#4d606b');
-        liq.addColorStop(1, 'rgb(' + Math.round(77 + 150 * warm) + ',' + Math.round(96 + 10 * warm) + ',' + Math.round(107 - 50 * warm) + ')');
-      } else {
-        liq.addColorStop(0, '#4da3da'); liq.addColorStop(0.25, '#4da3da');
-        liq.addColorStop(1, 'rgb(' + Math.round(77 + 160 * warm) + ',' + Math.round(163 - 40 * warm) + ',' + Math.round(218 - 150 * warm) + ')');
-      }
+      c.lineCap = 'round'; c.lineJoin = 'round';
+
+      /* the chip, glowing as the heat flux rises */
+      c.fillStyle = night ? '#4a403b' : '#3b3431'; c.fillRect(cx0, yC, cx1 - cx0, chH);
+      hatch(cx0, yC, cx1 - cx0, chH, 5, dry ? '#ff3b2f' : mix([122, 111, 104], [234, 90, 28], heatK), 1.6);
+      box(cx0, yC, cx1 - cx0, chH, INK, 1.8);
+      c.strokeStyle = '#9aa7b3'; c.lineWidth = 2; c.beginPath(); ln(cx0 - 4, yC - 1.5, cx1 + 4, yC - 1.5, 1); c.stroke();
+      /* copper base */
+      c.fillStyle = dry ? (night ? '#5a2018' : '#f8c3b3') : (night ? '#3a2416' : '#f6d3b5'); c.fillRect(x0, yB, x1 - x0, base);
+      hatch(x0, yB, x1 - x0, base, 6, dry ? '#e2603a' : '#d9823f', 1.3);
+      box(x0, yB, x1 - x0, base, INK, 1.7);
+
+      /* the coolant: it warms along the plate; much less so when it can boil */
+      var outT = mode === 1 ? heatK : heatK * 0.22;
+      var liq = c.createLinearGradient(x0, 0, x1, 0);
+      liq.addColorStop(0, mix(COLD, COLD, 0)); liq.addColorStop(0.28, mix(COLD, COLD, 0)); liq.addColorStop(1, mix(COLD, WARM, outT));
       c.fillStyle = liq; c.fillRect(x0, yT, x1 - x0, yB - yT);
-      c.fillRect(x0 + w * 0.02, pt, pw, yT - lid - pt + lid); c.fillRect(x1 - w * 0.02 - pw, pt, pw, yT - pt);
-      /* flow */
-      c.strokeStyle = 'rgba(255,255,255,.4)'; c.lineWidth = 1.2; c.beginPath();
-      this.streaks.forEach(function (s) {
-        s.x += s.v * dt * 0.32; if (s.x > 1) { s.x = 0; s.y = Math.random(); }
-        var sx = x0 + s.x * (x1 - x0), sy = yT + 4 + s.y * (yB - yT - 8);
-        c.moveTo(sx, sy); c.lineTo(Math.min(x1, sx + 13), sy);
-      });
-      c.stroke();
-      /* arrows at the ports */
-      c.strokeStyle = '#f5efe9'; c.lineWidth = 1.8; c.lineCap = 'round'; c.beginPath();
-      var ax = x0 + w * 0.02 + pw / 2, bx = x1 - w * 0.02 - pw / 2, ay = pt + 5;
-      c.moveTo(ax, ay); c.lineTo(ax, ay + 12); c.moveTo(ax - 4, ay + 8); c.lineTo(ax, ay + 12); c.lineTo(ax + 4, ay + 8);
-      c.moveTo(bx, ay + 12); c.lineTo(bx, ay); c.moveTo(bx - 4, ay + 4); c.lineTo(bx, ay); c.lineTo(bx + 4, ay + 4);
-      c.stroke();
-      if (mode !== 2) return;
-      /* bubbles nucleate on the heated wall, grow, lift off and are carried out */
-      var bub = this.bubbles, rate = q > XO ? 4 + 70 * (q - XO) : 0;
-      this.acc += rate * dt;
-      while (this.acc > 1 && bub.length < 160) { this.acc -= 1; bub.push({ x: cx0 + Math.random() * (cx1 - cx0), y: yB, r: 0.6, rd: 2.4 + Math.random() * (2.4 + 5 * q), free: false, vy: 0 }); }
-      c.fillStyle = 'rgba(255,255,255,.2)'; c.strokeStyle = 'rgba(255,255,255,.92)'; c.lineWidth = 1.1;
-      for (var b = bub.length - 1; b >= 0; b--) {
-        var o = bub[b];
-        if (!o.free) { o.r += dt * (3 + 9 * q); if (o.r >= o.rd) o.free = true; o.y = yB - o.r; }
-        else { o.x += dt * (w * 0.2); o.vy = Math.min(o.vy + dt * 40, 24); o.y -= o.vy * dt; if (o.y < yT + o.r) o.y = yT + o.r; }
-        if (o.x > x1 - o.r) { bub.splice(b, 1); continue; }
-        c.beginPath(); c.arc(o.x, o.y, o.r, 0, Math.PI * 2); c.fill(); c.stroke();
-      }
-      /* past the limit a vapour film covers the wall */
-      if (q > 0.94) {
-        var a = clamp((q - 0.94) / 0.08, 0, 1);
-        c.fillStyle = 'rgba(255,255,255,' + (0.8 * a).toFixed(2) + ')'; c.beginPath(); c.moveTo(cx0 - 6, yB);
-        for (var xx = cx0 - 6; xx <= x1; xx += 6) c.lineTo(xx, yB - (4 + 6 * a) - 2.5 * Math.sin(xx * 0.09 + tt * 5));
+      /* a warm layer grows from the hot wall while the coolant is all liquid */
+      if (mode === 1 || kk === 0) {
+        var lay = c.createLinearGradient(0, yB, 0, yT);
+        lay.addColorStop(0, 'rgba(' + WARM.join(',') + ',' + (0.35 + 0.55 * heatK).toFixed(2) + ')'); lay.addColorStop(1, 'rgba(' + WARM.join(',') + ',0)');
+        c.fillStyle = lay; c.beginPath(); c.moveTo(cx0 - 10, yB);
+        for (var xx = cx0 - 10; xx <= x1; xx += 8) { var f = clamp((xx - cx0 + 10) / (x1 - cx0), 0, 1); c.lineTo(xx, yB - (yB - yT) * (0.12 + 0.6 * Math.pow(f, 0.6)) * (0.25 + 0.75 * heatK)); }
         c.lineTo(x1, yB); c.closePath(); c.fill();
+        /* heat rising off the wall */
+        c.strokeStyle = HOT; c.lineWidth = 1.6; c.globalAlpha = 0.35 + 0.5 * heatK; c.beginPath();
+        for (var s3 = 0; s3 < 3; s3++) {
+          var hx = cx0 + (cx1 - cx0) * (0.22 + 0.28 * s3), top = yB - (yB - yT) * (0.3 + 0.4 * heatK);
+          for (var yy = yB - 2; yy >= top; yy -= 2) { var px = hx + 3 * Math.sin(yy * 0.35 + tt * 6 + s3); if (yy === yB - 2) c.moveTo(px, yy); else c.lineTo(px, yy); }
+        }
+        c.stroke(); c.globalAlpha = 1;
       }
+      /* flow marks */
+      var U = (x1 - x0) * 0.2;
+      c.strokeStyle = INK; c.globalAlpha = 0.28; c.lineWidth = 1.4; c.beginPath();
+      this.dash.forEach(function (d) {
+        d.x += d.v * dt * 0.2; if (d.x > 1) { d.x = 0; d.y = 0.15 + Math.random() * 0.7; }
+        var sx = x0 + d.x * (x1 - x0), sy = yT + d.y * (yB - yT);
+        c.moveTo(sx, sy); c.quadraticCurveTo(sx + 5, sy - 2, sx + 11, sy);
+      });
+      c.stroke(); c.globalAlpha = 1;
+
+      if (mode === 2) {
+        var H = yB - yT, free = this.free, up = this.up, sites = this.sites;
+        var bubFill = night ? 'rgba(239,231,223,.82)' : 'rgba(255,255,255,.92)', bubLine = night ? 'rgba(239,231,223,.95)' : 'rgba(27,22,20,.75)';
+        /* nucleation sites: more of them wake up, and they fire faster, as the flux rises */
+        if (q > XO && !dry) sites.forEach(function (st) {
+          if (st.on > 0.2 + 0.8 * I) { st.r = 0; return; }
+          if (st.wait > 0) { st.wait -= dt; return; }
+          if (!st.r) { st.r = 0.6; st.rd = (2.6 + 3.4 * I) * (0.8 + 0.4 * Math.random()); }
+          st.r += dt * (5 + 16 * I);
+          if (st.r >= st.rd) {
+            free.push({ x: cx0 - 14 + st.u * (cx1 - cx0 + 34), y: yB - st.r, r: st.r, vy: 0 });
+            st.r = 0; st.wait = (0.45 - 0.35 * I) * (0.6 + 0.8 * Math.random());
+          }
+        });
+        /* past the limit the film itself sheds big blobs of vapour */
+        if (dry && Math.random() < dt * 5) free.push({ x: cx0 + Math.random() * (cx1 - cx0), y: yB - 9, r: 4 + 5 * Math.random(), vy: 0 });
+        /* free bubbles drift with the flow, rise, grow a little and merge */
+        for (var i = free.length - 1; i >= 0; i--) {
+          var o = free[i];
+          o.vy = Math.min(o.vy + dt * 50, 26); o.y -= o.vy * dt; o.x += U * (1.05 + 0.3 * (yB - o.y) / H) * dt;
+          o.r = Math.min(o.r + dt * 0.8 * I, H * 2.2);
+          var ry = Math.min(o.r, H * 0.42), rx = o.r * o.r / ry;
+          if (o.y < yT + ry + 1) o.y = yT + ry + 1;
+          if (o.y > yB - ry - 1) o.y = yB - ry - 1;
+          o.rx = rx; o.ry = ry;
+          if (o.x - rx > outX + pw * 0.5) { free.splice(i, 1); continue; }
+          if (o.x > outX && o.x < outX + pw && up.length < 30 && Math.random() < 0.06) up.push({ x: outX + pw * (0.3 + 0.4 * Math.random()), y: yT - 2, r: Math.min(pw * 0.32, 1.5 + o.r * 0.3) });
+        }
+        for (var a = 0; a < free.length; a++) for (var b = a + 1; b < free.length; b++) {
+          var A = free[a], B = free[b], ddx = A.x - B.x, ddy = A.y - B.y, lim = (A.rx + B.rx) * 0.55;
+          if (ddx * ddx + ddy * ddy < lim * lim) {
+            var aa = A.r * A.r, bb = B.r * B.r;
+            A.x = (A.x * aa + B.x * bb) / (aa + bb); A.y = (A.y * aa + B.y * bb) / (aa + bb); A.r = Math.sqrt(aa + bb);
+            A.ry = Math.min(A.r, H * 0.42); A.rx = A.r * A.r / A.ry; free.splice(b, 1); b--;
+          }
+        }
+        if (free.length > 140) free.splice(0, free.length - 140);
+        c.fillStyle = bubFill; c.strokeStyle = bubLine; c.lineWidth = 1.2;
+        sites.forEach(function (st) { if (st.r > 0.8) { c.beginPath(); c.arc(cx0 - 14 + st.u * (cx1 - cx0 + 34), yB - st.r, st.r, 0, Math.PI * 2); c.fill(); c.stroke(); } });
+        free.forEach(function (o) { c.beginPath(); c.ellipse(o.x, o.y, o.rx, o.ry, 0, 0, Math.PI * 2); c.fill(); c.stroke(); });
+        /* close to the limit, dry patches flicker on the wall; past it, a vapour film covers it */
+        if (q > 0.9) {
+          var fa = clamp((q - 0.9) / 0.12, 0, 1);
+          c.fillStyle = bubFill; c.strokeStyle = bubLine; c.lineWidth = 1.3; c.beginPath(); c.moveTo(cx0 - 8, yB);
+          for (var fx = cx0 - 8; fx <= x1; fx += 5) {
+            var patch = dry ? 1 : Math.max(0, Math.sin(fx * 0.05 + tt * 3)) * fa;
+            c.lineTo(fx, yB - (dry ? 5 + 6 * fa : 1 + 6 * patch) - (dry ? 2.2 * Math.sin(fx * 0.09 + tt * 5) : 0));
+          }
+          c.lineTo(x1, yB); c.closePath(); c.fill(); c.stroke();
+        }
+        /* vapour going up the outlet */
+        for (var u2 = up.length - 1; u2 >= 0; u2--) { var v = up[u2]; v.y -= dt * 46; if (v.y < pTop + 2) up.splice(u2, 1); }
+        this.upDraw = up;
+      }
+
+      /* lid and ports */
+      c.fillStyle = night ? '#3a3f44' : '#e8ebee'; c.fillRect(x0, yT - lid, x1 - x0, lid);
+      hatch(x0, yT - lid, x1 - x0, lid, 7, '#9aa7b3', 1.1);
+      c.fillStyle = mix(COLD, COLD, 0); c.fillRect(inX, pTop, pw, yT - pTop + 1);
+      c.fillStyle = mix(COLD, WARM, outT); c.fillRect(outX, pTop, pw, yT - pTop + 1);
+      if (this.upDraw) { c.fillStyle = mode === 2 && night ? 'rgba(239,231,223,.82)' : 'rgba(255,255,255,.92)'; c.strokeStyle = night ? 'rgba(239,231,223,.95)' : 'rgba(27,22,20,.7)'; c.lineWidth = 1; this.upDraw.forEach(function (v) { c.beginPath(); c.arc(v.x, v.y, v.r, 0, Math.PI * 2); c.fill(); c.stroke(); }); }
+      c.strokeStyle = INK; c.lineWidth = 1.8; c.beginPath();
+      ln(x0, yT - lid, inX, yT - lid); ln(inX + pw, yT - lid, outX, yT - lid); ln(outX + pw, yT - lid, x1, yT - lid);
+      ln(inX, pTop, inX, yT - lid); ln(inX + pw, pTop, inX + pw, yT - lid); ln(outX, pTop, outX, yT - lid); ln(outX + pw, pTop, outX + pw, yT - lid);
+      ln(inX, yT, inX + pw, yT, 1); ln(outX, yT, outX + pw, yT, 1);
+      ln(x0, yT - lid, x0, yB + base); ln(x1, yT - lid, x1, yB + base);
+      ln(x0, yT, inX, yT); ln(inX + pw, yT, outX, yT); ln(outX + pw, yT, x1, yT);
+      c.stroke();
+      /* arrows in the ports */
+      c.strokeStyle = INK; c.lineWidth = 1.8; c.beginPath();
+      var ax = inX + pw / 2, bx = outX + pw / 2, ay = pTop + 6, al = Math.min(14, yT - lid - pTop - 10);
+      c.moveTo(ax, ay); c.lineTo(ax, ay + al); c.moveTo(ax - 4, ay + al - 4); c.lineTo(ax, ay + al); c.lineTo(ax + 4, ay + al - 4);
+      c.moveTo(bx, ay + al); c.lineTo(bx, ay); c.moveTo(bx - 4, ay + 4); c.lineTo(bx, ay); c.lineTo(bx + 4, ay + 4);
+      c.stroke();
+
+      /* a little thermometer in the outlet: it climbs with the heat when the coolant only warms up,
+         and barely moves once the coolant boils (boiling happens at an almost steady temperature) */
+      var tgt = mode === 1 ? 0.1 + 0.84 * heatK : 0.1 + 0.84 * Math.min(heatK, 0.26) + 0.05 * Math.max(0, heatK - 0.26);
+      this.lvl = this.lvl == null ? tgt : this.lvl + (tgt - this.lvl) * Math.min(1, dt * 4);
+      var sayW = 0, sayTxt = mode === 1 ? (q < 0.12 ? 'liquid warms up a little' : 'the liquid warms up as it goes') : ['no bubbles yet, just warming', 'bubbles carry the heat away', 'bubbles crowd the hot wall', 'vapour film: the wall overheats!'][kk];
+      c.font = '700 ' + (fs - 1) + 'px Caveat, "Segoe Print", cursive'; sayW = c.measureText(sayTxt).width;
+      var thx = outX - Math.max(15, w * 0.03), thT = pTop + 5, thB = yT - lid - 9, tubeW = 5, bulbR = 5.2;
+      if (thB - thT > 24 && (inX + pw + outX) / 2 + sayW / 2 + 10 < thx - bulbR) {
+        var tubeTop = thT, tubeBot = thB - bulbR + 1, lvlY = tubeBot - (tubeBot - tubeTop - 2) * clamp(this.lvl, 0, 1);
+        c.fillStyle = PAPER; c.fillRect(thx - tubeW / 2, tubeTop, tubeW, tubeBot - tubeTop);
+        c.fillStyle = RED; c.fillRect(thx - tubeW / 2 + 1.2, lvlY, tubeW - 2.4, tubeBot - lvlY + 1);
+        c.beginPath(); c.arc(thx, thB, bulbR, 0, Math.PI * 2); c.fill();
+        c.strokeStyle = INK; c.lineWidth = 1.4; c.beginPath();
+        ln(thx - tubeW / 2, tubeBot, thx - tubeW / 2, tubeTop + 2, 1); ln(thx + tubeW / 2, tubeBot, thx + tubeW / 2, tubeTop + 2, 1);
+        c.moveTo(thx + tubeW / 2, tubeTop + 2); c.arc(thx, tubeTop + 2, tubeW / 2, 0, Math.PI, true);
+        c.stroke();
+        c.beginPath(); c.arc(thx, thB, bulbR, -Math.PI * 0.35, Math.PI * 1.35); c.stroke();
+        c.lineWidth = 1; c.beginPath();
+        for (var tk = 1; tk <= 3; tk++) { var ty = tubeBot - (tubeBot - tubeTop) * tk / 4; c.moveTo(thx - tubeW / 2 - 4, ty); c.lineTo(thx - tubeW / 2 - 1, ty); }
+        c.stroke();
+      }
+
+      /* words, by hand */
+      c.font = '700 ' + fs + 'px Caveat, "Segoe Print", "Comic Sans MS", cursive'; c.textBaseline = 'alphabetic';
+      c.textAlign = 'left'; c.fillStyle = BLUE; c.fillText('cool liquid in', inX - 2, fs + 2);
+      c.textAlign = 'right'; c.fillStyle = mode === 2 && kk > 0 ? INK : HOT;
+      c.fillText(mode === 2 && kk > 0 ? 'liquid + vapour out' : 'warm liquid out', outX + pw + 2, fs + 2);
+      /* the chip's name on a little paper tag, so it reads on the hatching */
+      var cf = Math.max(14, Math.min(fs - 1, chH * 1.05)), ct = dry ? 'chip, too hot!' : 'chip';
+      c.font = '700 ' + cf + 'px Caveat, "Segoe Print", cursive'; c.textAlign = 'center';
+      var tw2 = c.measureText(ct).width + 12, tcx = (cx0 + cx1) / 2, tcy = yC + chH / 2;
+      c.fillStyle = PAPER; c.fillRect(tcx - tw2 / 2, tcy - cf * 0.55, tw2, cf * 1.1);
+      c.strokeStyle = INK; c.lineWidth = 1.2; c.strokeRect(tcx - tw2 / 2, tcy - cf * 0.55, tw2, cf * 1.1);
+      c.fillStyle = dry ? RED : INK; c.textBaseline = 'middle'; c.fillText(ct, tcx, tcy + 1); c.textBaseline = 'alphabetic';
+      var say = sayTxt;
+      c.font = '700 ' + (fs - 1) + 'px Caveat, "Segoe Print", cursive';
+      c.fillStyle = mode === 2 && kk === 3 ? RED : INK; c.globalAlpha = mode === 2 && kk === 3 ? 1 : 0.78;
+      c.fillText(say, (inX + pw + outX) / 2, yT - lid - 7);
+      c.globalAlpha = 1;
     };
     var plates = [new Plate(cv1, 1), new Plate(cv2, 2)];
     function still() { for (var n = 0; n < 90; n++) plates.forEach(function (p) { p.step(n / 30, 1 / 30); }); }
     update();
-    if (reduce) { still(); window.addEventListener('resize', still); }
+    if (reduce) { still(); window.addEventListener('resize', still); window.addEventListener('themechange', still); if (document.fonts && document.fonts.load) document.fonts.load('700 16px Caveat').then(still, function () {}); }
     else plates.forEach(function (p) { animate(p.cv, function (tt, dt) { p.step(tt, dt); }); });
   })();
 
