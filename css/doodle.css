@@ -1073,7 +1073,7 @@ span.dl-toolbox>span{font:600 13px/1 var(--font-text);transform:none}
 
 /* the pillar box garden: jasmine first and most, then the others; and a vine up the box */
 .dl-pillar-wrap .dl-pillar{position:relative;z-index:1}
-.dl-bed{position:absolute;right:90%;bottom:3%;z-index:2;display:flex;align-items:flex-end;justify-content:flex-end;width:232%;padding-bottom:3px}
+.dl-bed{position:absolute;right:90%;bottom:3%;z-index:2;display:flex;align-items:flex-end;justify-content:flex-end;width:218%;padding-bottom:3px}
 .dl-bed .dl-flbtn{width:var(--w,14%);margin-left:var(--ml,0)}
 .dl-bed-ground{position:absolute;left:-2%;right:-10%;bottom:0;line-height:0;pointer-events:none}
 .dl-bed-ground svg{width:100%;height:8px}
