@@ -1117,6 +1117,12 @@ span.dl-toolbox>span{font:600 13px/1 var(--font-text);transform:none}
 .dl-city-fl-q p+p{margin-top:6px}
 @media (max-width:600px){.dl-city-fl{grid-template-columns:44px minmax(0,1fr)}.dl-city-fl-q p{font-size:17px}}
 
+/* phone map: fewer words, smaller flowers; the tidbits (guavas, salt, kebabs) live in the place notes instead */
+@media (max-width:700px){.sitemap .dl-tidbit{display:none}.sitemap .dl-flart{transform:scale(.78)}}
+@media (max-width:700px){.sitemap .map-scale,.sitemap .map-scaletext{display:none}}
+@media (max-width:700px){.sitemap .map-pin[data-site="1"] .pin-name{text-anchor:middle;transform:translate(-9px,-25px)}}
+@media (max-width:700px){.sitemap .dl-flhit[data-flower="jasmine"] .dl-flart{transform:translate(4px,16px) scale(.78)}}
+
 /* =================================================================== colours: Watercolour violet */
 :root:not([data-mode="night"]){--bg:#f8efe9;--surface:#fffaf7;--surface-2:#f3e6e0;--ink:#2a2233;--ink-2:#43384d;--muted:#6f6377;--rule:#e8d9d6;
   --accent:#5b3fb0;--accent-2:#b03f7f;--accent-fill:#7b61d6;--btn-bg:#6347c4;--btn-fg:#ffffff;

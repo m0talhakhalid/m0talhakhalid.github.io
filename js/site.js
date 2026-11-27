@@ -373,7 +373,7 @@
   var mapSvg = $('#sitemap'), mapBox = $('#map-box'), tip = $('#map-tip');
   var setView = function () {}, showTip = function () {}, hideTip = function () {};
   if (mapSvg && mapBox && tip) {
-    var REGION = mapSvg.dataset.region.split(' ').map(Number), COUNTRY = [0, 0, 640, 480];
+    var REGION = ((window.innerWidth <= 700 && mapSvg.dataset.regionSm) || mapSvg.dataset.region).split(' ').map(Number), COUNTRY = [0, 0, 640, 480];
     var cur = REGION.slice(), view = 'region', anim = 0, invs = $$('.map-inv', mapSvg), radios = $$('input[name="map-view"]');
     var apply = function (vb) {
       mapSvg.setAttribute('viewBox', vb.map(function (n) { return n.toFixed(2); }).join(' '));
