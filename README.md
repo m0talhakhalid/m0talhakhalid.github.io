@@ -28,7 +28,7 @@ Each section shows short cards. The full text, figures and photos for a card sit
 - A link straight to a sheet, such as `…/#s-twins`, opens that sheet when the page loads. The browser's back button closes it.
 - With scripts off, the sheets show in place under their cards.
 
-## Skills rack and the flow behind Current studies
+## Skills cards and the flow behind Current studies (original notes)
 
 - Each unit in the skills rack opens to list where that tool shows up on the site. The list is kept as plain HTML in `index.html`: edit the links in each `unit-more` block.
 - The flow behind Current studies is drawn in `js/figures.js` (search for "flow past a cylinder"). It is a point-vortex sketch, not CFD, and the note under its controls says so.
@@ -41,3 +41,23 @@ The page opens in the day theme for every visitor, whatever their phone, compute
 
 - `assets/Muhammad-Talha-Khalid-CV.pdf` still says "top 5%" and "Dean's Honours List in each of the last three semesters". The page now says "top 10%" and "Dean's Merit List".
 - The canonical and social-preview addresses in the `<head>` of `index.html` point at `muhammadtalhakhalid-iota.vercel.app`. Change them if the site moves.
+
+## Doodle version
+
+The pictures are hand-drawn SVG doodles, written straight into `index.html`. The doodle layer lives in three files:
+
+- `css/doodle.css`: handwriting font (Caveat, self-hosted in `fonts/`), doodle styles, the few animations, and the night-mode colours.
+- `js/doodle.js`: draws each doodle in as it scrolls into view, the single-phase / two-phase switches, the label notes on the cooling drawings, the place notes on the map, the skill flip cards and the postcard.
+- `js/kv.js`: the live von Kármán street under Current studies (flow-speed slider, dye, nudge the cylinder).
+
+The cooling-twins infographic gets its doodles from `assets/ig-doodle.css` and a small script at the end of `assets/cooling-twins-infographic.html`.
+
+Everything moving stops for visitors who ask their device to reduce motion, and pauses while it is off screen.
+
+## Contact postcard
+
+The postcard posts straight to talhakhalidraja692@gmail.com through FormSubmit (`data-endpoint` on `<form id="letter">` in `index.html`). Visitors do not need an email app, and the reply address is optional.
+
+One-time step: after the site is live, send yourself a test postcard. FormSubmit emails you an "Activate Form" link; click it once and every postcard after that arrives in your inbox.
+
+To use your own Google Apps Script instead (`Code.gs`), deploy it as a web app and paste its `/exec` URL into `data-endpoint`. The page detects which one it is talking to.
