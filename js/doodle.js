@@ -145,6 +145,18 @@
   }
 
   // city notes: a pin or a place in the list opens a small card of tidbits
+  var quoteList = function (qs, cls) {
+    var box = document.createElement('div'); box.className = cls;
+    (qs || []).forEach(function (q) {
+      var t = typeof q === 'string' ? [q, ''] : q;
+      var p = document.createElement('p'); p.textContent = t[0];
+      if (t[1]) { var by = document.createElement('cite'); by.textContent = t[1]; p.appendChild(by); }
+      box.appendChild(p);
+    });
+    return box;
+  };
+  var flowerData = null;
+  try { flowerData = JSON.parse((document.getElementById('dl-flowers') || {}).textContent || 'null'); } catch (e) { flowerData = null; }
   var cityBox = document.getElementById('dl-city'), mapBox = document.getElementById('map-box'), cityData = null;
   try { cityData = JSON.parse((document.getElementById('dl-cities') || {}).textContent || 'null'); } catch (e) { cityData = null; }
   if (cityBox && mapBox && cityData) {
@@ -169,6 +181,19 @@
       var ul = document.createElement('ul');
       c.b.forEach(function (line) { var li = document.createElement('li'); li.textContent = line; ul.appendChild(li); });
       cityBox.appendChild(x); cityBox.appendChild(head); cityBox.appendChild(ul);
+      var fd = c.fl && flowerData && flowerData[c.fl];
+      if (fd) {
+        var fb = document.createElement('div'); fb.className = 'dl-city-fl';
+        var fa = document.createElement('span'); fa.className = 'dl-city-fl-art'; fa.setAttribute('aria-hidden', 'true'); fa.innerHTML = fd.art;
+        fb.appendChild(fa);
+        if (c.fn || (fd.q && fd.q.length)) {
+          var ft = document.createElement('div'); ft.className = 'dl-city-fl-t';
+          if (c.fn) { var fn = document.createElement('b'); fn.textContent = c.fn; ft.appendChild(fn); }
+          if (fd.q && fd.q.length) ft.appendChild(quoteList(fd.q, 'dl-city-fl-q'));
+          fb.appendChild(ft);
+        }
+        cityBox.appendChild(fb);
+      }
       cityBox.setAttribute('aria-label', 'Notes about ' + c.t);
       var pin = document.querySelector('.map-pin[data-site="' + id + '"]'), side = 'left';
       if (pin) { var pr = pin.getBoundingClientRect(), mr = mapBox.getBoundingClientRect(); if (pr.left + pr.width / 2 < mr.left + mr.width / 2) side = 'right'; }
@@ -180,7 +205,7 @@
     cityBox.addEventListener('click', function (e) { e.stopPropagation(); });
     // while a note is open, a tap on the map just closes it (it does not zoom)
     mapBox.addEventListener('click', function (e) {
-      if (cityBox.hidden || cityBox.contains(e.target) || e.target.closest('.map-pin')) return;
+      if (cityBox.hidden || cityBox.contains(e.target) || e.target.closest('.map-pin, [data-flower]')) return;
       e.stopPropagation(); e.preventDefault(); closeCity();
     }, true);
     document.addEventListener('click', function (e) {
@@ -205,6 +230,48 @@
       li.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !cityBox.hidden) closeCity(true); });
+  }
+
+  // flowers: tap one for a small card with the flower and a line about it
+  if (flowerData) {
+    var pop = document.createElement('div'); pop.className = 'dl-flpop'; pop.hidden = true;
+    pop.setAttribute('role', 'dialog'); document.body.appendChild(pop);
+    var popFrom = null, popY = 0;
+    var closePop = function (back) { if (pop.hidden) return; pop.hidden = true; if (back && popFrom && popFrom.focus) popFrom.focus({ preventScroll: true }); popFrom = null; };
+    var openPop = function (el) {
+      var f = flowerData[el.getAttribute('data-flower')]; if (!f) return;
+      if (popFrom === el && !pop.hidden) { closePop(); return; }
+      popFrom = el; pop.innerHTML = '';
+      var x = document.createElement('button'); x.type = 'button'; x.className = 'dl-flpop-x'; x.setAttribute('aria-label', 'Close'); x.textContent = '×';
+      x.addEventListener('click', function (e) { e.stopPropagation(); closePop(true); });
+      var art = document.createElement('span'); art.className = 'dl-flpop-art'; art.setAttribute('aria-hidden', 'true'); art.innerHTML = f.art;
+      var tx = document.createElement('div'); tx.className = 'dl-flpop-t';
+      var nm = document.createElement('b'); nm.textContent = f.n; tx.appendChild(nm);
+      if (f.sci) { var sc = document.createElement('i'); sc.className = 'dl-flpop-sci'; sc.textContent = f.sci; tx.appendChild(sc); }
+      if (f.w) { var wh = document.createElement('span'); wh.textContent = f.w; tx.appendChild(wh); }
+      if (f.q && f.q.length) tx.appendChild(quoteList(f.q, 'dl-flpop-q'));
+      pop.appendChild(x); pop.appendChild(art); pop.appendChild(tx);
+      pop.setAttribute('aria-label', f.n);
+      pop.hidden = false;
+      var r = el.getBoundingClientRect(), pw = pop.offsetWidth, ph = pop.offsetHeight, vw = document.documentElement.clientWidth, vh = window.innerHeight;
+      var left = Math.min(Math.max(10, r.left + r.width / 2 - pw / 2), vw - pw - 10);
+      var top = r.top - ph - 12 >= 70 ? r.top - ph - 12 : Math.min(r.bottom + 12, vh - ph - 10);
+      pop.style.left = left + 'px'; pop.style.top = Math.max(10, top) + 'px';
+      popY = window.scrollY;
+    };
+    pop.addEventListener('click', function (e) { e.stopPropagation(); });
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest && e.target.closest('[data-flower]');
+      if (t) { e.preventDefault(); e.stopPropagation(); openPop(t); return; }
+      if (!pop.hidden && !pop.contains(e.target)) closePop();
+    }, true);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { closePop(true); return; }
+      var t = e.target.closest && e.target.closest('g[data-flower]');
+      if (t && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openPop(t); }
+    });
+    window.addEventListener('scroll', function () { if (!pop.hidden && Math.abs(window.scrollY - popY) > 40) closePop(); }, { passive: true });
+    window.addEventListener('resize', function () { closePop(); });
   }
 
   // bubbles rise from the headline's full stop
