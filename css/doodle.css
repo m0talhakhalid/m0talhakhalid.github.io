@@ -949,3 +949,99 @@ mark.dl-hl{color:inherit;background:linear-gradient(100deg,rgba(246,197,69,.2) 0
 :root[data-mode="night"] .dl-ex-more summary{background:color-mix(in srgb,#ffd85a 10%,var(--dl-paper));border-color:color-mix(in srgb,#ffd85a 70%,transparent)}
 :root[data-mode="night"] .dl-ex-more[open] summary{background:color-mix(in srgb,#ffd85a 16%,var(--dl-paper))}
 :root[data-mode="night"] .dl-exm-sub{color:#cbbfb3}
+
+/* =================================================================== round twelve: calmer and more professional */
+/* Everything you click or read in sentences goes back to the site's own type. Handwriting stays inside the drawings,
+   on the postcard, on the map and in the Urdu welcome. */
+.bar-name span{font:inherit;letter-spacing:inherit}
+.bar-nav a{font-family:var(--font-text);font-size:14.5px;font-weight:500;padding:0 11px;letter-spacing:0}
+.bar-mail{font-family:var(--font-text);font-size:14px;font-weight:500;border:1px solid var(--rule);border-radius:999px}
+.btn{font-family:var(--font-text);font-size:15px;font-weight:600;letter-spacing:0;border-radius:8px}
+.btn-lg{font-size:16px}
+.bar-cv{font-size:14.5px}
+.btn-line{border-width:1px}
+.jump a{font-family:var(--font-text);font-size:14.5px;font-weight:500;border:1px solid var(--rule);border-radius:999px}
+.menu nav a{font-family:var(--font-display);font-weight:640}
+.dl-welcome span{font:500 12px/1 var(--font-text);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.dl-stage-cap{font:400 13.5px/1.3 var(--font-text)!important;letter-spacing:0;color:var(--muted)!important;transform:translateX(-50%)!important}
+.dl-stage-cap::before{content:none}
+
+/* "What I work on": kept, but set like a professional subject list instead of a shouty hand-lettered banner */
+.ticker.dl-strip{background:color-mix(in srgb,var(--accent-fill) 7%,var(--bg));border-block:1px solid color-mix(in srgb,var(--accent-fill) 24%,transparent);padding-block:18px}
+.dl-fields{gap:.35em .9em;font:500 clamp(15px,1.35vw,17.5px)/1.5 var(--font-text);color:var(--ink);letter-spacing:0}
+.dl-fields .dl-k{margin-right:.4em;font:600 12.5px/1.5 var(--font-text);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.dl-fields .dl-star{width:.42em;height:.42em;color:var(--accent-fill);opacity:.8}
+:root[data-mode="night"] .ticker.dl-strip{background:color-mix(in srgb,var(--accent-fill) 9%,var(--bg))}
+
+/* the cooling band: same heading style as every other section */
+.dl-explain-head h2{font-family:var(--font-display);font-weight:660;font-stretch:108%;font-size:clamp(30px,3.6vw,46px);line-height:1.06;letter-spacing:-.02em}
+.dl-explain-sub{font:400 16px/1.5 var(--font-text);color:var(--muted)}
+.dl-ex h3,.dl-ex-top h3{font-family:var(--font-display);font-weight:640;font-stretch:104%;font-size:clamp(22px,2vw,26px);letter-spacing:-.01em}
+.dl-switch button{font:600 13.5px/1 var(--font-text);min-height:36px;padding:7px 12px;border-radius:999px}
+.dl-ex-hint{font:400 14px/1.4 var(--font-text);color:var(--muted)}
+.dl-ex-hint::before{content:none}
+.dl-exm-t{font:600 15.5px/1.2 var(--font-text)}
+.dl-exm-sub{font:400 13.5px/1.2 var(--font-text)}
+.dl-ex-more summary{min-height:44px;border-radius:10px;border-width:1px}
+.dl-steps b{font:600 15.5px/1.35 var(--font-text)}
+.dl-catch span{font:600 15px/1.4 var(--font-text)}
+.dl-tipc b{font:600 15px/1.25 var(--font-text)}
+.dl-terms dt{font:600 15px/1.2 var(--font-text)}
+
+/* boiling figure and plates */
+.dl-pt-sub{font:400 14px/1.2 var(--font-text)}
+.meter b{font:600 14px/1 var(--font-data);min-width:7.5em}
+.dl-bread .boil-regime{font:640 20px/1.2 var(--font-display);font-stretch:104%}
+.dl-bread-dl dt{font:600 14.5px/1.3 var(--font-text)}
+
+/* vortex street controls */
+.dl-kv-ctl label{font:600 14.5px/1 var(--font-text)}
+.dl-kv-read{font:400 14px/1.45 var(--font-text)}
+
+/* skills and volunteering */
+#skills .rack-hint{font:400 14.5px/1.4 var(--font-text)}
+span.dl-toolbox>span{font:600 13px/1 var(--font-text);transform:none}
+.dl-sk-front h3{font:640 19px/1.1 var(--font-display);font-stretch:104%;letter-spacing:0}
+.dl-sk-k{font:600 13px/1.2 var(--font-text);letter-spacing:.06em;text-transform:uppercase}
+#volunteering .hon-top span:first-child{font:640 18px/1.2 var(--font-display);font-stretch:104%}
+
+/* inside the pop-ups */
+.kit-label{font:600 12.5px/1.2 var(--font-text)!important;letter-spacing:.1em!important;text-transform:uppercase}
+.corpus .num,.kit-note .num{font-family:var(--font-display)!important;font-size:1.15em}
+.ladder span{font-family:var(--font-data)!important;font-weight:500!important;font-size:13px!important;border-width:1px!important}
+.dl-welcome{gap:6px;transform:rotate(-4deg)}
+.dl-welcome span{transform:rotate(4deg)}
+
+/* =================================================================== manuscripts, compact */
+/* Two small cards per row on wide screens, one compact card per row on phones. Each card: number, type and status on
+   one line, the doodle in the corner, then title, authors and a short note. */
+#publications.sec{padding-block:clamp(48px,5.6vw,80px)}
+#publications .sec-head{margin-bottom:clamp(20px,2.4vw,30px);gap:10px}
+#publications .sec-head p{font-size:16.5px}
+.papers{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 20px;padding-top:12px}
+.papers li{display:flex;min-width:0}
+.papers a.dl-paper{flex:1;grid-template-columns:auto minmax(0,1fr) 84px;grid-template-areas:"n kind art" "body body art";align-items:center;align-content:start;
+  gap:6px 10px;padding:15px 16px 16px 18px;box-shadow:3px 4px 0 color-mix(in srgb,var(--ink) 8%,transparent)}
+.papers a.dl-paper:hover{padding-left:18px}
+.papers a.dl-paper .paper-n{grid-area:n;font-size:14px;line-height:1.4}
+.papers a.dl-paper .paper-kind{grid-area:kind;flex-direction:row;flex-wrap:wrap;align-items:center;gap:2px 14px;padding:0;min-height:0;font-size:13px;line-height:1.4}
+.papers a.dl-paper .paper-kind .status{font-size:13px}
+.papers a.dl-paper .paper-body{grid-area:body;gap:4px;align-self:start}
+.papers a.dl-paper .paper-title{font-size:clamp(16.5px,1.3vw,18px);line-height:1.3}
+.papers a.dl-paper .paper-auth{font-size:14px;line-height:1.45}
+.papers a.dl-paper .paper-note{font-size:13.5px;line-height:1.45}
+.papers a.dl-paper .paper-go{display:none}
+.papers a.dl-paper .dl-pub-art{grid-area:art;position:static;width:84px;align-self:start;margin-top:2px}
+.dl-clip-w{top:-15px;width:12px}
+.papers li:nth-child(even) .dl-clip-w{right:52px}
+@media (max-width:900px){
+  .papers{grid-template-columns:minmax(0,1fr);gap:16px}
+}
+@media (max-width:760px){
+  .papers a.dl-paper{grid-template-columns:auto minmax(0,1fr) 60px;grid-template-areas:"n kind art" "body body body";gap:6px 10px;padding:13px 14px 14px}
+  .papers a.dl-paper:hover{padding-left:14px}
+  .papers a.dl-paper .paper-kind{padding-right:0;min-height:0}
+  .papers a.dl-paper .dl-pub-art{position:static;width:60px;align-self:center;margin:0}
+  .papers a.dl-paper .paper-title{font-size:16px}
+  .papers li:nth-child(even) .dl-clip-w{left:auto;right:40px}
+}
